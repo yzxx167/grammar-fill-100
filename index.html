@@ -201,11 +201,29 @@ body.teacher #noteBar{display:flex}
 #dictBar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0;padding:8px 10px;background:#F5FBF7;border:1px solid var(--line);border-radius:10px}
 #dictBar .pen-tip{flex:1;min-width:170px;color:var(--sub);font-size:12px}
 #dictBar button{font-size:12px;padding:5px 10px}
-#dictTip{position:fixed;z-index:60;max-width:330px;padding:10px 12px;background:#fff;border:2px solid var(--main);border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.16);font-size:14px;line-height:1.6;color:var(--ink)}
-#dictTip .dw{font-weight:700;color:var(--main);margin-right:6px}
-#dictTip .dt{display:block;margin-top:4px;white-space:pre-wrap}
-#dictTip .dm{display:block;margin-top:6px;font-size:12px;color:var(--sub)}
-#dictTip button{margin-top:8px;font-size:12px}
+#dictTip{position:fixed;z-index:60;width:290px;max-width:calc(100vw - 20px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(31,42,38,.2);font-size:13px;color:var(--ink);overflow:hidden}
+#dictTip .dh{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--main);color:#fff;padding:9px 11px}
+#dictTip .dh b{font-size:15px;letter-spacing:.2px;word-break:break-all}
+#dictTip .dx{flex:0 0 auto;margin:0;padding:0;border:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.2);color:#fff;font-size:13px;line-height:1;cursor:pointer}
+#dictTip .db{padding:10px 12px}
+#dictTip .dp{display:block;color:var(--sub);font-size:12px}
+#dictTip .dt{display:block;margin-top:3px;font-size:15px;font-weight:600;line-height:1.5;white-space:pre-wrap}
+#dictTip .dt.none{color:var(--sub);font-size:13px;font-weight:400;font-style:italic}
+#dictTip .dmeta{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px}
+#dictTip .tag{font-size:11px;padding:2px 8px;border-radius:20px;background:#EAF3F0;color:var(--main)}
+#dictTip .tag.warn{background:#FFF2D9;color:#8A6100}
+#dictTip .dexa{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font-size:12px;color:var(--sub);line-height:1.6;max-height:96px;overflow:auto}
+#dictTip .dexa b{color:var(--main)}
+#dictTip .dgloss{margin-top:4px;max-height:170px;overflow:auto;font-size:12px;line-height:1.6}
+#dictTip .dgloss div{padding:2px 0;border-bottom:1px dotted var(--line)}
+#dictTip .dgloss b{display:inline-block;min-width:88px;color:var(--main)}
+#dictTip .dacts{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;background:#F7FAF9;border-top:1px solid var(--line)}
+#dictTip .dacts button{margin:0;font-size:12px;padding:5px 9px}
+#dictTip .dacts button.hi{background:var(--main);color:#fff;border-color:var(--main)}
+#dictTip .dedit{padding:9px 10px;background:#FFF9E8;border-top:1px solid var(--line)}
+#dictTip .dedit input{width:100%;font-size:13px;padding:7px 9px;border:2px solid var(--line);border-radius:8px;outline:none;font-family:inherit}
+#dictTip .dedit .mbtns{display:flex;gap:6px;margin-top:7px}
+#dictTip .dedit button{font-size:12px;padding:5px 10px;margin:0}
 #dictDlg .mbox{max-width:560px}
 .dlist{max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
 .drow{display:flex;gap:10px;padding:7px 10px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer}
@@ -366,7 +384,7 @@ body:not(.teacher) .teacher-only{display:none!important}
     <div class="dlist" id="dictList"></div>
     <div class="mok" id="dictCount"></div>
     <div class="mbtns"><button id="dictClose" class="primary">关闭</button></div>
-    <div class="mnote">词典释义裁剪自 ECDICT（MIT License · © Linwei / skywind3000），只保留本页短文用到的词；专有名词、所有格等可能未收录，教师可自行补充。</div>
+    <div class="mnote">词典释义裁剪自 ECDICT（MIT License · © Linwei / skywind3000），只保留本页短文用到的词；专有名词、所有格等可能未收录。</div>
   </div>
 </div>
 
@@ -422,12 +440,15 @@ body:not(.teacher) .teacher-only{display:none!important}
             <button id="noteClear" class="nbtn">清空本题</button>
             <span id="noteStatus"></span>
           </div>
-          <div id="dictBar">
-            <span class="pen-tip">离线生词：双击短文里的单词查中文（词库随页面自带，断网可用）</span>
-            <button id="dictListBtn" class="nbtn">本套生词表</button>
-            <button id="dictEditBtn" class="nbtn teacher-only">补词</button>
-            <button id="dictImportBtn" class="nbtn teacher-only">导入词表</button>
-            <button id="dictExportBtn" class="nbtn teacher-only">导出词表</button>
+          <div id="dictBar" class="teacher-only">
+            <span class="pen-tip">教师词句翻译：点短文里的单词就地出中文，划选一句话看逐词释义（离线词库，断网可用）</span>
+            <button id="dictListBtn" class="nbtn">本套词表</button>
+            <button id="dictMoreBtn" class="nbtn" hidden>词库管理</button>
+            <span id="dictAdvanced" hidden>
+              <button id="dictEditBtn" class="nbtn">加词</button>
+              <button id="dictImportBtn" class="nbtn">导入</button>
+              <button id="dictExportBtn" class="nbtn">导出</button>
+            </span>
             <input type="file" id="dictFile" accept=".csv,.json,.txt" hidden>
           </div>
           <div class="passage" id="passage"></div>
@@ -466,6 +487,7 @@ body:not(.teacher) .teacher-only{display:none!important}
   <div class="tip">宽屏为<b>左原文 · 右作答</b>（右侧随滚动悬浮），窄屏自动改为上下；顶部「布局」按钮可手动切换并记住选择。<br>键盘：<b>← →</b> 翻题 · <b>Enter</b> 核对 / 下一题 · 点短文里的其他空格可直接跳到那一题<br><b>学生模式</b>（默认）：输入答案核对、看对错与错题；看不到答案速查、不能一键看答案。要进教师模式，需输入<b>教师口令</b>或老师发放的<b>授权码</b>。<br><b>教师模式</b>：一键「公布答案」核对、正确率看板、五色笔文字高亮、<b>手写笔</b>在题目卡上涂画做笔记（5 色 / 4 档粗细 / 橡皮 / 撤销 / 清空，按题保存，学生只读可见），并可选择打印答案卷。<br>「打印」可选<b>只打印题目</b>或<b>题目+答案</b>，还能把手写笔记一并印出；「字号」100%–300%；作答、高亮、笔记均可用「导出 / 导入」迁移。资料依据《2026届各地英语语法填空汇编（含答案与解析）》整理。</div>
 </div>
 
+<script id="dictPhon" type="application/json">{"accessible":"әk'sesәbl","account":"ә'kaunt","across":"ә'krɒs","actually":"'æktʃuәli","acupuncture":"'ækju.pʌŋktʃә","acupuncturist":".ækju'pʌŋktʃәrist","added":"'ædid","advanced":"әd'vɑ:nst","agency":"'eidʒәnsi","ago":"ә'gәu","alive":"ә'laiv","alongside":"ә'lɒŋ'said","amaze":"ә'meiz","amazed":"ә'meizd","american":"ә'merikәn","ancient":"'einʃәnt","another":"ә'nʌðә","anyone":"'eniwʌn","appeal":"ә'pi:l","appreciate":"ә'pri:ʃieit","appreciation":"ә.pri:ʃi'eiʃәn","approach":"ә'prәutʃ","architecture":"'ɑ:kitektʃә","area":"'єәriә","arms":"ɑ:mz","around":"ә'raund","arranges":"əˈreindʒz","art":"ɑ:t","artful":"'ɑ:tful","artificial":".ɑ:ti'fiʃәl","arts":"ɑ:ts","artworks":"'ɑ:twɜ:ks","attention":"ә'tenʃәn","attracted":"ə'træktɪd","attractions":"ət'rækʃnz","attracts":"əˈtrækts","audience":"'ɒ:diәns","audiences":"'ɔ:dɪənsɪz","australian":"ɒ'streiljәn","background":"'bækgraund","balance":"'bælәns","banks":"bæŋks","battle":"'bætl","beautiful":"'bju:tiful","beautifully":"'bju:tifuli","beauty":"'bju:ti","became":"bi'keim","become":"bi'kʌm","began":"bi'gæn","beginning":"bi'giniŋ","beijing":"beidʒiŋ","belief":"bi'li:f","believing":"bi'li:viŋ","belonged":"bɪ'lɒŋd","beloved":"bi'lʌvd","ben":"ben","beyond":"bi'jɒnd","big":"big","biological":".baiәu'lɒdʒikәl","birthplace":"'bә:θpleis","boat":"bәut","body":"'bɒdi","bond":"bɒnd","book":"buk","borders":"'bɔ:dәz","breath":"breθ","breathtaking":"'breθ.teikiŋ","bridge":"bridʒ","british":"'britiʃ","brought":"brɒ:t","cairo":"'kaiәrәu","calling":"'kɒ:liŋ","calm":"kɑ:m","came":"keim","camera":"'kæmәrә","canadian":"kә'neidiәn","captures":"ˈkæptʃəz","capturing":"'kæptʃәriŋ","care":"kєә","carefully":"'kєәfuli","carried":"'kærid","caught":"kɒ:t","cause":"kɒ:z","celebrated":"'selibreitid","celebration":".seli'breiʃәn","center":"'sentә","centuries":"'sentʃərɪz","century":"'sentʃuri","check-ups":"t'ʃek'ʌps","china":"'tʃainә","chinese":"tʃai'ni:z","chongqing":"'tʃjŋ'kiŋ","cinema":"'sinәmә","cinematic":",sini'mætik","city":"'siti","classic":"'klæsik","clay":"klei","clear":"kliә","clearly":"'kliәli","clinic":"'klinik","cloud":"klaud","coach":"kәutʃ","coaches":"kəutʃiz","collection":"kә'lekʃәn","college":"'kɒlidʒ","colorful":"'kʌlәful","comfort":"'kʌmfәt","comfortable":"'kʌmfәtәbl","complete":"kәm'pli:t","completely":"kәm'pli:tli","concluded":"kənˈklu:did","confirm":"kәn'fә:m","connect":"kә'nekt","connection":"kә'nekʃәn","connects":"kəˈnekts","constant":"'kɒnstәnt","content":"kәn'tent","contrasts":"ˈkɔntræsts","control":"kәn'trәul","conveyed":"kənˈveid","cool":"ku:l","cooperation":"kәu.ɒpә'reiʃәn","core":"kɒ:","couldn't":"'kudnt","countless":"'kauntlis","court":"kɒ:t","create":"kri:'eit","created":"kri: 'eitid","creation":"kri:'eiʃәn","critical":"'kritikәl","cultural":"'kʌltʃәrәl","culture":"'kʌltʃә","cupping":"'kʌpiŋ","curiosity":".kjuәri'ɒsiti","cutting-edge":"'kʌtɪŋ'edʒ","cyberpunk":"ˈsaɪbəpʌŋk","daily":"'deili","dance":"dæns. dɑ:ns","dancers":"'dɑ:nsəz","data":"'deitә","davy":"'deivi","day":"dei","decades":"ˈdekeidz","decayed":"di'keid","december":"di'sembә","decline":"di'klain","deep":"di:p","deepened":"ˈdi:pənd","deeply":"'di:pli","deer":"diә","delivering":"diˈlivərɪŋ","denmark":"'denmɑ:k","design":"di'zain","designed":"di'zaind","despite":"di'spait","destination":".desti'neiʃәn","developing":"di'velәpiŋ","development":"di'velәpmәnt","different":"'difәrәnt","digital":"'didʒitәl","digitization":".didʒitai'zeiʃәn. -ti'z-","direct":"di'rekt","directly":"di'rektli, dai'rektli","disciples":"dɪ'saɪplz","discipline":"'disiplin","display":"dis'plei","distant":"'distәnt","distinct":"dis'tiŋkt","district":"'distrikt","diversity":"dai'vә:siti","domestic":"dәu'mestik","drama":"'drɑ:mә","drum":"drʌm","drumbeats":"ˈdrʌmbi:ts","due":"dju:","dynamic":"dai'næmik","dynasty":"'dainæsti","earliest":"'iәliist","earned":"ә:nd","echoing":"'ekәuiŋ","educating":"ˈedju:keitɪŋ","effort":"'efәt","egypt":"'i:dʒipt","egyptian":"i'dʒipʃәn","eight":"eit","emotion":"i'mәuʃәn","emperor":"'empәrә","employs":"imˈplɔiz","enables":"iˈneiblz","encourage":"in'kʌridʒ","end":"end","enemies":"'enəmɪz","engage":"in'geidʒ","english":"'iŋgliʃ","enhanced":"in'hɑ:nst. -'hænst","enjoying":"end'ʒɔɪɪŋ","enriched":"in'ritʃt","enthusiastic":"in.θju:zi'æstik","especially":"i'speʃәli","establish":"i'stæbliʃ","event":"i'vent","eventually":"i'ventʃuәli","everyday":"'evri'dei","examine":"ig'zæmin","example":"ig'zæmpl","exceptional":"ik'sepʃәnәl","exhibition":".eksi'biʃәn","expectations":"ekspek'teɪʃnz","experience":"ik'spiәriәns","experienced":"ik'spiәriәnst","experiences":"iksˈpiəriənsiz","expert":"'ekspә:t","explore":"ik'splɒ:","extensive":"ik'stensiv","fails":"feilz","family":"'fæmәli","far":"fɑ:","february":"'februәri","feel":"fi:l","fellow":"'felәu","felt":"felt","field":"fi:ld","figure":"'figә","filled":"fild","film":"film","finest":"fi'nest","firmly":"'fә:mli","flights":"flaits","floor":"flɒ:","flow":"flәu","flowing":"flәuiŋ","focus":"'fәukәs","football":"'futbɒ:l","forced":"fɒ:st","forceful":"'fɒ:sful","foreigners":"'fɒrənəz","form":"fɒ:m","found":"faund","front":"frʌnt","fruit":"fru:t","full":"ful","fully":"'fuli","fusion":"'fju:ʒәn","future":"'fju:tʃә","gentle":"'dʒentl","geographic":",dʒiә'^ræfik","global":"'glәubl","going":"'gәuiŋ","golden":"'gәuldn","graceful":"'greisful","gradually":"'grædʒuәli","great":"greit","ground":"graund","growing":"'grәuiŋ","growth":"grәuθ","guangzhou":"'ɡwɑ:ŋ'dʒəu","guizhou":"'^wei'dʒu:","habit":"'hæbit","half":"hɑ:f","hall":"hɒ:l","hammond":"'hæmәnd","harmful":"'hɑ:mful","harmony":"'hɑ:mәni","health":"'helθ","hear":"hiә","help":"help","heritage":"'heritidʒ","hide":"haid","him":"him","himself":"him'self","historic":"hi'stɒrik","historical":"hi'stɒrikәl","history":"'histәri","hobby":"'hɒbi","hold":"hәuld","hollow":"'hɒlәu","home":"hәum","hosts":"həusts","house":"haus","however":"hau'evә","human":"'hju:mәn","humanity":"hju:'mæniti","hunt":"hʌnt","illness":"'ilnis","impression":"im'preʃәn","inbound":"'in'baund","included":"in'klu:did","increase":"in'kri:s","increased":"in'kri:st","increasingly":"in'kri:siŋli","industry":"'indәstri","influence":"'influәns","initial":"i'niʃәl","initiatives":"ɪ'nɪʃətɪvz","innovative":"'inәjveitiv","inside":"'in'said","inspired":"in'spaiәd","inspiring":"in'spaiәriŋ","instant":"'instәnt","integrate":"'intigreit","intelligence":"in'telidʒәns","intense":"in'tens","interactive":",intәr'æktiv","interest":"'intrist","invites":"inˈvaits","it's":"its","itself":"it'self","joshua":"'dʒɒʃuә","journey":"'dʒә:ni","joy":"dʒɒi","june":"dʒu:n","kapok":"'keipɒk","kicked":"kikt","kind":"kaind","king":"kiŋ","knee":"ni:","known":"nәun","lab":"læb","labour":"'leibә","labourers":"ˈleɪbrəz","landscape":"'lændskeip","landscapes":"ˈlændskeips","large":"lɑ:dʒ","last":"lɑ:st","lasting":"'lɑ:stiŋ","late":"leit","later":"'leitә","latest":"'leitist","layered":"'leiәd","learn":"lә:n","learned":"'lә:nid","leave":"li:v","led":"led","left":"left","legacy":"'legәsi","life":"laif","life-sized":"'laifsaizd","light":"lait","like":"laik","limited":"'limitid","line":"lain","live":"liv.laiv","living":"'liviŋ","local":"'lәukәl","london":"'lʌndәn","long":"lɒŋ","longing":"'lɒŋiŋ","love":"lʌv","maintains":"meinˈteinz","major":"'meidʒә","managing":"'mænidʒiŋ","map":"mæp","master":"'mɑ:stә. 'mæstә","meant":"ment","media":"'mi:diә","medical":"'medikl","medicine":"'medisin","meeting":"'mi:tiŋ","member":"'membә","memorial":"mi'mɒ:riәl","message":"'mesidʒ","million":"'miljәn","ming":"miŋ","miracle":"'mirәkl","mix":"miks","model":"'mɒdәl","modeling":"'mɔdliŋ","modern":"'mɒdәn","moment":"'mәumәnt","month":"mʌnθ","monthly":"'mʌnθli","motion":"'mәuʃәn","motionless":"'mәuʃәnlis","mountain":"'mauntin","move":"mu:v","movement":"'mu:vmәnt","movie":"'mu:vi","moving":"'mu:viŋ","multilayered":"mʌltɪ'leɪəd","multimedia":".mʌlti'mi:diә","museum":"mju:'ziәm","music":"'mju:zik","musicians":"mju:'zɪʃənz","nanjing":"'næn'dʒiŋ","nature":"'neitʃә","nearly":"'niәli","notable":"'nәutәbl","offer":"'ɒfә","official":"ә'fiʃәl","old":"әuld","onto":"'ɒntu:","opening":"'әupәniŋ","opera":"'ɒpәrә","option":"'ɒpʃәn","ordinary":"'ɒ:dinәri","original":"ә'ridʒәnl","outbreak":"'autbreik","overseas":"'әuvә'si:z","owner":"'әunә","page":"peidʒ","pain":"pein","painting":"'peintiŋ","palace":"'pælis","pardoned":"ˈpɑ:dənd","part":"pɑ:t","parts":"pɑ:ts","pass":"pæs","passed":"pɑ:st","passion":"'pæʃәn","past":"pɑ:st","peace":"pi:s","peking":"'pi:kiŋ","people":"'pi:pl","perfect":"'pә:fikt","performance":"pә'fɒ:mәns","performances":"pə'fɔ:mənsɪz","performers":"pɚ'fɔrmɚz","personal":"'pә:snl","perth":"pә:θ","phenomenon":"fi'nɒminәn","philosophy":"fi'lɒsәfi","photo":"'fәutәu","photographer":"fә'tɔ^rәfә","photography":"fә'tɒgrәfi","physical":"'fizikl","picture":"'piktʃә","plant":"plænt. plɑ:nt","platforms":"p'lætfɔ:mz","pleasant":"'pleznt","poetry":"'pәuitri","possesses":"pəˈzesiz","possibly":"'pɒsәbli","posters":"'pəʊstəz","power":"'pauә","powerful":"'pauәful","practical":"'præktikl","practices":"ˈpræktisiz","practitioner":"præk'tiʃәnә","present":"'preznt","private":"'praivit","program":"'prәugræm","projectors":"prəd'ʒektəz","properly":"'prɒpәli","public":"'pʌblik","quarterly":"'kwɔ:tәli","quiet":"'kwaiәt","rare":"rєә","rarely":"'rєәli","rather":"'ræðә","raw":"rɒ:","read":"ri:d","real":"'riәl","reality":"ri'æliti","realize":"'riәlaiz","received":"ri'si:vd","receiving":"ri'si:viŋ","recent":"'ri:snt","recommendations":"ˌrekəmenˈdeiʃənz","recommending":"ˌrekəˈmendɪŋ","recover":"ri'kʌvә","recreation":".rekri'eiʃәn","reduced":"ri'dju:st","reflect":"ri'flekt","reflection":"ri'flekʃәn","relying":"riˈlaiŋ","remained":"riˈmeind","remains":"ri'meins","remarkable":"ri'mɑ:kәbl","representing":"ˌrepriˈzentɪŋ","residential":".rezi'denʃәl","responded":"riˈspɔndid","rhythm":"'riðәm","rich":"ri:tʃ","right":"rait","robe":"rәub","root":"ru:t","run":"rʌn","said":"sed","sailed":"seild","say":"sei","scale":"skeil","scene":"si:n","see":"si:","seen":"si:n","sense":"sens","serves":"sə:vz","set":"set","seven":"'sevn","sharing":"'ʃeәriŋ","shiny":"'ʃaini","shopping":"'ʃɒpiŋ","show":"ʃәu","showing":"'ʃәuiŋ","shown":"ʃәun","significant":"sig'nifikәnt","silent":"'sailәnt","silk":"silk","six":"siks","sky":"skai","skyscrapers":"'skaɪˌskreɪpəz","slowly":"'slәuli","small":"smɒ:l","social":"'sәuʃәl","soft":"sɒft","softly":"'sɒftli","solitude":"'sɒlitju:d","something":"'sʌmθiŋ","song":"sɒŋ","soon":"su:n","sorrow":"'sɒrәu","soul":"sәul","sound":"saund","spatial":"'speiʃәl","speak":"spi:k","sped":"sped","speed":"spi:d","spent":"spent","spirit":"'spirit","spring":"spriŋ","stage":"steidʒ","star":"stɑ:","started":"s'tɑ:tɪd","state":"steit","steady":"'stedi","stepped":"stept","stepping":"'stepiŋ","stills":"stilz","story":"'stɒ:ri","storytelling":"'stɒ:riteliŋ","strength":"streŋθ","strengthen":"'streŋθәn","strike":"straik","striking":"'straikiŋ","strong":"strɒŋ","studio":"'stju:diәu","study":"'stʌdi","summer":"'sʌmә","sun":"sʌn","surgery":"'sә:dʒәri","surpass":"sә'pɑ:s","surreal":"sә'riәl","surroundings":"sә'rajndiŋz","survive":"sә'vaiv","survived":"səˈvaivd","swordplay":"'sɒ:dplei","sydney":"'sidni","tan":"tæn","tang":"tæŋ","tea":"ti:","teacher":"'ti:tʃә","team":"ti:m","technological":".teknә'lɒdʒikl","technology":"tek'nɒlәdʒi","terracotta":"terә'kɔtә","theater":"'θiәtә","themselves":"ðәm'selvz","thoughtful":"'θɒ:tful","thousand":"'θauznd","time":"taim","timeless":"'taimlis","today":"tә'dei","together":"tә'geðә","told":"tәuld","tomb":"tu:m","too":"tu:","tools":"tu:lz","top":"tɒp","touch":"tʌtʃ","touching":"'tʌtʃiŋ","tourism":"'tuәrizm","tourists":"'tʊərɪsts","tours":"tuәz","toward":"tә'wɒ:d","tradition":"trә'diʃәn","traditional":"trә'diʃәnl","traditions":"trə'dɪʃnz","transforms":"trænsˈfɔ:mz","travel":"'trævl","traveling":"'trævliŋ","treasures":"ˈtreʒəz","treatment":"'tri:tmәnt","tree":"tri:","trend":"trend","turning":"'tә:niŋ","ultimately":"'ʌltimәtli","unfolding":"ʌn'fәuldiŋ","unique":"ju:'ni:k","unit":"'ju:nit","university":".ju:ni'vә:siti","unknown":".ʌn'nәun","untouched":".ʌn'tʌtʃt","upward":"'ʌpwәd","urban":"'ә:bәn","use":"ju:s","used":"'ju:st","viewers":"'vju:əz","virtual":"'vә:tʃuәl","visit":"'vizit","visiting":"'vizitiŋ","visitor":"'vizitә","visual":"'viʒuәl","visually":"'vizjjәli","vital":"'vaitl","vivid":"'vivid","wait":"weit","waited":"weitid","walking":"'wɒ:kiŋ","warrior":"'wɒ:riә","warriors":"'wɒrɪəz","watching":"'wɔtʃiŋ","water":"'wɒ:tә","waves":"weivz","way":"wei","ways":"weiz","welcome":"'welkәm","well":"wel","well-being":"'welbiiŋ","wild":"waild","wisdom":"'wizdәm","wish":"wiʃ","witness":"'witnis","wood":"wud","woods":"wjdz","work":"wә:k","world":"wә:ld","worldwide":"'wә:ldwaid","worried":"'wʌrid","worth":"wә:θ","xi'an":"'ʃi:'ɑ:n,ʃjɑ:n","year":"jiә","young":"jʌŋ","yunnan":"'ju:n'næn"}</script>
 <!-- 离线词典：裁剪自 ECDICT，MIT License，Copyright (c) 2025 Linwei / skywind3000；仅保留本页短文用到的词，运行时不发起任何网络请求 -->
 <script id="dictData" type="application/json">{"accessible":"a. 易接近的, 可进入的, 可使用的, 易受影响的, 可理解的","accompanied":"v. 陪伴, 伴随；伴奏（accompany的过去分词）；a. 伴随的；相伴的","account":"n. 报告, 解释, 估价, 理由, 利润, 算账, 帐目；vi. 报帐, 解释, 导致, 报偿, 占, 杀死","achievements":"n. 业绩；获得（achievement的复数）","across":"prep. 越过, 穿过, 与...相交叉, 在...的对面；adv. 交叉, 到另一边, 在对面, 成十字","actually":"adv. 事实上, 竟然, 如今, 现在","acupuncture":"n. 针刺, 针刺疗法；vt. 施以针灸","acupuncturist":"n. 针灸医生","added":"a. 额外的；更多的","advanced":"a. 在前的, 高级的, 先进的, 年老的；[法] 预付的, 预支的, 垫付的","agency":"n. 代理机构, 经销商, 中介；[化] 办事处","ago":"adv. 以前","alive":"a. 活着的, 活泼的, 敏感的, 热闹的","allows":"n. 允许","alongside":"adv. 在旁边, 靠拢着；prep. 在...旁边, 与...在一起","amaze":"vt. 使吃惊","amazed":"a. 吃惊的, 惊奇的","american":"n. 美国人；a. 美国的, 美洲的","americans":"n. 美国人（American的复数形式）","ancient":"a. 古代的, 古老的, 年老的, 旧的","another":"a. 另外的, 再一的, 不同的；pron. 又一个, 另一个, 类似的另一个","anyone":"pron. 任何人","appeal":"n. 恳求, 诉请, 上诉, 吸引力；vi. 呼吁, 诉请, 要求, 上诉, 有吸引力","appears":"v. 出现；呈现；看上去好像（appear的三单形式）","appreciate":"vt. 赏识, 鉴别, 为...而感激, 领会, 欣赏；vi. 增值, 涨价","appreciation":"n. 感激, 赏识, 鉴别；[经] 涨价, 增值","approach":"n. 接近, 入门；vt. 接近, 近似, 找...商量","architecture":"n. 建筑学, 建筑式样；[计] 体系结构","area":"n. 区域, 面积, 范围, 空地；[计] 区域","arms":"n. 武器, 军事行动；[机] 武器, 军械, 枪械","around":"prep. 包围, 在...周围, 四处；adv. 兜着圈子, 在附近, 到处","arranges":"v. 安排, 准备( arrange的第三人称单数 ); 把…（系统地）分类; 整理; 改编（剧本等）","art":"n. 艺术, 人文科学, 技术, 巧妙, 诡计, 美术；[计] 实际保持时间, 特许权和资源表, 平均检索时间, 平均运行时间","artful":"a. 巧妙的, 狡猾的","artificial":"a. 人造的, 假的, 非原地产的；[医] 人工的, 人造的, 伟牟","arts":"n. 文科","artworks":"n. （书, 杂志等的）插图( artwork的复数形式 ); 艺术作品, 美术作品","attention":"n. 注意, 注意力；[计] 引起注意信号","attracted":"吸引；的兴趣","attracting":"n. 吸引","attractions":"n. 吸引( attraction的复数形式 ); 具有吸引力的事物; 有吸引力的特征（或品质、人）; （尤指两性间的）爱慕","attracts":"v. 吸引( attract的第三人称单数 ); 使喜爱; 引起…的好感（或爱慕）; 具有吸引力","audience":"n. 听众, 观众, 读者；[法] 听讼, 观众, 听众","audiences":"n. 观众, 听众, 读者( audience的复数形式 )","australian":"n. 澳大利亚人；a. 澳大利亚的, 澳洲的, 澳洲人的","background":"n. 背景, 背景资料；[计] 背景, 后台","balance":"n. 平衡, 差额；vi. 平衡, 相等","banks":"n. 银行；斜床；岸, 堤（bank的复数形式）","battle":"n. 战役；v. 战斗","beautiful":"a. 美丽的","beautifully":"adv. 美好地, 漂亮地","beauty":"n. 美, 美人","became":"become的过去式","become":"vi. 变成, 变得；vt. 适合","began":"begin的过去式","beginning":"n. 开始","beijing":"[经] 北京","belief":"n. 信念, 相信, 信仰","believing":"a. 信任他人的, 有信仰的","belonged":"v. 属于( belong的过去式和过去分词 ); 是…的成员; 应被放在; 适应","beloved":"a. 心爱的；n. 心爱的人","ben":"n. 内室；[医] 贝昂(俗名,一般指辣木Moringa oleifera,有时也指一些不同属的植物)","beyond":"prep. 超过, 在那一边, 迟于；adv. 在远处","big":"a. 大的, 重要的；adv. 大量地","biggest":"a. 最大的（big的最高级）","biological":"a. 生物学的；[医] 生物学的","birthplace":"n. 诞生地","boat":"n. 船；vi. 乘船","body":"n. 身体, 人, 尸体, 主要部分, 团体；vt. 赋以形体","bond":"n. 捆绑物, 结合, 债券, 契约, 粘合剂, 保证人, 键, 关栈保留；vt. 存入关栈, 使黏合","book":"n. 书, 书籍, 帐簿, 名册, 工作簿；v. 登记, 预订","bookings":"[经] 未交定货","borders":"n. 边界；边缘地区（border的复数）","breath":"n. 呼吸, 气息, 瞬间；[医] 呼气, 呵气, 口气, 呼吸","breathtaking":"a. 惊人的, 惊险的","bridge":"n. 桥, 舰桥, 桥梁, 桥牌；vt. 架桥于, 跨越","brings":"v. 带来；使发生（bring的三单形式）","british":"a. 英国的；n. 英国人, 英国英语","brought":"bring的过去式和过去分词","buildings":"n. 建筑物（building的复数）","cairo":"n. 开罗","calling":"n. 职业, 行业, 呼唤, 召集；[计] 呼叫","calm":"n. 平稳, 风平浪静；a. 平静的, 冷静的","came":"come的过去式","camera":"n. 照相机, 摄影机, 密谈室, 暗箱；[计] 摄影","cameras":"照相机, 暗箱, 摄像机, 摄影机","canadian":"a. 加拿大的","captures":"v. 俘获( capture的第三人称单数 ); 夺取; 夺得; 引起（注意、想像、兴趣）","capturing":"v. 捕捉（capture的ing形式）","care":"n. 小心, 照料, 忧虑；vi. 关心, 介意","carefully":"adv. 小心地, 谨慎地","carried":"a. 入神的；被运的；忘我的","caught":"catch的过去式和过去分词","cause":"n. 原因, 目标；vt. 引起, 使产生, 使遭受","ceased":"v. 中止；中断；停止（cease的过去式及过去分词形式）","celebrated":"a. 驰名的, 有名的","celebration":"n. 庆祝, 庆典","center":"n. 中心, 中心点, 中锋；a. 中央的, 位在正中的","centuries":"n. 100年, 一世纪( century的名词复数 ); 100分; 千秋","century":"n. 世纪, 百年","changes":"n. 变化, 改变（change的复数）","chapters":"n. 章；回；章节（chapter的复数形式）","check-ups":"n. 体检（check-up的复数形式）","chemicals":"n. 化学品, 化学制品；化学药品；化工产品（chemical的复数）","chen":"n. 陈","china":"n. 中国, 瓷器；a. 中国的","chinese":"n. 中文, 中国话, 中国人；a. 中国的, 中国话的","chongqing":"重庆(中国最大的直辖市)","cinema":"n. 电影院, 电影","cinemas":"n. 电影院（cinema的复数）","cinematic":"a. 电影的, 影片的","citizens":"n. 市民；公民（citizen的复数）","city":"n. 城市, 市；[法] 都市, 城市, 市","classic":"n. 古典作品, 杰作, 大艺术家；a. 第一流的, 最优秀的, 古典的","clay":"n. 泥土, 肉体, 黏土；[化] 粘土","clear":"a. 清楚的, 明确的, 澄清的；adv. 清晰地","clearly":"adv. 清楚地","clinic":"n. 诊所, 临床教学；[医] 诊所(门诊部); 临床(讲解); 临床(学)科","cloud":"n. 云, 阴暗, 烟雾, 疑团；vt. 以云遮敝, 笼罩, 使黯然","coach":"n. 四轮大马车, 教练；vt. 训练, 指导","coaches":"n. 长途客运汽车( coach的复数形式 ); （铁路）旅客车厢; 教练; 指导；v. 训练, 辅导( coach的第三人称单数 )","collection":"n. 收集, 采集, (一批)收藏品, 募捐；[医] 收集; 收集品, 标本","collections":"n. 集合物件；收集（collection的复数）","college":"n. 学院, 大学, 学会","colorful":"a. 华美的, 富有色彩的, 有趣的","comfort":"n. 舒适, 安慰, 安慰者；vt. 安慰","comfortable":"a. 舒服的, 轻松的；n. 盖被","communities":"n. 社区；团体, 群体（community的复数形式）","complete":"a. 完全的, 十足的, 完成的；vt. 完成, 完工, 使圆满","completed":"a. 完整的；完全的","completely":"adv. 完全地, 十分地, 圆满地","concerns":"n. 关注；关注点；关注者（concern的复数形式）","concluded":"v. 结束( conclude的过去式和过去分词 ); 得出结论; 断定; 推断出","confirm":"vt. 证实, 确定, 批准, 使巩固；[计] 确认","connect":"v. 连接, 联合, 联系","connection":"n. 连接, 关系, 前后关系；[计] 连接","connects":"v. 连接( connect的第三人称单数 ); 把…看作有关联; 由…联想到; 给…接通电话","constant":"n. 常数, 恒量；a. 不变的, 一定的, 时常的","content":"n. 内容, 满足, 意义, 要旨；a. 满足的, 满意的","continues":"v. 继续；扩展；连续（continue的三单形式）","contrasts":"n. 对比( contrast的名词复数 ); 差异; [摄影术]反差; [物理学]对比度；v. （靠近或作比较时）显出明显的差异, 形成对比( contrast的第三人称单数 ); 对比, 对照","control":"n. 控制, 管理, 克制, 控制器, 操纵装置；vt. 控制, 操纵, 抑制","conveyed":"v. 运输( convey的过去式和过去分词 ); 运送; 输送; 表达","cool":"n. 凉爽, 凉爽的空气；a. 凉爽的, 冷淡的, 冷静的","cooperation":"n. 合作, 协力, 配合；[化] 合作","core":"n. 核心, 果心, 要点；vt. 挖...的核","couldn't":"(=could not)不能","countless":"a. 数不尽的, 无数的","court":"n. 法院, 庭院, 奉承；vt. 献殷勤, 追求, 招致","create":"vt. 创造, 建造, 引起, 任命","created":"a. 创造的；[电] 创造的, 建立的","creation":"n. 创造, 创作物, 发明；[化] 产生","creatively":"adv. 创造性地；有创造力地","critical":"a. 批评的, 决定性的, 危险的, 临界的；[医] 危象的; 临界的, 极期的","cultural":"a. 文化的, 教养的, 修养的；[医] 培养的","culture":"n. 文化, 修养, 耕种；vt. 耕种, 培养","cultures":"n. 文明, 文化（culture复数）","cupping":"n. 杯吸法, 拔火罐；[化] 采脂","curiosity":"n. 好奇心, 新奇的事物, 珍品","cutting-edge":"a. 前沿的, 最前沿的","cyberpunk":"n. 计算机科幻小说； 网络黑客","daily":"a. 每日的, 日常的；adv. 每日地, 日常地","dance":"n. 跳舞, 舞蹈, 舞会；v. 跳舞","dancers":"n. 跳舞者, 舞蹈演员( dancer的复数形式 )","data":"pl. 资料, 数据；[计] 数据; DOS内部命令:用于显示或设定系统的日期","davy":"n. 宣誓书","day":"n. 天, 日子, 白天, 工作日；[医] 日(一昼夜), 昼, 白天","decades":"n. 十年, 十年间( decade的复数形式 )","decayed":"a. 腐烂的；腐败的；衰退的","december":"n. 十二月","decline":"n. 衰退, 跌落, 下降；vt. 使降低, 婉谢","deep":"a. 深的；adv. 深入地","deepened":"v. 变深, 加深( deepen的过去式和过去分词 ); 加浓","deeply":"adv. 深刻地, 在深处, 深沉地","deer":"n. 鹿","delivering":"v. 递送, 交付( deliver的现在分词 ); 发表; 交出; 发动","denmark":"n. 丹麦","describes":"v. 描述, 记述；形容, 作图（describe的复数形式）","design":"n. 设计, 图样, 方案, 企图；v. 设计, 计划","designed":"a. 故意的, 有计划的, 特意的","despite":"n. 轻视, 憎恨；prep. 虽然, 尽管","destination":"n. 目的地, 目标, 目的；[计] 目的文件, 目的单元","developing":"a. 发展中的；[计] 显影","development":"n. 发展；[化] 展开","different":"a. 不同的；[机] 差动, 微分的, 差速器","digital":"a. 数字显示的, 数字的；n. 数字仪表, 数字式电子表(或时钟)","digitization":"n. 数字化, 数位化, 数码化","direct":"a. 直接的, 坦白的；vt. 指示, 指挥, 命令, 导演","directly":"adv. 径直地, 直接地, 直率地, 正好地, 直截了当地, (非正式)立即, 马上；conj. 一...(就...), 一当...就...","disciples":"n. 信徒( disciple的复数形式 ); 门徒; 耶稣的信徒; （尤指）耶稣十二门徒之一","discipline":"n. 训练, 纪律；vt. 训练, 惩罚","display":"n. 显示, 陈列, 炫耀, 显示器；vt. 陈列, 显示, 表现, 夸示","displaying":"v. 展出；使展现；显示（display的现在分词形式）","distant":"a. 远的, 疏远的；[经] 远期的","distinct":"a. 清楚的, 显著的, 不同的","district":"n. 区域, 地方；[医] 地区, 地段","diversity":"n. 差异, 多样性；[化] 多样性","domestic":"a. 家庭的, 国内的, 驯养的；[医] 家庭的, 家用的","drama":"n. 戏剧, 戏剧艺术","drum":"n. 鼓, 鼓声；vi. 击鼓, 作鼓声","drumbeats":"n. 鼓声, 打鼓( drumbeat的复数形式 ); 鼓点子","drums":"n. 鼓；鼓声（drum的复数）","due":"n. 应得的东西, 应付款；a. 到期的, 应得的, 应付的, 约定的","dynamic":"a. 动态的, 有活力的, 有力的, 动力的, 不断变化的；n. 动力, 动态","dynasty":"n. 朝代, 王朝","earliest":"a. 早的；初期的","earned":"a. 挣得的","echoing":"n. 回音；反照现象；呼应","educating":"v. 教育( educate的现在分词 ); 训练, 培养; 教导, 教养","effort":"n. 努力, 成就","efforts":"n. 努力；转向力（effort的复数）","egypt":"n. 埃及","egyptian":"n. 埃及人；a. 埃及的, 埃及人的","eight":"num. 八, 八个","emerging":"[法] 出现的, 发生的, 形成的","emotion":"n. 情绪, 激动, 强烈的情感；[医] 情绪, 情感","emperor":"n. 皇帝, 君主","employed":"vt. 雇佣（employ的过去分词）","employs":"v. 雇用( employ的第三人称单数 ); 使用, 利用","enables":"v. 使能够, 提供做…的权利[措施]( enable的第三人称单数 ); 使可能","encourage":"vt. 鼓励, 支持, 激励；[法] 怂恿, 煽动, 助长","end":"n. 结束, 终点, 目标, 末端, 梢, 死亡, 残余；v. 结束, 终结, 终止","enemies":"n. 仇敌( enemy的名词复数 ); 敌军; 危害物; 大敌","engage":"vi. 答应, 从事, 交战；vt. 使忙碌, 雇佣, 预定, 使从事于, 使参加","english":"n. 英语；a. 英文的, 英国人的","enhanced":"a. 增大的；加强的","enjoying":"v. 享有( enjoy的现在分词 ); 玩得快乐; 喜欢; enjoy yourself （祝愿时说）玩痛快些","enriched":"a. 浓缩的；强化的","enthusiastic":"a. 狂热的, 热心的, 热烈的","erhu":"n. 二胡（一种中国乐器）","especially":"adv. 尤其, 特别, 格外","establish":"vt. 建立, 确立, 制定；vi. 移植生长","event":"n. 事件, 结果, 事情的进程, 竞赛项目；[计] 事件","eventually":"adv. 最后, 终于","everyday":"a. 每天的, 日常的, 平常的","evolved":"n. 进化了的","examine":"v. 检查, 调查, 考试","example":"n. 例子, 样本, 实例；[化] 实例","exceptional":"a. 例外的, 异常的, 特别的","exhibition":"n. 表现, 展览会, 展览品；[医] 投药, 展览, 展出","exhibitions":"n. 与展览, 展示会；展示会（exhibition复数）","expectations":"n. 希望( expectation的复数形式 ); 预料; （被）预期; [常作复数] 期望的事情","experience":"n. 经历, 经验, 体验；vt. 经历, 经验, 体验","experienced":"a. 富有经验的, 老练的, 熟练的","experiences":"n. 经历( experience的名词复数 ); 经验; 亲身经历; 传统","experiencing":"n. 体验","expert":"n. 专家, 行家；a. 老练的, 内行的, 专门的","explained":"v. 解释（explain的过去式及过去分词）","explains":"v. 解释；说明（explain的三单形式）","explore":"v. 探险, 探测, 探究","extensive":"a. 广的, 广泛的, 多方面的；[经] 广大的, 扩大的","fails":"v. 在…中失败( fail的第三人称单数 ); 衰退; 衰弱; 破产","family":"n. 家庭, 家人, 族；a. 家庭的","far":"a. 远的, 久远的, 遥远的；adv. 甚远地, 很, 到很深的程度, 到很远的距离","february":"n. 二月","feel":"vt. 感觉, 觉得, 触摸, 以为；vi. 有知觉, 摸索, 同情","feels":"v. 觉得；体会；触摸（feel的第三人称单数）","fellow":"n. 男人, 朋友, 同事；a. 同伴的, 同事的, 同道的","felt":"n. 毛毯, 毡；vt. 制毡, 使粘结","field":"n. 领域, 田地, 场地, 战场, 场, 域；vt. 使...晒在场上, 使上场","fields":"n. 域, 字段；场设置（field复数形式）","figure":"n. 数字, 价格, 图形, 形状；vt. 描绘, 表示, 演算, 认为","figures":"n. 图形, 图表；价格, 金额, 数字；规定动作；人物（figure的复数）","filled":"a. 加满的；装满的；满的","film":"n. 软片, 薄膜, 胶卷, 电影；vt. 覆以薄膜, 拍摄","finest":"n. [总称]警察","firmly":"adv. 坚固, 坚定, 断然","flights":"n. （物体的）飞行( flight的名词复数 ); 航班; 飞翔; 楼梯的一段","floated":"a. 浮动的","floor":"n. 地板, 楼层, 底部, 底价；vt. 铺地板, 打倒","flow":"n. 流程, 流动, 流量, 洋溢, 泛滥, 涨潮；vi. 流动, 流泄, 畅流, 川流不息, 飘扬, 涌出","flowers":"[医] 花; 升华制成的药物; 月经","flowing":"a. 流动的, 如流的, 平滑的","focus":"n. 焦点, 焦距；vi. 聚焦, 注视","focuses":"pl. 焦点, 焦距, 对焦点, 聚焦, 活动中心, 集中点, 兴趣中心, 病灶, 震源, 疫源地","football":"n. 足球, 橄榄球","forced":"a. 被迫的, 强迫的, 用力的；[法] 强制的, 法定的, 强迫的","forceful":"a. 有力的, 强烈的, 有说服力的","foreigners":"n. 外国人( foreigner的复数形式 ); 外来人, 外地人; 老外; 蕃","form":"n. 形状, 形体, 类型, 方式, 表格, 形式；v. 形成, 排列, (使)组成","formed":"a. 成形的, 成形","found":"vt. 建立, 创立, 铸造；find的过去式和过去分词","friends":"n. 老友记（剧集）","front":"n. 前面, 开头, 前线, 阵线, 态度；vt. 面对, 朝向, 对抗","fruit":"n. 水果, 果类, 结果；[医] 果实, 种实","full":"n. 全部, 完整；a. 充满的, 完全的, 丰富的, 完美的, 丰满的, 详尽的","fully":"adv. 十分地, 完全地, 充分地","fusion":"n. 熔合物, 结合, 熔合；[化] 熔融; 熔化; 聚变","future":"n. 未来, 将来；a. 将来的, 未来的","generations":"n. 世代（generation的复数）","gentle":"a. 温和的, 文雅的","geographic":"a. 地理(学)的, 地区(性)的","global":"a. 通用的, 全球的, 球形的, 综合的, 普遍的；[计] 共用","going":"n. 去, 离去, 工作情况, 地面状况, 行为；a. 进行中的, 流行的, 成功的, 现存的","golden":"a. 金的, 含金的, 金色的, 贵重的, 繁盛的；[法] 金制的, 金色的, 兴隆的","graceful":"a. 优美的","gradually":"adv. 逐渐地","great":"a. 大的, 非常的, 主要的, 重大的, 崇高的, 伟大的；adv. 顺利地, 得意地","ground":"n. 土地, 战场, 场地, 地面, 范围；a. 土地的, 地面上的","growing":"a. 成长的","growth":"n. 生长, 栽培, 增长；[计] 等比级数","guangzhou":"n. 广州（广东省省会）","guizhou":"贵州(位于中国西南部)","habit":"n. 习惯, 嗜好, 习性；vt. 使穿衣","half":"n. 一半, 半场, 不完全；a. 一半的, 不完全的, 部分的, 半场的","hall":"n. 门厅, 走廊, 会堂","hammond":"n. 哈蒙德（美国城市）","harmful":"a. 有害的, 伤害的","harmony":"n. 协调, 和睦, 调和；[电] 和声学","he'd":"他将, 他会, 他已经, 他有","health":"n. 健康, 卫生, 蓬勃, 健康状态；[医] 健康","hear":"vt. 听到, 倾听, 听说, 审理；vi. 听见, 听","hearts":"n. 心；中心；内心；同情心；心形物（heart的复数）","help":"n. 帮忙, 帮助者, 补救办法, 有益的东西；vt. 帮助, 帮忙, 接济, 治疗, 款待","helped":"v. 帮助（help的过去分词）","helps":"abbr. 高端激光打印解决方案（High-End Laser Printing Solutions）","heritage":"n. 遗产, 祖先遗留物, 继承物；[医] 遗传性","hide":"n. 兽皮, 迹象, 躲藏处；vt. 藏, 隐瞒, 遮避, 剥...的皮, 隐藏","highlighting":"[计] 突出性, 醒目性, 高明亮部分, 图象最亮处","hills":"n. 丘陵（hill的复数形式）","him":"pron. 他","himself":"pron. 他自己, 他亲自","historic":"a. 历史上著名的, 有历史性的","historical":"a. 历史的, 史实的, 历史上的；[法] 历史性的","history":"n. 历史, 过去, 经历, 发展过程, 历史学, 过去的事, 历史记录；[计] 历史记录","hobby":"n. 嗜好, 癖好, 爱好","hold":"n. 把握, 把持力, 柄, 控制, 掌握, 监禁；vt. 保存, 握住, 拿住, 占据, 持有, 拥有","hollow":"n. 洞, 窟窿, 山谷；a. 空的, 虚伪的, 空腹的, 凹的","home":"n. 家, 避难所, 故乡；a. 家庭的, 国内的, 打中目标的","honors":"n. 优等成绩, (英)优等成绩奖金, 给予优等生的荣誉, 荣誉标志","hopes":"v. 希望（hope的第三人称单数）","hosts":"n. [计算机]主机( host的名词复数 ); 军队; （寄生动植物的）寄主; 主办人[地方, 机构等]","house":"n. 房子, 住宅, 机构, 议院, 家族, 家庭；vt. 给...房子住, 收藏","however":"adv. 然而, 无论如何, 究竟怎样；conj. 然而, 可是","human":"n. 人, 人类；a. 人类的, 似人类的, 人性的, 有同情心的","humanity":"n. 人性, 人类, 博爱","hundreds":"n. 数百","hunt":"n. 狩猎, 追捕, 搜寻, 猎区；vt. 狩猎, 打猎, 搜索","illness":"n. 疾病, 恶意；[医] 病","impression":"n. 印象, 意念, 盖印, 印记, 印数, 底色, 效果；[医] 压迹, 印模, 印象, 影响","inbound":"a. 归本国的, 入境的；[计] 不装订","included":"a. 包括在内；[计] 包含的","increase":"n. 增加, 增进, 利益；vt. 增加, 加大","increased":"a. 增强的（increase的过去分词）","increasingly":"adv. 逐渐地, 渐增地","industry":"n. 勤劳, 工业, 企业, 产业, 有组织的劳动；[经] 工业, 实业","influence":"n. 影响力, 权力, 势力；vt. 影响, 改变","informs":"abbr. 运筹学和管理学研究协会（Institute for Operations Research and the Management Sciences）","initial":"n. 字首, 首字母；a. 开始的, 最初的, 字首的","initiatives":"n. 主动性( initiative的复数形式 ); 主动的行动; 初步; 主动权","innovative":"a. 革新的, 创新的, 富有革新精神的","insects":"n. 昆虫；昆虫类, 昆虫纲（insect的复数形式）","inside":"n. 内部, 内脏, 内幕；a. 内部的, 秘密的, 户内的","insights":"n. 洞察力；眼力；深刻见解（insight的复数）","inspired":"a. 得到灵感的, 有灵感的, 官方授意的","inspiring":"a. 鼓舞人心的","instant":"n. 立即, 瞬间；a. 紧急的, 立即的, 即时的","integrate":"vt. 综合, 使完整, 使成整体；vi. 成一体","intelligence":"n. 智力, 情报, 信息；[医] 智力","intense":"a. 非常的, 强烈的, 紧张的, 热情的；[医] 强的","interactive":"a. 相互作用的, 相互影响的；[计] 交互, 人机对话的","interest":"n. 兴趣, 嗜好, 利息, 利益, 爱好, 趣味, 势力；vt. 使感兴趣, 与...有关系","invited":"v. 邀请；引起, 招致（invite的过去分词）","invites":"v. 邀请( invite的第三人称单数 ); 请求; 引诱; 招致","it's":"it is的缩写, it has的缩写","items":"n. 项目；名目；所有物品（item的复数形式）","itself":"pron. 它本身, 它自己","joshua":"n. 约书亚(<<圣经>>人物), <<约书亚记>>","journey":"n. 旅程, 旅行, 行程；vi. 旅行","joy":"n. 欢喜, 乐事, 高兴；vt. 使快乐, 令人高兴","june":"n. 六月","kapok":"n. 木棉","keke":"n. (Keke)人名；(匈)凯克","kicked":"v. 踢( kick的过去式和过去分词 ); 踢蹬, 踢（腿）; （因干了蠢事、失去良机等）对（自己）生气; 体育运动","kind":"n. 种类, 性质, 方式；a. 亲切的, 仁慈的, 和蔼的","king":"n. 国王, 君主；vt. 使...成为君主","knee":"n. 膝, 膝盖；vt. 膝行, 用膝盖碰","known":"a. 已知的, 有名的；know的过去分词","knows":"v. 知道（know的第三人称单数形式）","lab":"n. 实验室, 研究室；[医] 凝乳酶","labour":"n. 劳动, 努力, 工作, 劳工, 分娩；vi. 劳动, 努力, 苦干","labourers":"n. （尤指户外的）体力劳动者, 劳工, 工人( labourer的复数形式 )","landscape":"n. 风景, 山水, 风景画；vi. 从事景观美化","landscapes":"n. 风景( landscape的名词复数 ); 风景画; 乡村风景画; 地形","large":"a. 大的, 大量的, 宽大的, 广博的；adv. 大大地, 夸大地","last":"a. 最后的, 末尾的, 最近的；vi. 持续, 支持, 维持","lasting":"a. 永久的, 永恒的, 持久的；n. 厚实斜纹织物","late":"a. 迟的, 晚的, 已故的；adv. 很晚, 很迟, 晚","later":"adv. 以后, 随后","latest":"a. 最近的","layered":"a. 层状的；分层的","learn":"vt. 学习；认识到；得知","learned":"a. 有学问的, 学术上的；learn的过去式和过去分词","leave":"n. 许可, 告别, 请假, 休假；vt. 离开, 剩下, 遗忘, 委托, 丢弃","led":"lead的过去式和过去分词；[计] 发光二极管","left":"a. 左边的, 左倾的, 左侧的, 左派的；adv. 在左面","legacy":"n. 祖先传下来之物, 遗赠物；[经] 遗产, 遗赠物","liberated":"a. 解放的, 自由的","life":"n. 生活, 生命, 人生, 世事, 生物, 寿命, 一生, 生命力, 灵魂, 无期徒刑；[医] 生活, 生存, 生命, 寿命","life-sized":"a. 与原物一样大小的","lifted":"a. 提升的","light":"n. 光, 光亮, 灯, 日光, 发光体, 光源, 杰出人物, 火花, 眼光；a. 轻的, 少量的, 轻微的, 轻快的, 轻浮的, 明亮的, 淡色的, 容易的","like":"a. 相似的, 同样的；vt. 喜欢, 愿意, 想","limited":"a. 有限制的, 有限的, 有限责任的；n. 特别快车","line":"n. 列, 线, 绳, 电线, 线路, 路线, 航线, 作业线, 界线, 战线, 外形, 排, 家系；vt. 排成一行, 顺...排列, 划线于, 加衬里, 使有线条, 使起皱纹","lines":"n. 台词","live":"a. 活的, 生动的, 精力充沛的, 实况转播的；vi. 活, 生存, 居住","living":"n. 生活, 生计, 生存；a. 活的, 逼真的, 现存的","local":"a. 地方性的, 当地的, 局部的, 乡土的, 本地的；n. 当地居民, 本地新闻, 局部","locals":"n. 当地人；区域变量","located":"a. 处于, 位于；坐落的","london":"n. 伦敦","long":"a. 长的, 长久的, 冗长的, 做多头的；vi. 渴望, 热望, 极想","long-term":"a. 长期的；[经] 长期, (通常指一年以上)","longing":"n. 渴望, 热望, 憧憬；a. 渴望的, 热望的","love":"n. 爱, 恋爱, 爱情, 爱好, 性爱；vt. 爱, 爱好, 爱慕","maintains":"v. 保持( maintain的第三人称单数 ); 保养; 坚持; 保卫","major":"n. 主修课, 成年人, 陆军少校；a. 主要的, 较多的, 大部分的, 成年的, 严重的","makes":"v. 做, 制作（make的第三人称单数）","managing":"a. 管理的, 节约的；[法] 管理的, 主管的, 善于经营的","map":"n. 地图, 天体图, 映像；vt. 映射, 绘制...地图, 计划","master":"n. 主人, 硕士, 大师, 母机；a. 主人的, 主要的","meant":"mean的过去式和过去分词","media":"n. 媒体；[计] 媒质","medical":"n. 医生, 体格检查；a. 医学的, 内科的, 药的","medicine":"n. 药, 医学, 内科；vt. 给...用药","meeting":"n. 会议, 会面；[法] 会议, 会谈, 集会","member":"n. 成员, 会员；[医] │肢, 肢体","memorial":"n. 纪念物, 请愿书；a. 记念的, 记忆的","message":"n. 消息, 通讯, 讯息, 教训, 预言, 广告词；vt. 通知","meters":"n. 米；公尺（meter的复数形式）","methods":"n. 方法, 方式；研究方法（method的复数）","million":"n. 百万, 无数；num. 百万","millions":"n. 数百万","ming":"n. 明朝","miracle":"n. 奇迹, 奇事","mirroring":"[计] 反射","mix":"n. 混合物, 混乱, 糊涂；vt. 使混合, 弄混, 使结合, 混淆","model":"n. 模型, 模范, 模特儿；a. 模范的, 作模型用的","modeling":"n. 模特儿职业, 立体感；[计] 建模, 模型化, 模拟","modern":"n. 现代人, 有思想的人；a. 现代的, 时髦的","moment":"n. 片刻, 瞬间, 重要, 阶段, 力矩；[医] 片刻, 瞬间, 时机, 因素, 矩","monkeys":"n. 猴子（monkey的复数）","month":"n. 月；[经] 月","monthly":"n. 月刊；a. 每月的, 每月一次的","motion":"n. 移动, 手势, 动作, 意向, 请求, 提议；v. 打手势","motionless":"a. 不动的, 静止的；[机] 不动的, 静止的","mountain":"n. 山, 山脉, 大堆","move":"n. 移动, 迁居, 步骤；vt. 移动, 开动, 感动, 搬(家)","moved":"v. 移动, 移动到；感动（move的过去式, 过去分词）","movement":"n. 运动, 动作, 运转, 移动, 倾向, 变化, 活动, 乐章；[医] 运动","movements":"n. 运动, 运转；运动健身；动作（movement的复数形式）","movie":"n. 电影","moving":"a. 动人的, 令人感动的, 鼓动的, 原动的, [无比较级]活动的, 转动的","multilayered":"a. 多层的","multimedia":"n. 多媒体；[计] 多媒体","museum":"n. 博物馆","museums":"n. 博物馆（museum的复数形式）","music":"n. 音乐, 乐曲","musicians":"n. 音乐家( musician的复数形式 )","must-read":"必读的；不可不看的","mysteries":"n. 神秘的事物；难以理解的事；古代的秘密宗教仪式（mystery的复数）","nails":"n. 钉子（nail的复数）","nanjing":"n. 南京（等于Nanking, Nanching）","nature":"n. 自然, 大自然, 本性, 性格, 性质；[医] 自然, 大自然; 本性, 性能","nearly":"adv. 几乎, 密切地","needles":"n. 针数, 千针本；折页顶针（needle复数形式）","notable":"n. 著名人士, 值得注意之事物；a. 值得注意的, 显著的","notes":"n. 票据；注释, 说明（note复数）","objects":"n. 目标；物体（object的复数）","offer":"n. 给予(物), 出价, 提议, 意图, 报价；vt. 提供, 出价, 奉献, 试图, 使出现, 演出","offers":"n. 提议；出价；求婚；试图（offer的复数）","official":"n. 官员, 公务员, 职员；a. 公务的, 官方的, 正式的","old":"n. 以前, 往昔；a. 老的, 旧的, 古老的, 年长的, 老练的","online":"[计] 联机","onto":"prep. 在...之上","opened":"v. 打开, 开启（open过去分词形式）","opening":"n. 开始, 口子, 穴, 揭幕；a. 开始的","opera":"n. 歌剧","option":"n. 选择权, 挑选, 选项；[计] 选项","orders":"n. 牧师职, 神职","ordinary":"a. 平常的, 普通的, 平凡的；n. 平常的人(或事)","original":"a. 最初的, 原始的, 有创意的；n. 原物, 原作","originating":"[计] 起源, 始发, 发信","outbreak":"n. 爆发, 暴动；[医] 暴发","overheard":"overhear的过去式和过去分词","overseas":"a. 海外的, 国外的；adv. 在海外, 在国外","overseen":"oversee的过去分词","owner":"n. 拥有者, 物主, 所有人；[经] 所有者, 物主, 业主","page":"n. 页, 记录, 事件, 专栏, 男侍；vt. 标明...的页数, 翻...的书页, 分页排版, 呼叫, 侍候","pages":"n. 页数；青年侍从（page的复数）","pain":"n. 痛苦, 疼痛, 辛苦；vt. 使痛苦, 痛苦","painting":"n. 画, 绘画, 油漆；[化] 涂漆","palace":"n. 宫, 宫殿, 华丽大厦","pardoned":"v. 宽恕( pardon的过去式和过去分词 ); 原谅; 赦免; 特赦","part":"n. 部分, 局部, 零件, 要素, 等分, 职责, 角色, 部位；vt. 分开, 分离, 断绝, 区别, 分配","parts":"n. 零件, 部件","pass":"n. 经过, 要隘, 途径, 通行, 护照, 及格；vt. 经过, 越过, 通过, 批准, 度过, 传递, 忽略","passed":"a. 已被传递的；已经通过的；已经过去的","passion":"n. 激情, 酷爱, 热爱, 强烈感情, 耶稣受难(故事)","past":"n. 过去, 昔时, 往事, 早年经历, 过去时；a. 过去的, 结束的, 卸任的, 过去时的","patients":"n. 病人（patient的复数形式）","peace":"n. 和平, 和约, 治安, 和睦, 安宁, 静寂；vi. 安静下来, 不作声","peking":"n. 北京","people":"n. 人, 人民, 民族, 平民；vt. 使住满人, 居住于","perfect":"n. 完成时；a. 完美的, 完好的, 理想的, 熟练的, 精确的, 完成式的","performance":"n. 施行, 工作情况, 成绩, 行为, 表现, 演出；[电] 绩效, 性能","performances":"n. 履行( performance的复数形式 ); 性能; 表现; 演出","performers":"n. 演出者( performer的复数形式 ); 演奏者; 表演者; 履行者","personal":"a. 私人的, 涉及隐私的, 有人性的, 人称的, 亲自的, 身体的；[医] 人的; 个人的, 自身的","perth":"n. 珀斯, 佩斯（澳大利亚城市）","phd":"abbr. 哲学博士学位（Doctor of Philosophy）","phenomenon":"n. 现象, 迹象, 表现, 奇迹, 奇才；[化] 现象","philosophy":"n. 哲学, 人生观, 哲学思想, 哲理, 基本原理, 见解, 达观, 沉着","photo":"n. 相片, 照片, 逼真的描绘；v. 照相","photographer":"n. 摄影师, 摄影者","photography":"n. 摄影, 摄影术；[化] 照相术","physical":"a. 身体的, 物质的, 自然的, 物理学的, 好色的；n. 体格检查","picture":"n. 图画, 照片, 景色, 美丽如画的人(或物), 化身, 生动的描述, 想像, 形象思维；vt. 画, 拍摄, 用图说明, 描写, 想像","places":"n. 地点；位置；[数]位数（place的复数）","plant":"n. 植物, 作物, 工厂, 树枝, 生长, 设施, 成套设备；vt. 种植, 栽培, 播种, 培养, 安置, 殖民于, 使位于","platforms":"n. 台( platform的复数形式 ); 站台; （公开表达意见或在某方面发展的）机会; 纲领","players":"n. 队员, 参与者；迷你音碟机, 雷射唱盘（player的复数形式）；玩家（player的复数形式）","pleasant":"a. 愉快的, 可爱的, 活泼的, 亲切的","poems":"n. 诗歌, 诗集（poem复数形式）","poetry":"n. 诗, 韵文, 诗歌艺术","points":"n. 转轨器, 道岔；[计] 磅","possesses":"v. 有( possess的第三人称单数 ); 具有; 占据; 感觉","possibly":"adv. 可能, 也许","posters":"n. 招贴, 海报( poster的复数形式 ); 印成的大幅画","posts":"n. 标杆；岗位；帖子；邮件（post的复数）","power":"n. 力, 体力, 力量, 势力, 动力, 权力, 强国, 乘方, 强度, 幂, 功率；vt. 使...有力量, 供以动力, 激励","powerful":"a. 有力的, 有权力的, 强大的；[机] 强力的","practical":"a. 实际的, 现实的, 实用性的；[法] 事实上的, 实际上的, 接近...的","practices":"n. 练习( practice的名词复数 ); 实践; （医生或律师的）业务; 惯例","practising":"a. 在从事职业的, 在从事活动的","practitioner":"n. 从业者, 开业者；[医] 行医者, 医师","present":"n. 现在, 礼品, 瞄准；a. 现在的, 出席的","private":"a. 私人的, 秘密的, 私立的, 隐蔽的；n. 士兵, 隐士, 阴部","products":"n. 产品；商品（product的复数）","professionals":"n. 专业人员（professional的复数）","program":"n. 节目, 节目单, 程序, 纲要, 大纲, 计划；vt. 规划, 拟...计划","projectors":"n. 电影放映机, 幻灯机( projector的复数形式 )","properly":"adv. 适当地, 相当地","provinces":"n. 外省, 边远地区, 乡间","public":"n. 公众, 民众；a. 公众的, 公共的, 公立的, 公用的","pulled":"a. 牵引的；扯下来的","qin":"n. 秦（姓氏）","quarterly":"a. 季度的, 按季度的, 每季的；adv. 按季, 每三个月, 每季一次","quiet":"n. 安静, 闲适, 平静；a. 安静的, 静止的, 寂静的, 朴素的, 从容的, 暗中的","rare":"a. 稀罕的, 罕有的, 珍奇的, 稀薄的, 半熟的, 非常好的；adv. 非常","rarely":"adv. 很少地, 罕有地","rather":"adv. 宁可, 稍微, 相当","raw":"n. 擦伤处, 半成品；a. 生的, 未加工的, 生疏的, 不成熟的, 阴冷的, 刺痛的, 擦掉皮的","read":"v. 读, 阅读, 理解；a. 有学问的","real":"a. 真的, 真实的, 实际的, 实在的, 不动(产)的, 实数的；n. 实数, 现实","reality":"n. 实在, 事实, 实体, 逼真；[法] 现实, 实在存在的事物, 实在性","realize":"vt. 了解, 实现, 使显得逼真, 变卖；vi. 变卖","received":"a. 被一般承认的, 公认的","receiving":"[计] 接收","recent":"a. 最近的, 近代的, 最新的；[经] 最近的, 新进的","recognized":"a. 经过验证的；公认的","recommendations":"n. 推荐( recommendation的复数形式 ); 推荐信; 正式建议; 提议","recommending":"v. 托( recommend的现在分词 ); 推荐; 劝告; 使显得吸引人","recover":"vt. 重新获得, 恢复, 复原, 拯救；vi. 痊愈, 复原, 胜诉","recreation":"n. 娱乐, 消遣, 休息, 再创造；[医] 娱乐, 休养","reduced":"a. 减少的；简化的；缩减的","reflect":"vt. 反射, 反映, 招致, 深思；vi. 被反射, 映出, 深思, 考虑, 指责","reflection":"n. 反映, 沉思, 映像, 想法, 责难；[计] 反射","releasing":"n. 释放；松释动作；脱扣释放","relying":"v. 信任( rely的现在分词 ); 信赖; 依赖; 依靠","remained":"v. 留下( remain的过去式和过去分词 ); 保持; 留待; 仍然是","remains":"n. 剩余物, 废墟, 残余；[法] 遗体, 尸体, 遗骸","remarkable":"a. 不平常的, 值得注意的, 显著的","ren":"[计] DOS内部命令:更改文件名；[医] 肾","replaced":"v. 取代；替换；放回（replace的过去分词）","reports":"n. 报表；专题；报告（report的复数）","representing":"v. 表现( represent的现在分词 ); 代表; 体现; 作为…的代表","requesting":"n. 要求；请求","residential":"a. 住宅的, 与居住有关的；[法] 有关居住的, 房产的:居所的, 适于居住的","responded":"v. 回答, 回报, 响应( respond的过去式和过去分词 ); 有反应; 有效果; 有影响","revealed":"v. 透露（reveal的过去式）；显示","rhythm":"n. 旋律, 节奏, 韵律, 匀称, 张弛节律；[医] 节律","rich":"a. 富裕的, 富饶的, 浓厚的, 贵重的","right":"n. 权利, 右边, 正义, 右派, 公正；a. 正确的, 对的, 恰当的, 正常的, 正直的, 正面的, 右方的","riverbanks":"(riverbank 的复数) n.河堤, 河岸","robe":"n. 宽松长袍, 礼服, 披肩, 覆盖物；v. (给)穿长袍","rocketed":"a. 利用火箭运载的）；借火箭起动的（火箭助推的","root":"n. 根, 根本, 根源, 基础, 底部；vt. 使扎根, 使固定, 根除, 肃清, 搜出, 用鼻拱","roots":"n. 乡土感情, 归根之情","run":"n. 跑, 赛跑, 奔跑, 奔跑的路程, 趋向, 流出, 运转时间, 连续；vi. 跑, 奔跑, 跑步, 赛跑, 竞赛, 行驶, 运转, 进行, 蔓延","runs":"n. 顺串；泻肚子；流量（run的复数形式）","safeguarding":"n. 安全防护；安全措施","said":"a. 上述的；say的过去式和过去分词","sailed":"v. 驾驶( sail的过去式和过去分词 ); 起航; 坐船旅行; 掠","say":"vt. 说, 讲, 念, 说明, 指明；vi. 说, 讲","scale":"n. 刻度, 衡量, 比例, 比例尺, 数值范围, 等级, 规模, 天平, 秤, 鳞, 积垢；vt. 依比例决定, 攀登, 测量, 绘制, 刮鳞, 使生垢, 过秤","scans":"abbr. 网络系统自动程序控制（scheduling control automation by network system）","scene":"n. 场, 情景, 镜头, 发生地点, 道具, 布景, 景色；[化] 现场","scenes":"n. 现场, 景色；场景（scene的复数）","screenings":"n. 筛后残余的物；筛屑；残渣","see":"vt. 看见, 查看, 参观, 游览, 理解, 知道, 同意；vi. 看, 观看, 注意, 知道, 考虑","seeking":"[计] 查找, 寻找, 故障检查","seemed":"v. 装作；似乎（seem的过去式）","seen":"see的过去分词","sense":"n. 感应, 感觉, 感官, 意识, 观念, 情理, 知觉, 理智；vt. 感觉, 觉察, 检测","serves":"v. （为…）服务( serve的第三人称单数 ); 任（职）; 提供; 端上","set":"n. 日落, 同伙, 组合, 集合, 装置；vt. 放, 安置, 放置, 设定, 使凝结, 点燃, 确定, 点缀, 使就位, 树立, 分配, 调整","seven":"num. 七, 七个","sharing":"[计] 共享, 公用","shiny":"a. 有光泽的, 发光的, 辉煌的, 磨光的, 磨损的","shopping":"n. 买东西, 购物；[经] 购物, 买东西","show":"n. 显示, 表现, 展览, 卖弄, 炫耀, 外观, 演出, 洋相；vt. 表示, 显示, 展现, 陈列, 演出, 表明, 指出, 带领","showcased":"(showcase 的过去分词) n. 陈列橱；[经] 商品陈列所, 货物陈列架","showing":"n. 显示, 陈列, 展览, 成绩, 表现, 表演, 夸耀, 陈述, 叙述, 外表, 迹象","shown":"show的过去分词","significant":"a. 重要的, 有效的, 有含义的, 暗示的, 值得注意的","silent":"a. 沉默的, 安静的, 无声的, 静止的；[医] 静止的, 无症状的","silk":"n. 丝, 绸, 绸锻类, 丝织品；a. 丝的, 丝织的","six":"num. 六, 六个","skills":"n. 技术；技能；技巧（skill的复数形式）","sky":"n. 天空, 天色, 天堂；vt. 击向空中, 挂在高处","skyscrapers":"n. 摩天大楼( skyscraper的复数形式 ); 层楼高耸; 广厦高楼","slowly":"adv. 慢慢地, 迟缓地","small":"a. 小的, 少的, 小型的, 低微的, 小气的, 细微的；adv. 些微地","social":"a. 社会的, 群居的, 社交的；n. 联欢会","soft":"a. 软的, 温和的, 柔和的, 柔滑的, 温柔的, 软弱的, 坡度小的, 笨的, 纸币的；n. 柔软的东西, 笨人, 纸币","softly":"adv. 柔和地, 静静地, 温柔地","solitude":"n. 孤独, 单独, 孤寂","something":"pron. 某事, 某物","song":"n. 歌, 曲, 鸣声, 歌唱, 歌曲, 诗歌","soon":"adv. 不久, 早, 快, 宁可","sorrow":"n. 悲伤, 哀惜, 不幸；vi. 悲伤, 懊悔, 遗憾","soul":"n. 灵魂, 心灵, 精神, 精髓, 人, 化身, 典型, 鬼魂；a. 黑人的","sound":"n. 声音, 语音, 吵闹, 声调, 听力范围, 探条, 海峡；a. 健全的, 可靠的, 合理的, 健康的, 彻底的, 资金充实的","spatial":"a. 空间的, 受空间条件限制的, 占地位的；[医] 隙的, 间隙的, 腔的; 空间的, 立体的","speak":"vi. 说, 说话, 演说, 发言；vt. 说, 讲, 说出","sped":"speed的过去式和过去分词","speed":"n. 速率, 速度, 迅速；vi. 加速, 超速, 快进","spent":"a. 用尽的, 精疲力竭的；spend的过去式和过去分词","spirit":"n. 精神, 心灵, 灵魂, 态度, 志气, 人格, 情绪, 心情, 烈酒；vt. 诱拐, 鼓励, 鼓舞","spring":"n. 春天, 弹簧, 跳跃, 弹性, 活力, 泉, 源泉；a. 春天的","stage":"n. 阶段, 舞台, 场所, 戏剧, 站, 驿站, 级, 层, 脚手架；vt. 上演, 表演, 筹划","star":"n. 星, 恒星, 星形物, 运气, 明星；vt. 以星状物装饰, 用星号标, 使成为明星","started":"v. 出发, 启程( start的过去式和过去分词 ); 起动; 提出（问题）; 开办","state":"n. 州, 状态, 情形, 国家, 政府, 领土, 国务, 社会地位；a. 国家的, 正式的, 礼仪用的, 州的","stayed":"v. 停留, 制止（stay的过去分词形式）","steady":"a. 稳定的, 不动摇的, 沉着的, 稳固的, 坚定的, 经常的；vt. 使稳定, 使坚定","stepped":"v. 踏；行走（step的过去式和过去分词）","stepping":"[计] 步进式, 改变","stills":"n. 平静( still的名词复数 ); （电影片中某一镜头的）剧照; [摄影术]静止摄影; （制酒的）蒸馏器","stories":"n. 故事（story的复数）","story":"n. 故事, 小说, 传奇, 描述, 阅历, 经历, 层","storytelling":"n. 说故事, 说谎话","strength":"n. 力量, 实力, 强度, 浓度, 人数, 抵抗力；[化] 强度","strengthen":"vt. 加强, 变坚固；vi. 变强, 股票上涨","stretched":"a. 拉伸的, 伸展了的","strike":"n. 罢工, 打击, 殴打；vt. 打, 撞击, 冲击, 侵袭, 取消, 结算, 打掉, 罢工, 刺透, 使生根, 遇见","striking":"a. 醒目的, 惊人的, 打击的, 罢工的；[法] 罢工的, 罢市的, 罢课的","strong":"a. 强壮的, 坚固的, 坚强的, 强烈的, 有力的, 优良的；adv. 强劲地, 有力地, 猛烈地","studio":"n. 工作室, 画室, 演播室, 电影制片厂","study":"n. 学习, 研究, 学科, 论文, 求学, 书房, 试作；vt. 学习, 读书, 研究, 考虑, 计划","summer":"n. 夏季, 全盛时期；vi. 避暑, 过夏天","sun":"n. 太阳, 日, 日光, 阳光；vt. 晒","surgery":"n. 外科, 手术, 手术室, 换球术","surpass":"vt. 超越, 凌驾, 胜过","surreal":"a. 超现实主义的；离奇的；不真实的","surroundings":"n. 环境, 周围的事物；[化] 环境","survive":"vt. 比...活得长, 生存, 生还, 幸免于；vi. 活下来, 幸存","survived":"v. 幸存, 活下来( survive的过去式和过去分词 ); 比…活得长, 经历…之后还存在; 幸免于难; 挺过","swordplay":"n. 剑术, 击剑, 巧辩","sydney":"n. 悉尼（澳大利亚港市）","symptoms":"n. 病徵；症状；症候","tan":"n. 黄褐色, 鞣料, 马戏团；a. 黄褐色的, 鞣皮的","tang":"n. 强烈味道, 特殊的气味, 特性, 柄脚, 当的一声, 墨角藻；vt. 使发气味, 装刀柄于, 使发出当的一声","tcm":"[计] 网络编码调制","tea":"n. 茶, 茶叶；[医] 茶, 茶剂, 浸剂","teacher":"n. 教师, 老师, 导师","team":"n. 队, 组；vt. 把马(牛)套在同一辆车上, 把...编成一组","technological":"a. 技术的；[经] 工艺的, 技术的","technologies":"n. 技术；科技（technology的复数）","technology":"n. 技术, 工业技术, 术语；[医] 技术学, 工艺学","terracotta":"n. 赤土, 赤陶器, 赤陶, 赤褐色, 一种带褐色的柑子","theater":"n. 戏院, 电影院, 剧场, 全体观众, 戏剧, 戏剧效果, 阶梯式讲堂, 场所","theatre":"n. 戏院, 电影院, 剧场, 全体观众, 戏剧, 戏剧效果, 阶梯式讲堂, 场所","themselves":"pron. 他们自己, 她们自己, 它们自己","thoughtful":"a. 深思的, 体贴的","thousand":"num. 千；a. 成千的, 许多的","ties":"n. 结","time":"n. 时间, 时侯, 时机, 时期, 期限, 次数, 节拍, 暂停, 规定时间；vt. 测定...的时间, 记录...的时间, 计时, 定时","timeless":"a. 无时间限制的, 不受时间影响的, 永恒的","today":"n. 今天, 当今, 现在；adv. 今天, 当今","together":"adv. 一起, 共同, 彼此","told":"tell的过去式和过去分词","tomb":"n. 坟墓, 死亡；vt. 埋葬","too":"adv. 也, 非常, 太","tools":"n. 工具, 工具菜单；工具箱（tool的复数形式）","top":"n. 顶部, 顶端, 极点, 上面, 上部, 顶篷, 最高地位, 首位, 陀螺；a. 最高的, 顶上的, 头等的","touch":"n. 触觉, 碰, 触, 机灵, 轻触, 格调, 少许, 缺点, 弹力；vt. 接触, 触摸, 触及, 使接触, 达到, 涉及, 影响到, 使轻度受害, 感动","touching":"a. 动人的, 令人同情的","tourism":"n. 观光业, 游览；[经] 旅游业","tourists":"n. 旅行者, 观光客( tourist的名词复数 )","tours":"n. 图尔斯（姓氏）；图尔市（法国城市名）","toward":"prep. 向, 对于, 为了；a. 即将来临的, 进行中的","tradition":"n. 传说, 传统, 交付；[法] 传统, 惯例, 移交","traditional":"a. 传统的, 惯例的；[经] 传统的, 惯例的","traditions":"n. 传统( tradition的复数形式 ); 惯例","trains":"n. 火车；行列（train的复数形式）","transforms":"v. 改变( transform的第三人称单数 ); 使改变形态, 使改变外观（或性质）, 使改观","translated":"n. 译本","travel":"n. 旅行, 游历, 行进；vi. 旅行, 行进, 移动, 被传播","traveling":"a. 旅行的, 旅行用的, 移动的","treasures":"n. 金银财宝( treasure的名词复数 ); 宝藏; 珍宝; 不可多得的人才；v. 重视( treasure的第三人称单数 ); 珍惜; 珍视; 珍爱","treatment":"n. 治疗, 待遇, 处理；[医] 疗法, 治疗; 处理","tree":"n. 树, 木料, 树状物；vt. 把...赶上树","trees":"n. 树木；乔木；树状结构（tree的复数）","trend":"n. 趋势, 倾向, 走向；vi. 倾向, 转向","tries":"n. 尝试, 试验（try的复数）","turning":"n. 旋转, 转弯处, 车削工作；[化] 车削","ultimately":"adv. 最后, 最终；[法] 最后, 终究, 总之","unfolded":"a. 展开的；未折叠的；[石油]未褶皱的","unfolding":"[化] 解折叠; 开折; 伸展","unique":"a. 独一无二的, 独特的, 稀罕的","unit":"n. 单位, 分队, 部队, 单元, 部件, 装置；a. 单位的, 单元的","university":"n. 大学","unknown":"a. 不知道的, 未知的, 陌生的；n. 未知物, 未知数","untouched":"a. 未触摸过的, 未改变的, 未受影响的","up-close":"adj. 在很近距离内的","upward":"a. 向上的；adv. 以上","urban":"a. 都市的, 住在都市的, 习惯于都市的；[法] 城市的, 都市的, 市区的","use":"n. 使用, 习惯, 使用价值, 用法, 使用权；vt. 使用, 利用, 运用, 耗费","used":"a. 使用过的, 二手的, 习惯的","viewers":"n. 电视观众( viewer的复数形式 ); 观看者; 勘查孔; 看片机（把幻灯片等放大观看的装置）","virtual":"a. 实际上起作用的, 虚的, 实质的, 有效的, 事实上生效的；[计] 虚拟","visit":"n. 拜访, 访问, 游览, 视察；vt. 拜访, 访问, 参观, 视察, 降临","visiting":"n. 参观, 拜访, 访问","visitor":"n. 参观者, 游客, 访客；[法] 视察人, 检视人, 检查员","visitors":"n. 访问者, 游客（visitor 复数）","visits":"v. 参观；拜访；视察（visit的第三人称单数）","visual":"a. 视觉的；[医] 视觉的, 视力的, 视觉性记忆优势者","visually":"adv. 看, 视力, 视觉, 可见, 凭视力, 看到, 看得见, 光学, 形象化, 栩栩如生","vital":"a. 生命的, 重要的, 充满活力的, 生死攸关的, 致命的；[医] 生命的, 生活的, 生活上必需的, 紧要的","vivid":"a. 生动的, 鲜明的, 鲜艳的, 活泼的, 逼真的, 清晰的","voices":"n. 声音","wait":"n. 等待, 等候；vt. 等候, 期待, 延缓, 伺候, 推迟","waited":"v. 等候( wait的过去式和过去分词 ); 等待; （尤指长期地）希望; 盼望","walking":"n. 步行, 步态；a. 步行的, 步行用的","walks":"n. 搭板, 跳板","wang":"n. 王（姓氏）；王安电脑公司","warrior":"n. 战士, 勇士, 武士, 鼓吹战争的人, 战斗, 尚武","warriors":"n. 武士, 勇士, 战士( warrior的复数形式 )","watching":"vt. 观看, 守望；监视, 注意（watch现在分词）","water":"n. 水, 雨水, 海水, 水位, 水面, 流水；vt. 给...浇水, 供以水, 注入水, 使湿","waves":"n. 波（wave的复数形式）","way":"n. 路, 路线, 路途, 方法, 道路, 情形, 规模, 习惯, 行业, 方面；adv. 远远地, 非常","ways":"n. 方法（way的复数）；滑路","welcome":"n. 欢迎, 欢迎词；a. 受欢迎的, 可随意的, 可喜的","well":"n. 井, 泉水, 源泉, 好；v. 涌出","well-being":"a. 安宁的, 康乐的","wild":"n. 荒野, 荒地；a. 野性的, 野蛮的, 野生的, 失控的, 任性的, 杂乱的, 轻率的, 狂热的, 疯狂的","wisdom":"n. 智慧, 明智行为, 学识, 名言, 贤人","wish":"n. 希望, 愿望, 祝愿, 命令, 请求；vt. 愿, 想要, 希望, 祝愿","witness":"n. 证人, 目击者, 证据, 证词；vt. 目击, 作证, 证明, 表明","wood":"n. 木材, 木制品；vt. 植林于, 给...添加木柴","woods":"n. 森林, 树林","words":"n. 言语；话语；字（word的复数）","work":"n. 工作, 劳动, 职业, 行为, 功, 作品, 成果, 产品, 工程；vi. 工作, 劳动, 做, 运转, 起作用, 被加工","world":"n. 世界, 地球, 宇宙, 万物, 世人, 人间, 领域, 世事, 世故, 社会生活, 大量；[法] 世界, 地球, 世人","worldwide":"a. 全世界的","worried":"a. 担心的, 闷闷不乐的","worth":"n. 价值, 财产；a. 值...的, 值得的","xi'an":"西安","year":"n. 年, 年度, 年龄；[经] 年度","years":"n. 年代；岁月；年；年龄","young":"a. 年轻的, 无经验的, 朝气蓬勃的；n. 青年们, 幼小动物, 崽","yunnan":"n. 云南（中国西南部一省）","zhao":"n. 赵（姓氏）"}</script>
 <script id="data" type="application/json">{
@@ -1352,7 +1374,11 @@ function updateNoteStatus(){
   var n=(notes[curGi()]||[]).length;
   el.textContent=(noteOn?'画笔开启 · 本题 ':'本题已有 ')+n+' 笔笔记';
 }
-function syncNoteCanvas(){try{redrawNotes();updateNoteStatus()}catch(e){}}
+var noteSyncTimer=0;
+function syncNoteCanvas(){   /* 合并同一轮里的多次重绘请求，翻题时只画一次 */
+  if(noteSyncTimer)return;
+  noteSyncTimer=setTimeout(function(){noteSyncTimer=0;try{redrawNotes();updateNoteStatus()}catch(e){}},0);
+}
 function notePt(e){
   var r=$('noteCanvas').getBoundingClientRect();
   return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];
@@ -1634,6 +1660,7 @@ function jumpToGlobal(gi){
   if(i<0){mode='all';filter=0;$('setSel').value='0';syncSeg();vis=visible();i=vis.indexOf(gi)}
   if(i>=0){pos=i;render()}
 }
+var renderCache={si:-1,pKey:'',pNo:-1,jumpKey:''};
 function render(){
   vis=visible();
   if(!vis.length){$('content').hidden=true;$('empty').hidden=false;return}
@@ -1645,27 +1672,41 @@ function render(){
   $('mTopic').textContent='· '+q.topic;
   $('mQn').textContent='第 '+q.no+' 题';
   $('mPos').textContent=(pos+1)+' / '+vis.length;
-  $('passage').innerHTML=passageHTML(q.passage,q.no);
-  applyHighlights($('passage'),gi);
-  var pEl=$('passage'),curEl=pEl.querySelector('.blank.cur');
+  var pEl=$('passage'),pKey=q.si+'|'+q.no+'|'+JSON.stringify(highlights[gi]||[]);
+  if(renderCache.pKey!==pKey){
+    pEl.innerHTML=passageHTML(q.passage,q.no);
+    applyHighlights(pEl,gi);
+    renderCache.pKey=pKey;renderCache.pNo=q.no;
+  }else if(renderCache.pNo!==q.no){
+    var oldCur=pEl.querySelector('.blank.cur'),newCur=pEl.querySelector('.blank[data-no="'+q.no+'"]');
+    if(oldCur)oldCur.classList.remove('cur');
+    if(newCur)newCur.classList.add('cur');
+    renderCache.pNo=q.no;
+  }
+  var curEl=pEl.querySelector('.blank.cur');
   if(curEl&&pEl.scrollHeight>pEl.clientHeight+4){pEl.scrollTop=Math.max(0,curEl.offsetTop-pEl.clientHeight/2)}
   $('curNo').textContent=q.no;
   $('hintLabel').textContent=q.hint?'提示词：('+q.hint+')':'（无提示词，纯语境填空）';
   $('answerInput').value=r&&r.input?r.input:'';
   $('favBtn').textContent=r&&r.fav?'★ 已收藏':'☆ 收藏本题';
   // 跳转下拉
-  var opts=vis.map(function(g,i){var x=FLAT[g];return '<option value="'+i+'"'+(i===pos?' selected':'')+'>'+(i+1)+'. '+x.set+' 第'+x.no+'题'+(rec[x.key]&&rec[x.key].ok===true?' ✓':'')+'</option>'}).join('');
-  $('jumpSel').innerHTML=opts;
-  // 答案速查
-  var s=DATA.sets[q.si];
-  $('sheetBody').innerHTML=s.questions.map(function(x){
-    return '<div data-no="'+x.no+'"><span>'+x.no+'. '+(x.hint?'('+x.hint+')':'')+'</span><b>'+esc(x.answer)+'</b></div>';
-  }).join('');
+  var jumpKey=mode+'|'+filter+'|'+vis.join(',')+'|'+vis.map(function(g){var x=FLAT[g],rr=rec[x.key];return rr&&rr.ok===true?'1':(rr&&rr.ok===false?'0':'-')}).join('');
+  if(renderCache.jumpKey!==jumpKey){
+    var opts=vis.map(function(g,i){var x=FLAT[g];return '<option value="'+i+'"'+(i===pos?' selected':'')+'>'+(i+1)+'. '+x.set+' 第'+x.no+'题'+(rec[x.key]&&rec[x.key].ok===true?' ✓':'')+'</option>'}).join('');
+    $('jumpSel').innerHTML=opts;renderCache.jumpKey=jumpKey;
+  }
+  $('jumpSel').value=String(pos);
+  // 答案速查：同一套卷内容不变，翻题时不重复重建
+  if(renderCache.si!==q.si){
+    $('sheetBody').innerHTML=DATA.sets[q.si].questions.map(function(x){
+      return '<div data-no="'+x.no+'"><span>'+x.no+'. '+(x.hint?'('+x.hint+')':'')+'</span><b>'+esc(x.answer)+'</b></div>';
+    }).join('');
+    renderCache.si=q.si;
+  }
   $('prevBtn').disabled=(pos===0);
   $('nextBtn').disabled=(pos===vis.length-1);
   if(r){showResult(r.ok,r.input)}else{hideResult()}
-  window.scrollTo(0,0);
-  setTimeout(syncNoteCanvas,0);   /* 题目切换后重画该题笔记 */
+  setTimeout(syncNoteCanvas,0);   /* 题目切换后重画该题笔记（已节流合并，不再强制回顶） */
 }
 function hideResult(){$('result').hidden=true;$('result').className='result';$('result').innerHTML='';setTimeout(syncNoteCanvas,0)}
 function showResult(ok,input){
@@ -1817,7 +1858,13 @@ $('printGo').addEventListener('click',doPrint);
 $('printDlg').addEventListener('click',function(e){if(e.target===$('printDlg'))$('printDlg').hidden=true});
 /* 字号 */
 $('fontBtn').addEventListener('click',function(){var p=$('fontPanel');var show=!p.classList.contains('show');p.classList.toggle('show',show);if(show){$('fontRange').value=Math.round(fontScale*100);$('fontVal').textContent=Math.round(fontScale*100)+'%';}});
-$('fontRange').addEventListener('input',function(){var v=parseInt(this.value,10);fontScale=v/100;$('fontVal').textContent=v+'%';applyFont();try{localStorage.setItem('grammar_fill_font_v1',fontScale)}catch(e){}});
+var fontTimer=0;
+$('fontRange').addEventListener('input',function(){
+  var v=parseInt(this.value,10);fontScale=v/100;$('fontVal').textContent=v+'%';
+  if(fontTimer)clearTimeout(fontTimer);
+  fontTimer=setTimeout(function(){fontTimer=0;applyFont()},40);   /* 拖动滑块时节流，避免每格整页重排 */
+  try{localStorage.setItem('grammar_fill_font_v1',fontScale)}catch(e){}
+});
 Array.prototype.forEach.call(document.querySelectorAll('#fontPanel .presets button'),function(b){b.addEventListener('click',function(){var v=parseInt(b.dataset.f,10);fontScale=v/100;$('fontRange').value=v;$('fontVal').textContent=v+'%';applyFont();try{localStorage.setItem('grammar_fill_font_v1',fontScale)}catch(e){}});});
 document.addEventListener('click',function(e){if(!e.target.closest('#fontPanel')&&!e.target.closest('#fontBtn'))$('fontPanel').classList.remove('show');});
 /* 学生 / 教师 模式：教师需口令或老师发放的授权码 */
@@ -1946,22 +1993,83 @@ function setWordsOfCurrent(){
   });
   return out.sort();
 }
-var dictTipWord='';
-function showDictTip(w,x,y){
-  var r=dictLookup(w),el=$('dictTip');if(!r||!el)return;
-  dictTipWord=r.w;
-  el.innerHTML='<span class="dw">'+esc(r.w)+'</span>'+
-    '<span class="dt">'+esc(r.t||'词库里还没有这个词')+'</span>'+
-    (r.base?'<span class="dm">按原形 '+esc(r.base)+' 查到</span>':'')+
-    (r.custom?'<span class="dm">自定义词条</span>':'')+
-    (teacherMode?'<button id="dictTipEdit" class="nbtn">补 / 改释义</button>':'');
-  el.hidden=false;
+var PHON={};
+try{PHON=JSON.parse((($('dictPhon')||{}).textContent)||'{}')||{}}catch(e){PHON={}}
+function escRe(s){return String(s||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+/* 点哪儿取哪个词：用浏览器光标定位，不改动短文 DOM，五色笔划词不受影响 */
+function wordAtPoint(x,y){
+  var rg=null;
+  try{
+    if(document.caretRangeFromPoint)rg=document.caretRangeFromPoint(x,y);
+    else if(document.caretPositionFromPoint){
+      var p=document.caretPositionFromPoint(x,y);
+      if(p){rg=document.createRange();rg.setStart(p.offsetNode,p.offset)}
+    }
+  }catch(e){return ''}
+  if(!rg||!rg.startContainer||rg.startContainer.nodeType!==3)return '';
+  var t=rg.startContainer.nodeValue,i=rg.startOffset,s=i,e=i;
+  while(s>0&&/[A-Za-z'-]/.test(t.charAt(s-1)))s--;
+  while(e<t.length&&/[A-Za-z'-]/.test(t.charAt(e)))e++;
+  return t.slice(s,e).replace(/^[^A-Za-z]+|[^A-Za-z'-]+$/g,'');
+}
+function sentenceOf(w){
+  try{
+    var s=DATA.sets[(typeof filter!=='undefined'&&filter>0)?filter-1:FLAT[vis[pos]].si];
+    var t=s.passage.replace(/\d+\.____/g,' ').replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ');
+    var parts=t.match(/[^.!?]+[.!?]*/g)||[],re=new RegExp('\\b'+escRe(w),'i');
+    for(var i=0;i<parts.length;i++)if(re.test(parts[i]))return parts[i].trim().slice(0,200);
+  }catch(e){}
+  return '';
+}
+function speakWord(w){
+  try{
+    if(typeof SpeechSynthesisUtterance==='undefined'||!window.speechSynthesis)return;
+    var u=new SpeechSynthesisUtterance(String(w||'').replace(/[^A-Za-z' -]/g,'').slice(0,60));
+    u.lang='en-US';u.rate=.85;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+var dictTipWord='',dictTipX=100,dictTipY=100;
+function positionTip(el,x,y){
   var vw=window.innerWidth||1000,vh=window.innerHeight||700;
-  var bw=el.offsetWidth||300,bh=el.offsetHeight||100;
+  var bw=el.offsetWidth||290,bh=el.offsetHeight||180;
   el.style.left=Math.max(8,Math.min(x,vw-bw-10))+'px';
-  el.style.top=Math.max(8,Math.min(y+14,vh-bh-10))+'px';
-  var eb=$('dictTipEdit');
-  if(eb)eb.addEventListener('click',function(){openDictEdit(r.w,r.t)});
+  el.style.top=Math.max(8,Math.min(y+12,vh-bh-10))+'px';
+}
+function showDictTip(w,x,y,phrase){
+  if(!teacherMode)return;   /* 词句翻译仅教师模式可用 */
+  var el=$('dictTip');if(!el)return;
+  dictTipWord=String(w||'');dictTipX=x||100;dictTipY=y||100;
+  var title,phon='',def='',exa='',gloss='',tags=[],defNone=false;
+  if(phrase){
+    var words=(dictTipWord.match(/[A-Za-z][A-Za-z'-]*/g)||[]),seen={},n=0;
+    words.forEach(function(t){
+      var k=wordNorm(t);if(k.length<3||seen[k])return;seen[k]=1;
+      var rr=dictLookup(k);if(!rr||!rr.t)return;n++;
+      gloss+='<div><b>'+esc(k)+'</b>'+esc(rr.t.slice(0,70))+'</div>';
+    });
+    title='选中的词句';phon='共 '+words.length+' 词 · 已收录 '+n+' 条';
+    def=n?'':'（这段里暂未收录的词，可在「词库管理」里补）';defNone=!n;
+    exa=esc(dictTipWord.slice(0,180));tags=['逐词释义','教师模式'];
+  }else{
+    var r=dictLookup(dictTipWord);if(!r)return;
+    dictTipWord=r.w;
+    title=r.w;var _p=PHON[r.w]||(r.base?PHON[r.base]:'')||'';phon=_p?'/'+_p+'/':'';
+    def=r.t||'词库里还没有这个词';defNone=!r.t;
+    var sent=sentenceOf(r.w);
+    if(sent)exa=esc(sent).replace(new RegExp('('+escRe(r.w)+')','ig'),'<b>$1</b>');
+    tags=(r.custom?['教师补充']:['内嵌词库']).concat(r.base?['原形 '+r.base]:[],['教师模式']);
+  }
+  var h='<div class="dh"><b>'+esc(title)+'</b><button class="dx" data-act="close" title="关闭">×</button></div><div class="db">';
+  if(phon)h+='<span class="dp">'+esc(phon)+'</span>';
+  h+='<span class="dt'+(defNone?' none':'')+'">'+esc(def)+'</span>';
+  h+='<div class="dmeta">'+tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+'</div>';
+  if(gloss)h+='<div class="dgloss">'+gloss+'</div>';
+  if(exa)h+='<div class="dexa"><b>原文</b> '+exa+'</div>';
+  h+='</div><div class="dacts">'+
+     '<button data-act="speak">▶ 朗读</button>'+
+     '<button class="hi" data-act="list">查词</button>'+
+     '</div>';
+  el.innerHTML=h;el.hidden=false;positionTip(el,dictTipX,dictTipY);
 }
 function hideDictTip(){var el=$('dictTip');if(el)el.hidden=true}
 function openDictEdit(w,t){
@@ -1995,18 +2103,60 @@ function renderDictList(){
   $('dictList').innerHTML=h||'<div class="drow none"><span>没有匹配的词</span></div>';
   $('dictCount').textContent='共 '+ws.length+' 个词，显示 '+n+' 个 ｜ 内嵌 '+Object.keys(DICT).length+' 条 ＋ 自定义 '+Object.keys(userDict).length+' 条';
 }
-$('dictListBtn').addEventListener('click',function(){$('dictSearch').value='';renderDictList();$('dictDlg').hidden=false});
+$('dictListBtn').addEventListener('click',function(){if(!teacherMode)return;$('dictSearch').value='';renderDictList();$('dictDlg').hidden=false});
+$('dictMoreBtn').addEventListener('click',function(){
+  if(!teacherMode)return;
+  var s=$('dictAdvanced');s.hidden=!s.hidden;
+  this.textContent=s.hidden?'词库管理':'收起管理';
+});
 $('dictClose').addEventListener('click',function(){$('dictDlg').hidden=true});
 $('dictSearch').addEventListener('input',renderDictList);
 $('dictList').addEventListener('click',function(e){
-  var d=e.target.closest('.drow');if(!d)return;
-  showDictTip(d.dataset.w,Math.min(window.innerWidth-340,180),120);
+  var d=e.target.closest('.drow');if(!d||!teacherMode)return;
+  showDictTip(d.dataset.w,Math.min(window.innerWidth-340,180),120,false);
 });
 $('dictDlg').addEventListener('click',function(e){if(e.target===$('dictDlg'))$('dictDlg').hidden=true});
-$('passage').addEventListener('dblclick',function(e){
-  var sel=window.getSelection(),w=sel?sel.toString().trim():'';
-  if(!w||!/^[A-Za-z][A-Za-z'-]*$/.test(w))return;
-  showDictTip(w,e.clientX||100,e.clientY||100);
+/* 卡片内按钮统一事件委托（动态生成，不用 id） */
+$('dictTip').addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-act]');if(!b)return;
+  var act=b.dataset.act,box,inp,r;
+  if(act==='close'){hideDictTip();return}
+  if(act==='cancel'){box=this.querySelector('.dedit');if(box)box.hidden=true;return}
+  if(act==='speak'){speakWord(dictTipWord);return}
+  if(act==='list'){$('dictSearch').value=dictTipWord;renderDictList();$('dictDlg').hidden=false;hideDictTip();return}
+  if(act==='edit'){
+    box=this.querySelector('.dedit');if(!box)return;
+    box.hidden=false;inp=box.querySelector('.dinput');
+    if(inp){r=dictLookup(dictTipWord);inp.value=r?(r.t||''):'';try{inp.focus()}catch(err){}}
+    return;
+  }
+  if(act==='save'){
+    box=this.querySelector('.dedit');inp=box?box.querySelector('.dinput'):null;if(!inp)return;
+    var w=wordNorm(dictTipWord),t=inp.value.trim();if(!w)return;
+    if(t)userDict[w]=t;else delete userDict[w];
+    saveUserDict();if(!$('dictDlg').hidden)renderDictList();
+    showDictTip(w,dictTipX,dictTipY,false);return;
+  }
+});
+/* 点单词：就地查义 */
+$('passage').addEventListener('click',function(e){
+  if(!teacherMode)return;
+  if(e.target.closest('.blank')||e.target.closest('.hl'))return;
+  var sel=window.getSelection();if(sel&&!sel.isCollapsed)return;
+  var w=wordAtPoint(e.clientX,e.clientY);
+  if(w&&w.length>=2)showDictTip(w,e.clientX,e.clientY,false);
+  else hideDictTip();
+});
+/* 划选一句话：逐词释义（没选五色笔颜色时才生效） */
+$('passage').addEventListener('mouseup',function(e){
+  if(!teacherMode||penColor)return;
+  var sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  var t=sel.toString().trim();if(t.length<4||t.length>220)return;
+  try{
+    var a=sel.getRangeAt(0).commonAncestorContainer,ae=a.nodeType===1?a:a.parentElement;
+    if(!ae||!ae.closest||!ae.closest('#passage'))return;
+  }catch(err){return}
+  showDictTip(t,e.clientX,e.clientY,true);
 });
 document.addEventListener('click',function(e){
   if($('dictTip').hidden||!e.target||!e.target.closest)return;
