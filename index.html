@@ -185,6 +185,7 @@ body.teacher #noteBar{display:flex}
 .mrow label{font-size:14px;display:flex;align-items:center;gap:6px;cursor:pointer}
 .mrow input[type=text],.mrow input[type=password]{flex:1;min-width:140px;font-size:15px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;outline:none;font-family:inherit}
 .mrow input[type=text]:focus,.mrow input[type=password]:focus{border-color:var(--main)}
+.mrow select{font-size:14px;padding:9px 10px;border:2px solid var(--line);border-radius:10px;outline:none;font-family:inherit;background:#fff;color:var(--ink);max-width:100%}
 .mbtns{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
 .mnote{font-size:12px;color:var(--sub);line-height:1.7;background:#F7FAF9;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:12px}
 .merr{font-size:13px;color:var(--red);min-height:18px;margin-top:8px}
@@ -292,7 +293,7 @@ body:not(.teacher) .sheet{display:none!important}
     </div>
     <div class="merr" id="gateMsg"></div>
     <div class="mbtns"><button id="gateCancel" class="nbtn">取消，留在学生模式</button></div>
-    <div class="mnote">默认教师口令 <b>2468</b>，请在「教师设置」里修改。授权码由老师点「给学生授权」生成、口头告诉学生，<b>10 分钟</b>内有效。</div>
+    <div class="mnote">默认教师口令 <b>2468</b>，请在「教师设置」里修改。授权码由老师点「给学生授权」生成、口头告诉学生，<b>有效时间由老师设置</b>。<br>按老师设置的「验证后本机保持」方式，验证一次后重新打开页面可自动进入教师模式；老师点「锁定并返回学生模式」即可取消。</div>
   </div>
 </div>
 
@@ -300,24 +301,36 @@ body:not(.teacher) .sheet{display:none!important}
 <div id="teacherSetDlg" class="modal" hidden>
   <div class="mbox">
     <h3>教师设置</h3>
-    <p class="mdesc">仅教师模式可见。学生拿到授权码才能进入教师模式。</p>
+    <p class="mdesc">仅教师模式可见。验证一次后本机自动保持教师模式，学生拿不到口令或授权码就进不来。</p>
     <div class="gate-title">修改教师口令</div>
     <div class="mrow">
       <input type="password" id="pinNew" placeholder="新口令（4 位以上）" autocomplete="off">
       <button id="pinSave" class="nbtn">保存</button>
     </div>
-    <div class="gate-title">给学生授权（临时开放教师模式）</div>
+    <div class="gate-title">给学生授权（老师自定有效时间）</div>
+    <div class="mrow">
+      <label>授权码有效 <input type="text" id="grantMinutes" inputmode="numeric" value="10" style="flex:0 0 64px;min-width:64px;text-align:center"> 分钟</label>
+      <label>验证后本机保持
+        <select id="grantKeep">
+          <option value="forever">一直保持，直到我锁定</option>
+          <option value="expire">与授权码同时到期</option>
+          <option value="once">不记住，每次都验证</option>
+        </select>
+      </label>
+    </div>
     <div class="mrow">
       <button id="grantGo" class="nbtn">生成 6 位授权码</button>
       <button id="grantRevoke" class="nbtn">收回授权</button>
     </div>
     <div class="codebox" id="grantCode" hidden>------</div>
     <div class="mok" id="grantInfo">当前未发放授权码，学生无法进入教师模式。</div>
+    <div class="gate-title">本机记住状态</div>
+    <div class="mok" id="teacherRemember"></div>
     <div class="gate-title">退出</div>
     <div class="mrow"><button id="lockGo" class="nbtn">锁定并返回学生模式</button></div>
     <div class="mok" id="teacherSetMsg"></div>
     <div class="mbtns"><button id="teacherSetClose" class="primary">完成</button></div>
-    <div class="mnote">说明：这是纯前端课堂管理工具，口令/授权码保存在本机浏览器，技术性绕过不在防护范围内；适合防止学生随手点击切换，不适合作为考试防作弊。</div>
+    <div class="mnote">说明：这是纯前端课堂管理工具，口令/授权码保存在本机浏览器，技术性绕过不在防护范围内；适合防止学生随手点击切换，不适合作为考试防作弊。「收回授权」只影响尚未验证的设备，已记住教师模式的设备需各自点「锁定并返回学生模式」。</div>
   </div>
 </div>
 
@@ -1199,15 +1212,28 @@ function saveHL(){try{localStorage.setItem(HKEY,JSON.stringify(highlights))}catc
 var NKEY='grammar_fill_notes_v1', notes={};
 try{notes=JSON.parse(localStorage.getItem(NKEY)||'{}')||{}}catch(e){notes={}}
 function saveNotes(){try{localStorage.setItem(NKEY,JSON.stringify(notes))}catch(e){}}
-/* 教师权限：默认口令 2468 的哈希；每次加载都回到学生模式 */
+/* 教师权限：默认口令 2468；验证一次后可记住，重开页面仍是教师模式 */
 var DEFAULT_PIN_HASH='7c795ed9';
 var PKEY='grammar_fill_pin_v1', GKEY='grammar_fill_grant_v1';
+var TKEY='grammar_fill_teacher_v1', MKEY='grammar_fill_grant_min_v1';
 function pinHash(s){var h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0;}return h.toString(16);}
 function getPinHash(){var v=null;try{v=localStorage.getItem(PKEY)}catch(e){}return v||DEFAULT_PIN_HASH;}
 function getGrant(){try{return JSON.parse(localStorage.getItem(GKEY)||'null')}catch(e){return null}}
 function setGrant(g){try{if(g)localStorage.setItem(GKEY,JSON.stringify(g));else localStorage.removeItem(GKEY)}catch(e){}}
 function grantValid(g,c){return !!(g&&g.code===c&&g.exp>Date.now())}
-var teacherMode=false;   /* 不持久化：刷新即回到学生模式 */
+/* 本机记住的教师身份；exp=0 表示一直有效，直到老师锁定 */
+function getTeacherSaved(){try{return JSON.parse(localStorage.getItem(TKEY)||'null')}catch(e){return null}}
+function setTeacherSaved(v){try{if(v)localStorage.setItem(TKEY,JSON.stringify(v));else localStorage.removeItem(TKEY)}catch(e){}}
+function teacherRemembered(){var s=getTeacherSaved();return !!(s&&s.on&&(!s.exp||s.exp>Date.now()))}
+function getGrantMinutes(){var v=10;try{v=parseInt(localStorage.getItem(MKEY),10)||10}catch(e){}return Math.max(1,Math.min(10080,v))}
+function saveGrantMinutes(v){try{localStorage.setItem(MKEY,v)}catch(e){}}
+function fmtLeft(ms){
+  var m=Math.ceil(ms/60000);if(m<60)return m+' 分钟';
+  var h=Math.floor(m/60),r=m%60;
+  if(h<24)return h+' 小时'+(r?' '+r+' 分钟':'');
+  return Math.floor(h/24)+' 天'+(h%24?' '+(h%24)+' 小时':'');
+}
+var teacherMode=teacherRemembered();   /* 验证一次后持久化：重新打开页面仍是教师模式 */
 var fontScale=1;try{var _f=parseFloat(localStorage.getItem('grammar_fill_font_v1'));if(_f>=1&&_f<=3)fontScale=_f}catch(e){}
 var penColor=null;
 /* 画笔状态 */
@@ -1330,36 +1356,49 @@ function openGate(){
   $('gateDlg').hidden=false;
   setTimeout(function(){try{$('gatePin').focus()}catch(e){}},60);
 }
-function teacherUnlock(){
+function refreshRememberInfo(){
+  var el=$('teacherRemember');if(!el)return;
+  var s=getTeacherSaved();
+  if(s&&s.on&&(!s.exp||s.exp>Date.now())){
+    el.textContent='本机已记住教师模式'+(s.exp?'（到 '+new Date(s.exp).toLocaleString('zh-CN')+'）':'')+'：重新打开页面自动进入，直到点「锁定并返回学生模式」。';
+  }else{el.textContent='本机未记住教师模式：每次重新打开页面都需重新验证。';}
+}
+function teacherUnlock(by,g){
   teacherMode=true;
-  try{localStorage.removeItem('grammar_fill_mode_v1')}catch(e){}
+  var keep=(by==='code'&&g)?(g.keep||'forever'):'forever';   /* 口令登录一律记住，方便老师自己用 */
+  if(keep==='once'){setTeacherSaved(null)}
+  else{setTeacherSaved({on:true,by:by,exp:(keep==='expire'&&g)?g.exp:0,at:Date.now()})}
   $('gateDlg').hidden=true;
-  applyMode();syncNoteCanvas();
+  applyMode();syncNoteCanvas();refreshRememberInfo();
 }
 function gatePinGo(){
-  if(pinHash($('gatePin').value.trim())===getPinHash()){teacherUnlock();return}
+  if(pinHash($('gatePin').value.trim())===getPinHash()){teacherUnlock('pin',null);return}
   $('gateMsg').textContent='口令不正确，请重新输入（默认 2468）。';
 }
 function gateCodeGo(){
   var v=$('gateCode').value.trim(),g=getGrant();
-  if(grantValid(g,v)){teacherUnlock();return}
+  if(grantValid(g,v)){teacherUnlock('code',g);return}
   $('gateMsg').textContent=(g&&g.code===v&&g.exp<=Date.now())?'授权码已过期，请老师重新生成。':'授权码无效或未发放，请向老师索取。';
 }
 function lockTeacher(){
   teacherMode=false;
+  setTeacherSaved(null);   /* 取消记住：下次打开回到学生模式 */
   $('teacherSetDlg').hidden=true;$('gateDlg').hidden=true;$('printDlg').hidden=true;$('dash').hidden=true;
-  setNoteOn(false);applyMode();syncNoteCanvas();
+  setNoteOn(false);applyMode();syncNoteCanvas();refreshRememberInfo();
 }
 function refreshGrantInfo(){
   var g=getGrant(),box=$('grantCode'),info=$('grantInfo');
   if(g&&g.exp>Date.now()){
     box.hidden=false;box.textContent=g.code;
-    info.textContent='有效中 · 剩余约 '+Math.ceil((g.exp-Date.now())/60000)+' 分钟。把此码告诉学生，学生即可进入教师模式。';
+    info.textContent='有效中 · 剩余 '+fmtLeft(g.exp-Date.now())+'（老师设置 '+fmtLeft((g.minutes||10)*60000)+'）。把此码告诉学生，学生即可进入教师模式。';
   }else{box.hidden=true;info.textContent='当前未发放授权码，学生无法进入教师模式。';}
 }
 function openTeacherSet(){
   if(!teacherMode)return;
-  $('teacherSetMsg').textContent='';refreshGrantInfo();$('teacherSetDlg').hidden=false;
+  $('teacherSetMsg').textContent='';
+  $('grantMinutes').value=String(getGrantMinutes());
+  var g=getGrant();$('grantKeep').value=(g&&g.keep)||'forever';
+  refreshGrantInfo();refreshRememberInfo();$('teacherSetDlg').hidden=false;
 }
 function wrapText(root,text,color){
   if(!text)return;
@@ -1739,12 +1778,18 @@ $('pinSave').addEventListener('click',function(){
   $('pinNew').value='';$('teacherSetMsg').textContent='教师口令已更新，请牢记：'+v;
 });
 $('grantGo').addEventListener('click',function(){
+  var raw=parseInt($('grantMinutes').value,10);
+  if(isNaN(raw)||raw<1||raw>10080){$('teacherSetMsg').textContent='有效时间请填 1–10080 分钟（最长 7 天）。';return}
+  var keep=$('grantKeep').value||'forever';
   var code=String(Math.floor(100000+Math.random()*900000));
-  setGrant({code:code,exp:Date.now()+10*60*1000});
-  refreshGrantInfo();$('teacherSetMsg').textContent='已生成，10 分钟内有效。';
+  setGrant({code:code,exp:Date.now()+raw*60000,minutes:raw,keep:keep});
+  saveGrantMinutes(raw);refreshGrantInfo();
+  var kn={forever:'一直保持，直到锁定',expire:'与授权码同时到期',once:'每次都要验证'}[keep]||'一直保持，直到锁定';
+  $('teacherSetMsg').textContent='已生成授权码 '+code+'：有效 '+fmtLeft(raw*60000)+'；验证后'+kn+'。';
 });
 $('grantRevoke').addEventListener('click',function(){
-  setGrant(null);refreshGrantInfo();$('teacherSetMsg').textContent='已收回授权，学生无法再进入教师模式。';
+  setGrant(null);refreshGrantInfo();
+  $('teacherSetMsg').textContent='已收回授权，学生无法再凭此码进入；已记住教师模式的设备需各自点「锁定并返回学生模式」。';
 });
 $('lockGo').addEventListener('click',function(){lockTeacher();});
 /* 教师核对答案特权按钮 */
