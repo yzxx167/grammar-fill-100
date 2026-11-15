@@ -173,10 +173,14 @@ input[type=text]:focus{border-color:var(--main)}
 @media print{
   @page{margin:14mm}
   .wrap{display:none!important}
+  header{display:none!important}
+  #fontPanel,#dash,#penPanel,.modal{display:none!important}
   #printArea{display:block}
 }
 
-/* 教师模式 / 字号 / 五色笔 */
+/* 教师模式：错题本为学生专属，隐藏顶部入口与打印选项 */
+body.teacher #wrongBookTopBtn{display:none!important}
+body.teacher #optWR{display:none!important}
 .hl{background:#FFD54F;color:inherit;border-radius:2px;padding:0 1px}
 #penUndo{font-weight:bold;color:#666;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;padding:2px 6px;margin:0 4px;}
 body.teacher .hl{cursor:pointer}
