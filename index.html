@@ -149,6 +149,7 @@ input[type=text]:focus{border-color:var(--main)}
 
 /* 教师模式 / 字号 / 五色笔 */
 .hl{background:#FFD54F;color:inherit;border-radius:2px;padding:0 1px}
+#penUndo{font-weight:bold;color:#666;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;padding:2px 6px;margin:0 4px;}
 body.teacher .hl{cursor:pointer}
 body{overflow-x:hidden}
 #penBar{display:none;position:relative;z-index:12;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 8px;padding:8px 10px;background:#FBFCFB;border:1px solid var(--line);border-radius:10px}
@@ -493,6 +494,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
             <button class="pen" data-c="#80DEEA" style="background:#80DEEA" title="蓝"></button>
             <button class="pen" data-c="#A5D6A7" style="background:#A5D6A7" title="绿"></button>
             <button class="pen" data-c="#CE93D8" style="background:#CE93D8" title="紫"></button>
+            <button id="penUndo" class="pen-clear" title="撤销上一步">↶ 撤销</button>
             <button id="penClear" class="pen-clear">清空本页</button>
           </div>
           <div id="noteBar">
@@ -1389,6 +1391,23 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(rec))}catch(e){}}
 var HKEY='grammar_fill_hl_v1', highlights={};
 try{highlights=JSON.parse(localStorage.getItem(HKEY)||'{}')||{}}catch(e){highlights={}}
 function saveHL(){try{localStorage.setItem(HKEY,JSON.stringify(highlights))}catch(e){}}
+
+/* 五色笔撤销栈 */
+var hlUndoStack = [];
+function saveHLState() {
+  hlUndoStack.push(JSON.parse(JSON.stringify(highlights)));
+  if(hlUndoStack.length > 20) hlUndoStack.shift(); // 限制最多20步撤销
+}
+function hlUndo() {
+  if(hlUndoStack.length > 0) {
+    highlights = hlUndoStack.pop();
+    saveHL();
+    render();
+  }
+}
+function hlRedo() {
+  // 可以实现重做功能，这里先不实现
+}
 /* 手写笔记（按题保存，笔迹为坐标点） */
 var NKEY='grammar_fill_notes_v1', notes={};
 try{notes=JSON.parse(localStorage.getItem(NKEY)||'{}')||{}}catch(e){notes={}}
@@ -1501,20 +1520,22 @@ function noteStart(e){
   var tool=noteTool;
   var col=(tool==='marker')?markerColor:noteColor;
   var w=(tool==='eraser')?eraserSize:(tool==='marker')?16:penSize;
-  if(tool==='eraser')eraseHLAt(e.clientX,e.clientY);   /* 橡皮同时擦五色笔文字高亮 */
+  if(tool==='eraser')eraseHLAt(e.clientX,e.clientY);           /* 橡皮同时擦五色笔文字高亮 */
+  else if(tool==='pen')eraseHLAt(e.clientX,e.clientY,Math.max(10,Math.round((penSize||4)*2)));  /* 钢笔点到的五色笔圈也消失 */
   noteStroke={c:col,w:w,tool:tool,erase:(tool==='eraser'),pts:[notePt(e)]};
   (notes[curGi()]=notes[curGi()]||[]).push(noteStroke);
   noteDrawing=true;
   try{$('noteCanvas').setPointerCapture(e.pointerId)}catch(err){}
   redrawNotes();
 }
-/* 橡皮擦五色笔高亮：按坐标 + 矩形 + 橡皮容差命中，数据层批量删除。
-   不依赖 elementFromPoint（开笔后 canvas 捕获指针会让它失效）；一次划过删掉命中的所有高亮，只 render 一次。 */
-function eraseHLAt(x,y){
+/* 橡皮/钢笔擦五色笔高亮：按坐标 + 矩形 + 命中容差判断，数据层批量删除。
+   不依赖 elementFromPoint（开笔后 canvas 捕获指针会让它失效）；一次划过删掉命中的所有高亮，只 render 一次。
+   tolOverride：钢笔点选时用更小的容差，橡皮用粗细换算的容差。 */
+function eraseHLAt(x,y,tolOverride){
   if(!teacherMode)return false;
   var gi=vis[pos],arr=highlights[gi];
   if(!arr||!arr.length)return false;
-  var tol=Math.max(12,Math.round((eraserSize||14)*2));   /* 橡皮越粗，命中范围越大 */
+  var tol=tolOverride||Math.max(12,Math.round((eraserSize||14)*2));   /* 橡皮越粗，命中范围越大 */
   var hit=[],all=document.querySelectorAll('.hl');
   for(var i=0;i<all.length;i++){
     var el=all[i],r=el.getBoundingClientRect();
@@ -1524,6 +1545,7 @@ function eraseHLAt(x,y){
   }
   if(!hit.length)return false;
   var changed=false;
+  saveHLState();   /* 进撤销栈：擦掉的五色笔可以「↶ 撤销」找回 */
   for(var m=0;m<hit.length;m++){
     for(var j=arr.length-1;j>=0;j--){
       if(arr[j].text===hit[m].t&&arr[j].color===hit[m].c){arr.splice(j,1);changed=true;break;}
@@ -1665,6 +1687,7 @@ function autoPaint(){
   var text=sel.toString();var gi=vis[pos];
   (highlights[gi]=highlights[gi]||[]).push({text:text,color:penColor});
   suppressWordClick=true;   /* 画完重点，抑制紧随的 click 误弹查词 */
+  saveHLState(); // 保存撤销状态
   saveHL();sel.removeAllRanges();render();
 }
 function removeHL(el){
@@ -1672,7 +1695,11 @@ function removeHL(el){
   if(!el.classList.contains('hl'))return false;
   var gi=vis[pos];var arr=highlights[gi];if(!arr)return false;
   var i=arr.findIndex(function(h){return h.text===el.dataset.t&&h.color===el.dataset.c});
-  if(i>=0){arr.splice(i,1);saveHL();render();return true;}
+  if(i>=0){
+    arr.splice(i,1);
+    saveHLState(); // 保存撤销状态
+    saveHL();render();return true;
+  }
   return false;
 }
 function mergeHL(src){
@@ -2124,8 +2151,13 @@ $('lockGo').addEventListener('click',function(){lockTeacher();});
 /* 教师核对答案特权按钮 */
 $('pubAnsBtn').addEventListener('click',pubAns);
 /* 五色笔 */
-Array.prototype.forEach.call(document.querySelectorAll('#penBar .pen'),function(b){if(b.id==='penClear')return;b.addEventListener('click',function(){var c=b.dataset.c;penColor=(penColor===c?null:c);updatePenUI();});});
-$('penClear').addEventListener('click',function(){var gi=vis[pos];if(highlights[gi]){delete highlights[gi];saveHL();render();}});
+Array.prototype.forEach.call(document.querySelectorAll('#penBar .pen'),function(b){if(b.id==='penClear'||b.id==='penUndo')return;b.addEventListener('click',function(){var c=b.dataset.c;penColor=(penColor===c?null:c);updatePenUI();});});
+$('penClear').addEventListener('click',function(){var gi=vis[pos];if(highlights[gi]){
+  saveHLState(); // 保存撤销状态
+  delete highlights[gi];
+  saveHL();render();
+}});
+$('penUndo').addEventListener('click',hlUndo);
 $('passage').addEventListener('click',function(e){var t=e.target.closest('.hl');if(t)removeHL(t);});
 $('result').addEventListener('click',function(e){var t=e.target.closest('.hl');if(t)removeHL(t);});
 document.addEventListener('mouseup',autoPaint);
