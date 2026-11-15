@@ -354,6 +354,37 @@ body:not(.teacher) .teacher-only{display:none!important}
   </div>
 </div>
 
+<!-- 离线生词翻译：查词气泡 -->
+<div id="dictTip" hidden></div>
+
+<!-- 本套生词表 -->
+<div id="dictDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>本套生词表</h3>
+    <p class="mdesc">词库内嵌在本页面里，断网、飞行模式、双击本地文件都能查。点任一行可看释义。</p>
+    <div class="mrow"><input type="text" id="dictSearch" placeholder="搜索单词（支持部分匹配）"></div>
+    <div class="dlist" id="dictList"></div>
+    <div class="mok" id="dictCount"></div>
+    <div class="mbtns"><button id="dictClose" class="primary">关闭</button></div>
+    <div class="mnote">词典释义裁剪自 ECDICT（MIT License · © Linwei / skywind3000），只保留本页短文用到的词；专有名词、所有格等可能未收录，教师可自行补充。</div>
+  </div>
+</div>
+
+<!-- 补充 / 修改释义 -->
+<div id="dictEditDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>补充 / 修改释义</h3>
+    <div class="mrow"><input type="text" id="dictWord" placeholder="英文单词（小写）"></div>
+    <div class="mrow"><input type="text" id="dictDef" placeholder="中文释义"></div>
+    <div class="mok" id="dictEditMsg"></div>
+    <div class="mbtns">
+      <button id="dictEditCancel" class="nbtn">取消</button>
+      <button id="dictEditSave" class="primary">保存</button>
+    </div>
+    <div class="mnote">自定义词条存在本机浏览器，会覆盖内嵌词库；导出后可发给别的设备导入。</div>
+  </div>
+</div>
+
 <div class="wrap">
   <div class="card">
     <div id="content">
@@ -2021,37 +2052,6 @@ $('dictFile').addEventListener('change',function(e){
 applyFont();applyMode();applyLayout();updateStats();render();
 })();
 </script>
-<!-- 离线生词翻译：查词气泡 -->
-<div id="dictTip" hidden></div>
-
-<!-- 本套生词表 -->
-<div id="dictDlg" class="modal" hidden>
-  <div class="mbox">
-    <h3>本套生词表</h3>
-    <p class="mdesc">词库内嵌在本页面里，断网、飞行模式、双击本地文件都能查。点任一行可看释义。</p>
-    <div class="mrow"><input type="text" id="dictSearch" placeholder="搜索单词（支持部分匹配）"></div>
-    <div class="dlist" id="dictList"></div>
-    <div class="mok" id="dictCount"></div>
-    <div class="mbtns"><button id="dictClose" class="primary">关闭</button></div>
-    <div class="mnote">词典释义裁剪自 ECDICT（MIT License · © Linwei / skywind3000），只保留本页短文用到的词；专有名词、所有格等可能未收录，教师可自行补充。</div>
-  </div>
-</div>
-
-<!-- 补充 / 修改释义 -->
-<div id="dictEditDlg" class="modal" hidden>
-  <div class="mbox">
-    <h3>补充 / 修改释义</h3>
-    <div class="mrow"><input type="text" id="dictWord" placeholder="英文单词（小写）"></div>
-    <div class="mrow"><input type="text" id="dictDef" placeholder="中文释义"></div>
-    <div class="mok" id="dictEditMsg"></div>
-    <div class="mbtns">
-      <button id="dictEditCancel" class="nbtn">取消</button>
-      <button id="dictEditSave" class="primary">保存</button>
-    </div>
-    <div class="mnote">自定义词条存在本机浏览器，会覆盖内嵌词库；导出后可发给别的设备导入。</div>
-  </div>
-</div>
-
 <div id="printArea"></div>
 </body>
 </html>
