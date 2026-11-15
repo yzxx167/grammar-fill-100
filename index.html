@@ -51,6 +51,21 @@ body[data-render="split"] .right-col{padding-left:24px;padding-right:4px;positio
 .blank.cur{background:var(--lime);box-shadow:0 0 0 2px rgba(44,110,99,.16)}
 .blank.cur u{border-bottom-color:var(--ink)}
 .blank.cur em,.blank.cur small{color:#3A4A20}
+/* 学生模式：横线内直接作答 */
+.blankInput{font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;border-bottom:2px solid #9AA9A4;border-radius:0;outline:none;width:92px;min-width:64px;max-width:150px;padding:2px 3px;margin:0 3px;text-align:center}
+.blankInput:focus{border-bottom-color:var(--main);background:#EAF3F0}
+.blankInput.ok{color:#2C6E63;border-bottom-color:#2C6E63;font-weight:700}
+.blankInput.bad{color:#C4483B;border-bottom-color:#C4483B;text-decoration:line-through}
+.stuSubmitBar{display:flex;gap:8px;align-items:center;justify-content:center;margin:14px 0 4px;flex-wrap:wrap}
+.stuSubmitBar button{font-size:15px;padding:9px 22px}
+.stuScore{font-size:14px;font-weight:700;color:var(--main)}
+.stuResult{margin-top:12px;padding:12px 14px;background:#F7FAF9;border:1px solid var(--line);border-radius:10px;font-size:13px;line-height:1.9}
+.stuResult[hidden]{display:none}
+.stuResult .sr{display:flex;gap:8px;padding:3px 0;border-bottom:1px dotted var(--line)}
+.stuResult .sr:last-child{border-bottom:0}
+.stuResult .sr b{min-width:38px}
+.stuResult .sr .g{color:#2C6E63;font-weight:700}
+.stuResult .sr .x{color:#C4483B;font-weight:700}
 .ansbox{background:#F7FAF9;border:1px solid var(--line);border-radius:12px;padding:18px}
 .anslabel{font-size:14px;font-weight:700;margin-bottom:10px}
 .anslabel .hint{font-weight:500;color:var(--sub);font-size:13px;margin-left:8px}
@@ -178,6 +193,7 @@ body.teacher #noteBar{display:flex}
 #penPanel{position:absolute;top:calc(100% - 4px);left:60px;z-index:30;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(31,42,38,.18);padding:10px 12px;min-width:220px}
 #penPanel .pp-title{font-size:12px;color:var(--sub);margin:2px 0 6px}
 #penPanel .pp-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+[hidden]{display:none!important}   /* 保证 hidden 属性优先于 display:flex，颜色分组只显示当前工具那一组 */
 #penPanel .clr{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
 #penPanel .clr.active{outline:2px solid var(--main);outline-offset:2px}
 #penPanel input[type=range]{flex:1;min-width:100px;accent-color:var(--main);cursor:pointer}
@@ -268,6 +284,17 @@ body:not(.teacher) #revealBtn,
 body:not(.teacher) #pubAnsBtn,
 body:not(.teacher) .sheet,
 body:not(.teacher) .teacher-only{display:none!important}
+/* 手写工具按身份区分：教师用钢笔+橡皮，学生用记号笔+橡皮 */
+body:not(.teacher) #toolPen{display:none!important}
+body.teacher #toolMarker{display:none!important}
+/* 五色笔文字高亮为教师专属 */
+body:not(.teacher) #penBar{display:none!important}
+/* 学生横线作答面板：仅学生可见；右侧传统作答区仅教师可见 */
+body.teacher .student-only{display:none!important}
+body:not(.teacher) .right-col .ansbox,
+body:not(.teacher) .right-col .result,
+body:not(.teacher) .right-col .colhead.r,
+body:not(.teacher) .right-col .sheet{display:none!important}
 .pubans{color:var(--main)!important;font-weight:700}
 </style>
 </head>
@@ -299,6 +326,7 @@ body:not(.teacher) .teacher-only{display:none!important}
       <button id="printBtn" title="打印 / 导出 PDF（按当前所选套卷）">打印</button>
       <button id="fontBtn" title="调整字体大小（100%–300%）">字号</button>
       <button id="dashBtn" title="查看正确率看板（教师）">正确率</button>
+      <button id="wordBookTopBtn" title="打开我的单词本（点单词收藏的生词）">单词本</button>
       <button id="teacherSetBtn" title="教师设置：口令、授权、锁定">教师设置</button>
     </div>
   </div>
@@ -433,7 +461,7 @@ body:not(.teacher) .teacher-only{display:none!important}
 <div id="wordBookDlg" class="modal" hidden>
   <div class="mbox">
     <h3>我的单词本</h3>
-    <p class="mdesc">在查词卡片点「收藏」的单词会存到这里，按收藏顺序排列，保存在本机浏览器。</p>
+    <p class="mdesc">点短文里的单词即可收藏到这里（教师点词出查词卡片再点收藏；学生点词直接收藏），按收藏顺序排列，保存在本机浏览器。</p>
     <div class="dlist" id="wordBookList"></div>
     <div class="mok" id="wordBookCount"></div>
     <div class="mbtns">
@@ -515,6 +543,14 @@ body:not(.teacher) .teacher-only{display:none!important}
           </div>
           <div class="passage" id="passage"></div>
           <div class="scrollhint">短文较长，可在此区域内上下滑动</div>
+          <div id="stuPanel" class="student-only">
+            <div class="stuSubmitBar">
+              <button class="primary" id="stuSubmitBtn">提交批改</button>
+              <span class="stuScore" id="stuScore"></span>
+              <button id="stuResetBtn">清空重做</button>
+            </div>
+            <div class="stuResult" id="stuResult" hidden></div>
+          </div>
         </div>
         <div class="right-col">
           <div class="colhead r">作答区 <small>← → 翻题 · Enter 核对</small></div>
@@ -1394,6 +1430,11 @@ function applyMode(){
   ms[0].className=teacherMode?'':'on';
   ms[1].className=teacherMode?'on':'';
   if(!teacherMode){penColor=null;updatePenUI();setNoteOn(false);}
+  /* 工具默认：教师钢笔、学生记号笔；橡皮两种身份都用 */
+  noteTool=teacherMode?'pen':'marker';
+  Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){b.classList.toggle('on',b.dataset.tool===noteTool)});
+  var panel=$('penPanel');if(panel)panel.hidden=true;
+  if(typeof applyLayout==='function')applyLayout();   /* 身份切换时按设备重新选布局 */
   syncNoteCanvas();
 }
 function updatePenUI(){
@@ -1453,7 +1494,7 @@ function notePt(e){
   return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];
 }
 function noteStart(e){
-  if(!teacherMode||!noteOn)return;
+  if(!noteOn)return;   /* 学生（记号笔/橡皮）与教师（钢笔/橡皮）都可画笔 */
   e.preventDefault();
   var tool=noteTool;
   var col=(tool==='marker')?markerColor:noteColor;
@@ -1482,7 +1523,7 @@ function noteMove(e){
 }
 function noteEnd(){if(!noteDrawing)return;noteDrawing=false;noteStroke=null;saveNotes();updateNoteStatus();}
 function setNoteOn(v){
-  noteOn=!!v&&teacherMode;
+  noteOn=!!v;   /* 学生也可用记号笔/橡皮做笔记 */
   document.body.classList.toggle('note-on',noteOn);
   var b=$('noteToggle');if(b){b.textContent=noteOn?'收笔':'开笔';b.classList.toggle('on',noteOn);}
   updateNoteStatus();
@@ -1652,7 +1693,8 @@ var LKEY='grammar_fill_layout_v1',layout='auto';
 try{layout=localStorage.getItem(LKEY)||'auto'}catch(e){}
 if(['auto','split','stack'].indexOf(layout)<0)layout='auto';
 function applyLayout(){
-  var render=(layout==='auto')?(window.innerWidth>=720?'split':'stack'):layout;
+  /* 自动布局按身份：教师=左右分栏（白板/电脑横屏），学生=窄屏上下（手机/平板）、宽屏左右 */
+  var render=(layout==='auto')?(teacherMode?'split':(window.innerWidth>=720?'split':'stack')):layout;
   document.body.setAttribute('data-render',render);
   document.documentElement.style.setProperty('--hdH',(document.querySelector('header').offsetHeight+12)+'px');
   $('layoutBtn').textContent=layout==='auto'?('布局：自动 · '+(render==='split'?'左右':'上下')):(layout==='split'?'布局：左右分栏':'布局：上下堆叠');
@@ -1730,10 +1772,14 @@ function importFile(e){
   e.target.value='';
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function passageHTML(text,cur){
+function passageHTML(text,cur,editable,vals){
   return esc(text).replace(/(\d{2})\._{3,}\s*(?:\(([^)]*)\))?/g,function(m,no,hint){
     var n=parseInt(no,10),cls=(n===cur?'blank cur':'blank');
     var h=hint?'<small>（'+hint+'）</small>':'';
+    if(editable){
+      var v=(vals&&vals[n])||'';
+      return '<span class="'+cls+'" data-no="'+n+'"><em>'+no+'.</em><input class="blankInput" type="text" data-no="'+n+'" value="'+esc(v)+'" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="第'+n+'题答案">'+h+'</span> ';
+    }
     return '<span class="'+cls+'" data-no="'+n+'"><em>'+no+'.</em><u></u>'+h+'</span> ';
   });
 }
@@ -1754,9 +1800,13 @@ function render(){
   $('mTopic').textContent='· '+q.topic;
   $('mQn').textContent='第 '+q.no+' 题';
   $('mPos').textContent=(pos+1)+' / '+vis.length;
-  var pEl=$('passage'),pKey=q.si+'|'+q.no+'|'+JSON.stringify(highlights[gi]||[]);
+  var pEl=$('passage');
+  /* 学生模式：预填当前套各题已存答案到横线 */
+  var vals={};
+  if(!teacherMode)FLAT.forEach(function(x){if(x.si===q.si&&rec[x.key]&&rec[x.key].input)vals[x.no]=rec[x.key].input});
+  var pKey=(teacherMode?'T':'S')+'|'+q.si+'|'+q.no+'|'+JSON.stringify(highlights[gi]||[]);
   if(renderCache.pKey!==pKey){
-    pEl.innerHTML=passageHTML(q.passage,q.no);
+    pEl.innerHTML=passageHTML(q.passage,q.no,!teacherMode,vals);
     applyHighlights(pEl,gi);
     renderCache.pKey=pKey;renderCache.pNo=q.no;
   }else if(renderCache.pNo!==q.no){
@@ -1788,7 +1838,20 @@ function render(){
   $('prevBtn').disabled=(pos===0);
   $('nextBtn').disabled=(pos===vis.length-1);
   if(r){showResult(r.ok,r.input)}else{hideResult()}
+  if(!teacherMode)studentRefreshResult();
   setTimeout(syncNoteCanvas,0);   /* 题目切换后重画该题笔记（已节流合并，不再强制回顶） */
+}
+/* 学生模式：翻题后按当前套已存批改状态回填横线颜色与汇总 */
+function studentRefreshResult(){
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si),done=0,right=0,any=false;
+  qs.forEach(function(q){
+    var rr=rec[q.key],inp=$('passage').querySelector('.blankInput[data-no="'+q.no+'"]');
+    if(rr&&rr.ok===true){right++;done++;any=true;if(inp){inp.classList.add('ok');inp.classList.remove('bad')}}
+    else if(rr&&rr.ok===false){done++;any=true;if(inp){inp.classList.add('bad');inp.classList.remove('ok')}}
+    else if(inp){inp.classList.remove('ok','bad')}
+  });
+  if(any)$('stuScore').textContent='本题已做 '+done+'/'+qs.length+' · 答对 '+right;
+  else $('stuScore').textContent='';
 }
 function hideResult(){$('result').hidden=true;$('result').className='result';$('result').innerHTML='';setTimeout(syncNoteCanvas,0)}
 function showResult(ok,input){
@@ -1828,6 +1891,42 @@ function submit(){
   rec[q.key]={ok:ok,input:v,fav:!!old.fav};
   save();showResult(ok,v);updateStats();renderJumpMark();
 }
+/* ============ 学生模式：横线作答 + 提交批改 ============ */
+function setQuestionsOf(si){return FLAT.filter(function(x){return x.si===si})}
+function qKeyByNo(si,no){for(var i=0;i<FLAT.length;i++)if(FLAT[i].si===si&&FLAT[i].no===no)return FLAT[i].key;return null}
+function studentSaveInput(no,val){
+  if(teacherMode)return;
+  var si=FLAT[vis[pos]].si,k=qKeyByNo(si,no);if(!k)return;
+  var old=rec[k]||{ok:null,fav:false};old.input=val;rec[k]=old;save();
+  var inp=$('passage').querySelector('.blankInput[data-no="'+no+'"]');
+  if(inp){inp.classList.remove('ok','bad')}
+}
+function studentSubmit(){
+  if(teacherMode)return;
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si),right=0,done=0,h='';
+  qs.forEach(function(q){
+    var inp=$('passage').querySelector('.blankInput[data-no="'+q.no+'"]');
+    var v=inp?inp.value.trim():((rec[q.key]&&rec[q.key].input)||'');
+    var ok=null;
+    if(v){done++;ok=norm(v)===norm(q.answer);if(ok)right++}
+    var old=rec[q.key]||{fav:false};
+    if(v)rec[q.key]={ok:ok,input:v,fav:!!old.fav};
+    if(inp){inp.classList.toggle('ok',ok===true);inp.classList.toggle('bad',ok===false)}
+    h+='<div class="sr"><b>'+q.no+'.</b><span>你的答案：'+(v?esc(v):'（空）')+'</span>'+
+       '<span class="'+(ok===true?'g':(ok===false?'x':''))+'">'+(ok===true?'✓ 正确':(ok===false?'✗ 正确：'+esc(q.answer):'未作答'))+'</span></div>';
+  });
+  save();updateStats();renderJumpMark();
+  var box=$('stuResult');box.innerHTML=h;box.hidden=false;
+  $('stuScore').textContent='本题已做 '+done+'/'+qs.length+' · 答对 '+right;
+}
+function studentReset(){
+  if(teacherMode)return;
+  if(!confirm('清空本题的所有作答并重做？'))return;
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si);
+  qs.forEach(function(q){var old=rec[q.key];if(old){delete old.input;delete old.ok;if(old.fav===false&&!old.input)delete rec[q.key];else rec[q.key]=old}});
+  save();updateStats();renderCache.pKey='';render();
+  var box=$('stuResult');box.hidden=true;box.innerHTML='';$('stuScore').textContent='';
+}
 function renderJumpMark(){
   var q=FLAT[vis[pos]];
   var o=$('jumpSel').options[pos];
@@ -1860,12 +1959,20 @@ $('seg').addEventListener('click',function(e){
 });
 $('backAll').addEventListener('click',function(){mode='all';filter=0;$('setSel').value='0';syncSeg();pos=0;render()});
 $('checkBtn').addEventListener('click',submit);
+/* 学生横线作答：输入即存、提交批改、清空重做 */
+$('passage').addEventListener('input',function(e){
+  var t=e.target;if(!t.classList||!t.classList.contains('blankInput'))return;
+  studentSaveInput(parseInt(t.dataset.no,10),t.value);
+});
+$('stuSubmitBtn').addEventListener('click',studentSubmit);
+$('stuResetBtn').addEventListener('click',studentReset);
 $('revealBtn').addEventListener('click',peek);
 $('favBtn').addEventListener('click',toggleFav);
 $('prevBtn').addEventListener('click',function(){go(-1)});
 $('nextBtn').addEventListener('click',function(){go(1)});
 $('jumpSel').addEventListener('change',function(){pos=parseInt(this.value,10);render()});
 $('passage').addEventListener('click',function(e){
+  if(e.target.closest('input'))return;   /* 学生横线输入框：点击不跳题 */
   var b=e.target.closest('.blank');if(!b)return;
   var n=parseInt(b.dataset.no,10),q=FLAT[vis[pos]];
   var gi=-1;for(var i=0;i<FLAT.length;i++){if(FLAT[i].si===q.si&&FLAT[i].no===n){gi=i;break}}
@@ -2022,9 +2129,13 @@ document.addEventListener('keyup',function(e){if(e.shiftKey)autoPaint();});
 $('noteToggle').addEventListener('click',function(){setNoteOn(!noteOn)});
 /* 三工具切换：点工具弹出设置面板，选颜色 / 调粗细 */
 function setTool(t){
+  if(t==='marker'&&teacherMode)return;   /* 记号笔只给学生 */
+  if(t==='pen'&&!teacherMode)return;     /* 钢笔只给教师 */
+  var panel=$('penPanel');
+  if(t===noteTool&&panel&&!panel.hidden){panel.hidden=true;return}   /* 再点当前工具 → 收起面板 */
   noteTool=t;
   Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){b.classList.toggle('on',b.dataset.tool===t)});
-  var panel=$('penPanel');if(panel)panel.hidden=false;
+  if(panel)panel.hidden=false;
   var colorBox=$('ppColors'),penColors=$('ppPenColors'),markerColors=$('ppMarkerColors'),sizeBox=$('ppSize');
   if(colorBox)colorBox.hidden=(t==='eraser');   /* 橡皮没有颜色 */
   if(penColors)penColors.hidden=(t!=='pen');
@@ -2072,14 +2183,20 @@ $('dashBtn').addEventListener('click',openDash);
 $('dashClose').addEventListener('click',closeDash);
 $('dash').addEventListener('click',function(e){if(e.target===$('dash'))closeDash();});
 document.addEventListener('keydown',function(e){
-  var inInput=document.activeElement&&document.activeElement.id==='answerInput';
+  var ae=document.activeElement,inAnswer=ae&&ae.id==='answerInput',inBlank=ae&&ae.classList&&ae.classList.contains('blankInput');
   var shown=!$('result').hidden;
-  if(e.key==='ArrowLeft'&&!inInput){e.preventDefault();go(-1);return}
-  if(e.key==='ArrowRight'&&!inInput){e.preventDefault();go(1);return}
+  /* 翻页笔：多数翻页笔发 PageUp/PageDown；教师模式用它前后翻题 */
+  if(e.key==='PageUp'||e.key==='PageDown'){
+    if(teacherMode){e.preventDefault();go(e.key==='PageUp'?-1:1)}
+    return;
+  }
+  if(e.key==='ArrowLeft'&&!inAnswer&&!inBlank){e.preventDefault();go(-1);return}
+  if(e.key==='ArrowRight'&&!inAnswer&&!inBlank){e.preventDefault();go(1);return}
   if(e.key==='Enter'){
+    if(inBlank){e.preventDefault();studentSubmit();return}   /* 学生横线输入回车 = 提交批改 */
     e.preventDefault();
     if(shown){go(1)}
-    else if(inInput){submit()}
+    else if(inAnswer){submit()}
     else{$('answerInput').focus()}
   }
 });
@@ -2089,21 +2206,35 @@ try{DICT=JSON.parse((($('dictData')||{}).textContent)||'{}')||{}}catch(e){DICT={
 var UKEY='grammar_fill_dict_user_v1',userDict={};
 try{userDict=JSON.parse(localStorage.getItem(UKEY)||'{}')||{}}catch(e){userDict={}}
 function saveUserDict(){try{localStorage.setItem(UKEY,JSON.stringify(userDict))}catch(e){}}
-/* ============ 单词本（教师收藏生词，按收藏顺序，仅教师模式可用） ============ */
+/* ============ 单词本（教师查词收藏 / 学生点词收藏，按收藏顺序，师生共用） ============ */
 var WKEY='grammar_fill_wordbook_v1',wordBook=[];
 try{wordBook=JSON.parse(localStorage.getItem(WKEY)||'[]')||[]}catch(e){wordBook=[]}
 function saveWordBook(){try{localStorage.setItem(WKEY,JSON.stringify(wordBook))}catch(e){}}
 function phonOf(w){var r=dictLookup(w);return PHON[w]||(r&&r.base?PHON[r.base]:'')||''}
 function isWordFaved(w){w=wordNorm(w);if(!w)return false;for(var i=0;i<wordBook.length;i++)if(wordBook[i].w===w)return true;return false}
+/* 收藏/取消收藏某个词（教师卡片按钮与学生点词共用） */
+function favWordByText(w){
+  w=wordNorm(w)||String(w||'').trim().toLowerCase();
+  if(!w)return null;
+  var i=-1;for(var k=0;k<wordBook.length;k++){if(wordBook[k].w===w){i=k;break}}
+  var added;
+  if(i>=0){wordBook.splice(i,1);added=false}
+  else{var r=dictLookup(w)||{};wordBook.push({w:w,def:(r.t||''),phon:phonOf(w),at:Date.now()});added=true}
+  saveWordBook();return added;
+}
 function toggleFavWord(){
   if(!teacherMode)return;
-  var w=wordNorm(dictTipWord)||String(dictTipWord||'').trim().toLowerCase();
-  if(!w)return;
-  var i=-1;for(var k=0;k<wordBook.length;k++){if(wordBook[k].w===w){i=k;break}}
-  if(i>=0)wordBook.splice(i,1);
-  else{var r=dictLookup(w)||{};wordBook.push({w:w,def:(r.t||''),phon:phonOf(w),at:Date.now()})}
-  saveWordBook();
+  var added=favWordByText(dictTipWord);if(added===null)return;
   showDictTip(dictTipWord,dictTipX,dictTipY,false);   /* 刷新收藏按钮状态 */
+}
+var stuFavTimer=0;
+function studentFav(w){
+  var added=favWordByText(w);if(added===null)return;
+  var el=$('noteStatus');if(el){
+    el.textContent=(added?'★ 已加入单词本：':'☆ 已从单词本移除：')+wordNorm(w);
+    clearTimeout(stuFavTimer);
+    stuFavTimer=setTimeout(updateNoteStatus,2200);
+  }
 }
 function renderWordBook(){
   var el=$('wordBookList');if(!el)return;
@@ -2112,10 +2243,10 @@ function renderWordBook(){
     var ph=it.phon?('<span class="wbph">/'+esc(it.phon)+'/</span>'):'';
     h+='<div class="wbrow" data-i="'+i+'"><b>'+esc(it.w)+'</b>'+ph+'<span class="wbdef">'+esc(it.def||'（暂无释义）')+'</span><button class="wbdel" data-i="'+i+'" title="移除">×</button></div>';
   });
-  el.innerHTML=h||'<div class="drow none"><span>还没有收藏单词。教师模式下点短文里的单词 → 「☆ 收藏」。</span></div>';
+  el.innerHTML=h||'<div class="drow none"><span>还没有收藏单词。点短文里的单词即可加入（学生点词直接收藏，教师点词后在卡片点收藏）。</span></div>';
   var c=$('wordBookCount');if(c)c.textContent='已收藏 '+wordBook.length+' 个单词'+(wordBook.length?'（按收藏顺序）':'');
 }
-function openWordBook(){if(!teacherMode)return;renderWordBook();$('wordBookDlg').hidden=false;}
+function openWordBook(){renderWordBook();$('wordBookDlg').hidden=false;}
 function wordNorm(s){return String(s||'').trim().toLowerCase().replace(/^[^a-z]+|[^a-z'-]+$/g,'')}
 function dictGuess(w){
   var a=[];
@@ -2272,21 +2403,21 @@ $('dictList').addEventListener('click',function(e){
 $('dictDlg').addEventListener('click',function(e){if(e.target===$('dictDlg'))$('dictDlg').hidden=true});
 /* 单词本弹窗 */
 $('wordBookBtn').addEventListener('click',openWordBook);
+$('wordBookTopBtn').addEventListener('click',openWordBook);
 $('wbClose').addEventListener('click',function(){$('wordBookDlg').hidden=true});
 $('wordBookDlg').addEventListener('click',function(e){if(e.target===$('wordBookDlg'))$('wordBookDlg').hidden=true});
 $('wordBookList').addEventListener('click',function(e){
-  if(!teacherMode)return;
   var b=e.target.closest&&e.target.closest('.wbdel');if(!b)return;
   var i=parseInt(b.dataset.i,10);
   if(i>=0&&i<wordBook.length){wordBook.splice(i,1);saveWordBook();renderWordBook();}
 });
 $('wbClear').addEventListener('click',function(){
-  if(!teacherMode||!wordBook.length)return;
+  if(!wordBook.length)return;
   if(!confirm('清空单词本的全部 '+wordBook.length+' 个单词？'))return;
   wordBook=[];saveWordBook();renderWordBook();
 });
 $('wbExport').addEventListener('click',function(){
-  if(!teacherMode||!wordBook.length)return;
+  if(!wordBook.length)return;
   var rows=['word,音标,释义'];
   wordBook.forEach(function(it){
     rows.push(it.w+',"'+String(it.phon?'/'+it.phon+'/':'').replace(/"/g,'""')+'","'+String(it.def||'').replace(/"/g,'""')+'"');
@@ -2325,14 +2456,15 @@ $('dictTip').addEventListener('click',function(e){
     showDictTip(w,dictTipX,dictTipY,false);return;
   }
 });
-/* 点单词：就地查义 */
+/* 点单词：教师就地查义；学生只加入单词本，不出翻译 */
 $('passage').addEventListener('click',function(e){
-  if(!teacherMode)return;
   if(e.target.closest('.blank')||e.target.closest('.hl'))return;
+  if(e.target.closest('input'))return;   /* 学生模式横线输入框不触发查词 */
   var sel=window.getSelection();if(sel&&!sel.isCollapsed)return;
   var w=wordAtPoint(e.clientX,e.clientY);
-  if(w&&w.length>=2)showDictTip(w,e.clientX,e.clientY,false);
-  else hideDictTip();
+  if(!w||w.length<2){if(teacherMode)hideDictTip();return}
+  if(teacherMode)showDictTip(w,e.clientX,e.clientY,false);
+  else studentFav(w);
 });
 /* 划选一句话：逐词释义（没选五色笔颜色时才生效） */
 $('passage').addEventListener('mouseup',function(e){
