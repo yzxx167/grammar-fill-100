@@ -312,10 +312,8 @@ body:not(.teacher) .right-col .sheet{display:none!important}
       <select id="setSel" aria-label="选择套卷"></select>
       <div class="seg" id="seg">
         <button data-mode="all" class="on">全部</button>
-        <button data-mode="wrong">错题</button>
-        <button data-mode="fav">收藏</button>
       </div>
-      <span class="stats">已做 <b id="done">0</b>/100 · 正确率 <b id="acc">--</b> · 错 <b id="wrong">0</b> · 藏 <b id="fav">0</b></span>
+      <span class="stats">已做 <b id="done">0</b>/100 · 正确率 <b id="acc">--</b></span>
       <div class="seg" id="modeSeg" title="切换身份：学生 / 教师">
         <button data-mode="student" class="on">学生</button>
         <button data-mode="teacher">教师</button>
@@ -565,7 +563,6 @@ body:not(.teacher) .right-col .sheet{display:none!important}
             </div>
             <div class="subrow">
               <button id="revealBtn">直接看解析</button>
-              <button id="favBtn">☆ 收藏本题</button>
               <button id="pubAnsBtn" class="pubans" title="教师讲评：一键显示本题答案与解析">公布答案（教师）</button>
             </div>
           </div>
@@ -1420,8 +1417,10 @@ function fmtLeft(ms){
 var teacherMode=teacherRemembered();   /* 验证一次后持久化：重新打开页面仍是教师模式 */
 var fontScale=1;try{var _f=parseFloat(localStorage.getItem('grammar_fill_font_v1'));if(_f>=1&&_f<=3)fontScale=_f}catch(e){}
 var penColor=null;
+var suppressWordClick=false;   /* 画完五色笔重点后，抑制紧随的 click 误弹查词 */
 /* 画笔状态 */
-var noteOn=false,noteColor='#C4483B',noteSize=4,noteDrawing=false,noteStroke=null;
+var noteOn=false,noteColor='#C4483B',noteDrawing=false,noteStroke=null;
+var penSize=4,eraserSize=14;   /* 钢笔与橡皮粗细各自独立；记号笔无粗细 */
 /* 手写工具：pen 钢笔 / marker 记号笔（只颜色、无粗细、半透明）/ eraser 橡皮（只粗细、可擦五色笔） */
 var noteTool='pen',markerColor='#A5D6A7';
 var bySet={};FLAT.forEach(function(q){(bySet[q.si]=bySet[q.si]||[]).push(q)});
@@ -1501,8 +1500,9 @@ function noteStart(e){
   e.preventDefault();
   var tool=noteTool;
   var col=(tool==='marker')?markerColor:noteColor;
+  var w=(tool==='eraser')?eraserSize:(tool==='marker')?16:penSize;
   if(tool==='eraser')eraseHLAt(e.clientX,e.clientY);   /* 橡皮同时擦五色笔文字高亮 */
-  noteStroke={c:col,w:noteSize,tool:tool,erase:(tool==='eraser'),pts:[notePt(e)]};
+  noteStroke={c:col,w:w,tool:tool,erase:(tool==='eraser'),pts:[notePt(e)]};
   (notes[curGi()]=notes[curGi()]||[]).push(noteStroke);
   noteDrawing=true;
   try{$('noteCanvas').setPointerCapture(e.pointerId)}catch(err){}
@@ -1658,6 +1658,7 @@ function autoPaint(){
   if(!el.closest('#passage')&&!el.closest('#result'))return;
   var text=sel.toString();var gi=vis[pos];
   (highlights[gi]=highlights[gi]||[]).push({text:text,color:penColor});
+  suppressWordClick=true;   /* 画完重点，抑制紧随的 click 误弹查词 */
   saveHL();sel.removeAllRanges();render();
 }
 function removeHL(el){
@@ -1723,20 +1724,14 @@ function norm(s){return (s||'').trim().toLowerCase().replace(/\s+/g,' ')}
 function visible(){
   var a=FLAT.map(function(x,i){return i});
   if(filter>0)a=a.filter(function(i){return FLAT[i].si===filter-1});
-  if(mode==='wrong')a=a.filter(function(i){var r=rec[FLAT[i].key];return r&&r.ok===false});
-  if(mode==='fav')a=a.filter(function(i){var r=rec[FLAT[i].key];return r&&r.fav});
   return a;
 }
 function updateStats(){
   var vals=Object.keys(rec).map(function(k){return rec[k]});
   var done=vals.filter(function(x){return x.ok===true||x.ok===false}).length;
   var right=vals.filter(function(x){return x.ok===true}).length;
-  var wrong=vals.filter(function(x){return x.ok===false}).length;
-  var fav=vals.filter(function(x){return x.fav}).length;
   $('done').textContent=done;
   $('acc').textContent=done?Math.round(right/done*100)+'%':'--';
-  $('wrong').textContent=wrong;
-  $('fav').textContent=fav;
   $('progressBar').style.width=(done/FLAT.length*100)+'%';
 }
 function exportRec(){
@@ -1832,7 +1827,6 @@ function render(){
   $('curNo').textContent=q.no;
   $('hintLabel').textContent=q.hint?'提示词：('+q.hint+')':'（无提示词，纯语境填空）';
   $('answerInput').value=r&&r.input?r.input:'';
-  $('favBtn').textContent=r&&r.fav?'★ 已收藏':'☆ 收藏本题';
   // 跳转下拉
   var jumpKey=mode+'|'+filter+'|'+vis.join(',')+'|'+vis.map(function(g){var x=FLAT[g],rr=rec[x.key];return rr&&rr.ok===true?'1':(rr&&rr.ok===false?'0':'-')}).join('');
   if(renderCache.jumpKey!==jumpKey){
@@ -1951,12 +1945,6 @@ function peek(){
   showResult(old?old.ok:null,old?old.input:'');
   updateStats();
 }
-function toggleFav(){
-  var q=FLAT[vis[pos]],old=rec[q.key]||{ok:null,input:'',fav:false};
-  old.fav=!old.fav;rec[q.key]=old;save();
-  $('favBtn').textContent=old.fav?'★ 已收藏':'☆ 收藏本题';
-  if(mode==='fav')render();
-}
 function go(d){var n=pos+d;if(n>=0&&n<vis.length){pos=n;render()}}
 function syncSeg(){
   Array.prototype.forEach.call($('seg').children,function(b){b.className=(b.dataset.mode===mode?'on':'')});
@@ -1979,7 +1967,6 @@ $('passage').addEventListener('input',function(e){
 $('stuSubmitBtn').addEventListener('click',studentSubmit);
 $('stuResetBtn').addEventListener('click',studentReset);
 $('revealBtn').addEventListener('click',peek);
-$('favBtn').addEventListener('click',toggleFav);
 $('prevBtn').addEventListener('click',function(){go(-1)});
 $('nextBtn').addEventListener('click',function(){go(1)});
 $('jumpSel').addEventListener('change',function(){pos=parseInt(this.value,10);render()});
@@ -2153,17 +2140,18 @@ function setTool(t){
   if(penColors)penColors.hidden=(t!=='pen');
   if(markerColors)markerColors.hidden=(t!=='marker');
   if(sizeBox)sizeBox.hidden=(t==='marker');   /* 记号笔不用粗细 */
+  var s=$('noteSize');   /* 切换工具时，粗细滑块显示对应工具独立的值 */
+  if(s&&t!=='marker')s.value=(t==='eraser')?eraserSize:penSize;
   updateNotePreview();
 }
 function updateNotePreview(){
   var pv=$('notePreview');if(!pv)return;
   var col=(noteTool==='marker')?markerColor:(noteTool==='eraser')?'#9AA5A1':noteColor;
-  var w=noteSize;
-  if(noteTool==='marker')w=Math.max(14,noteSize*4);       /* 记号笔预览：固定较粗 */
-  else if(noteTool==='eraser')w=noteSize*5;                /* 橡皮预览：按粗细放大 */
+  var w=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?16:penSize;
   pv.style.background=col;pv.style.height=Math.min(24,Math.max(3,w))+'px';
   pv.style.opacity=(noteTool==='marker')?'0.4':'1';
-  var v=$('noteSizeVal');if(v)v.textContent=noteSize;
+  var v=$('noteSizeVal');
+  if(v)v.textContent=(noteTool==='marker')?'':((noteTool==='eraser')?eraserSize:penSize);
 }
 Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){
   b.addEventListener('click',function(){setTool(b.dataset.tool||'pen')});
@@ -2177,7 +2165,9 @@ Array.prototype.forEach.call(document.querySelectorAll('#penPanel .clr'),functio
   });
 });
 $('noteSize').addEventListener('input',function(){
-  noteSize=parseInt(this.value,10)||4;updateNotePreview();
+  var v=parseInt(this.value,10)||4;
+  if(noteTool==='eraser')eraserSize=v;else penSize=v;   /* 各自独立保存 */
+  updateNotePreview();
 });
 $('noteUndo').addEventListener('click',noteUndo);
 $('noteClear').addEventListener('click',noteClearCur);
@@ -2475,10 +2465,14 @@ $('dictTip').addEventListener('click',function(e){
     showDictTip(w,dictTipX,dictTipY,false);return;
   }
 });
-/* 点单词：教师就地查义；学生只加入单词本，不出翻译 */
+/* 点单词：教师就地查义；学生只加入单词本，不出翻译。
+   做笔记/画重点时不误弹：画完重点、五色笔选中、手写笔开笔时都不触发取词 */
 $('passage').addEventListener('click',function(e){
   if(e.target.closest('.blank')||e.target.closest('.hl'))return;
   if(e.target.closest('input'))return;   /* 学生模式横线输入框不触发查词 */
+  if(suppressWordClick){suppressWordClick=false;return;}   /* 刚画完五色笔重点，抑制误弹 */
+  if(teacherMode&&(penColor||noteOn))return;               /* 教师：五色笔选中/手写笔开笔时不查词 */
+  if(!teacherMode&&noteOn)return;                          /* 学生：记号笔开笔时不收藏 */
   var sel=window.getSelection();if(sel&&!sel.isCollapsed)return;
   var w=wordAtPoint(e.clientX,e.clientY);
   if(!w||w.length<2){if(teacherMode)hideDictTip();return}
