@@ -186,6 +186,15 @@ body.note-on #noteCanvas{pointer-events:auto;cursor:crosshair}
 body.note-on .card{box-shadow:0 8px 30px rgba(44,110,99,.22)}
 #noteBar{display:none;position:relative;z-index:12;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 8px;padding:8px 10px;background:#FFFDF3;border:1px solid #EADFA8;border-radius:10px}
 body.teacher #noteBar{display:flex}
+body.student-locked #noteBar{display:flex}   /* 学生也有记号笔 + 橡皮 */
+/* 钢笔只给教师：学生在工具栏里看不到「✒ 笔」 */
+body.student-locked #toolPen{display:none}
+/* 提示文案按身份切换 */
+body.teacher #noteTipStudent{display:none}
+body.student-locked #noteTipTeacher{display:none}
+/* 全局浮层提示：学生点词收藏要有可见反馈（noteStatus 也在工具栏内，需双保险） */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:9999;max-width:86vw;text-align:center;background:rgba(44,110,99,.95);color:#fff;padding:9px 18px;border-radius:20px;font-size:14px;line-height:1.5;box-shadow:0 6px 22px rgba(0,0,0,.24);pointer-events:none}
+#toast[hidden]{display:none!important}
 #noteBar .pen-tip{font-size:12px;color:var(--sub);margin-right:4px}
 .npen{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
 .toolgroup{display:inline-flex;gap:4px}
@@ -302,6 +311,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
 </style>
 </head>
 <body >
+<div id="toast" hidden></div>
 <script>
 /* 首屏先定布局，避免分栏闪动 */
 (function(){document.body.setAttribute('data-render',(function(){var l='auto';try{l=localStorage.getItem('grammar_fill_layout_v1')||'auto'}catch(e){}return (l==='auto')?(window.innerWidth>=720?'split':'stack'):l})());})();
@@ -498,7 +508,8 @@ body:not(.teacher) .right-col .sheet{display:none!important}
             <button id="penClear" class="pen-clear">清空本页</button>
           </div>
           <div id="noteBar">
-            <span class="pen-tip">手写工具：点工具选颜色/粗细，开笔后涂画；橡皮也能擦掉五色笔高亮</span>
+            <span class="pen-tip" id="noteTipTeacher">手写工具：钢笔/记号笔点工具选颜色，开笔后涂画；橡皮可擦掉五色笔高亮</span>
+            <span class="pen-tip" id="noteTipStudent">手写工具：记号笔涂画重点、橡皮擦掉；未开笔时点短文里的单词可直接收藏到单词本</span>
             <button id="noteToggle" class="nbtn">开笔</button>
             <div class="toolgroup">
               <button id="toolPen" class="toolbtn on" data-tool="pen" title="钢笔：可选颜色与粗细">✒ 笔</button>
@@ -2275,10 +2286,20 @@ function toggleFavWord(){
   showDictTip(dictTipWord,dictTipX,dictTipY,false);   /* 刷新收藏按钮状态 */
 }
 var stuFavTimer=0;
+/* 全局浮层提示：学生点词收藏时，工具栏里的 noteStatus 可能不可见，用浮层双保险 */
+var toastTimer=0;
+function toast(msg){
+  var el=$('toast');if(!el)return;
+  el.textContent=msg;el.hidden=false;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){el.hidden=true;},1900);
+}
 function studentFav(w){
   var added=favWordByText(w);if(added===null)return;
+  var msg=(added?'★ 已加入单词本：':'☆ 已从单词本移除：')+wordNorm(w);
+  toast(msg);
   var el=$('noteStatus');if(el){
-    el.textContent=(added?'★ 已加入单词本：':'☆ 已从单词本移除：')+wordNorm(w);
+    el.textContent=msg;
     clearTimeout(stuFavTimer);
     stuFavTimer=setTimeout(updateNoteStatus,2200);
   }
