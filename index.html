@@ -1508,23 +1508,29 @@ function noteStart(e){
   try{$('noteCanvas').setPointerCapture(e.pointerId)}catch(err){}
   redrawNotes();
 }
-/* 橡皮：穿透画布找到光标下的五色笔高亮并擦掉（elementFromPoint 命中不稳时用矩形兜底） */
+/* 橡皮擦五色笔高亮：按坐标 + 矩形 + 橡皮容差命中，数据层批量删除。
+   不依赖 elementFromPoint（开笔后 canvas 捕获指针会让它失效）；一次划过删掉命中的所有高亮，只 render 一次。 */
 function eraseHLAt(x,y){
-  try{
-    var cv=$('noteCanvas'),el=null;
-    if(cv&&document.elementFromPoint){
-      var old=cv.style.pointerEvents;cv.style.pointerEvents='none';
-      el=document.elementFromPoint(x,y);
-      cv.style.pointerEvents=old;
-      if(el&&el.closest){var h=el.closest('.hl');if(h&&removeHL(h))return;}
+  if(!teacherMode)return false;
+  var gi=vis[pos],arr=highlights[gi];
+  if(!arr||!arr.length)return false;
+  var tol=Math.max(12,Math.round((eraserSize||14)*2));   /* 橡皮越粗，命中范围越大 */
+  var hit=[],all=document.querySelectorAll('.hl');
+  for(var i=0;i<all.length;i++){
+    var el=all[i],r=el.getBoundingClientRect();
+    if(!r||(!r.width&&!r.height))continue;                 /* 跳过隐藏(result)里的空矩形 */
+    var dx=Math.max(r.left-x,0,x-r.right),dy=Math.max(r.top-y,0,y-r.bottom);
+    if(dx*dx+dy*dy<=tol*tol)hit.push({t:el.dataset.t,c:el.dataset.c});
+  }
+  if(!hit.length)return false;
+  var changed=false;
+  for(var m=0;m<hit.length;m++){
+    for(var j=arr.length-1;j>=0;j--){
+      if(arr[j].text===hit[m].t&&arr[j].color===hit[m].c){arr.splice(j,1);changed=true;break;}
     }
-    /* 兜底：遍历当前可见 .hl，用矩形命中 */
-    var all=document.querySelectorAll('.hl');
-    for(var i=0;i<all.length;i++){
-      var r=all[i].getBoundingClientRect();
-      if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){if(removeHL(all[i]))return;}
-    }
-  }catch(e){}
+  }
+  if(changed){saveHL();render();}
+  return changed;
 }
 function noteMove(e){
   if(!noteDrawing)return;
