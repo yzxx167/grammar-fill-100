@@ -199,6 +199,8 @@ body.teacher #noteBar{display:flex}
 #penPanel input[type=range]{flex:1;min-width:100px;accent-color:var(--main);cursor:pointer}
 #penPanel .pp-preview{height:28px;display:flex;align-items:center;justify-content:center;background:#F5FBF7;border-radius:6px;overflow:hidden}
 #penPanel .pp-preview span{display:block;width:70%;border-radius:99px;background:#C4483B;height:4px}
+#penPanel .pp-close{position:absolute;top:6px;right:6px;width:22px;height:22px;line-height:20px;text-align:center;border:0;background:#F0F4F2;border-radius:6px;color:var(--sub);cursor:pointer;font-size:16px;padding:0}
+#penPanel .pp-close:hover{background:var(--line);color:var(--ink)}
 .wbrow em{color:var(--sub);font-size:12px;margin-left:8px;font-style:normal}
 .wbdel{float:right;margin:0!important;padding:0 8px!important;font-size:13px!important;line-height:1.4;color:#B04A3A!important}
 .nbtn{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;cursor:pointer;color:var(--ink)}
@@ -504,6 +506,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
               <button id="toolEraser" class="toolbtn" data-tool="eraser" title="橡皮：只有粗细，可擦五色笔">▤ 橡皮</button>
             </div>
             <div id="penPanel" hidden>
+              <button id="penPanelClose" class="pp-close" title="关闭">×</button>
               <div id="ppColors">
                 <div class="pp-title">颜色</div>
                 <div class="pp-row" id="ppPenColors">
@@ -1505,14 +1508,22 @@ function noteStart(e){
   try{$('noteCanvas').setPointerCapture(e.pointerId)}catch(err){}
   redrawNotes();
 }
-/* 橡皮：穿透画布找到光标下的五色笔高亮并擦掉 */
+/* 橡皮：穿透画布找到光标下的五色笔高亮并擦掉（elementFromPoint 命中不稳时用矩形兜底） */
 function eraseHLAt(x,y){
   try{
-    var cv=$('noteCanvas');if(!cv||!document.elementFromPoint)return;
-    var old=cv.style.pointerEvents;cv.style.pointerEvents='none';
-    var el=document.elementFromPoint(x,y);
-    cv.style.pointerEvents=old;
-    if(el&&el.closest){var h=el.closest('.hl');if(h)removeHL(h);}
+    var cv=$('noteCanvas'),el=null;
+    if(cv&&document.elementFromPoint){
+      var old=cv.style.pointerEvents;cv.style.pointerEvents='none';
+      el=document.elementFromPoint(x,y);
+      cv.style.pointerEvents=old;
+      if(el&&el.closest){var h=el.closest('.hl');if(h&&removeHL(h))return;}
+    }
+    /* 兜底：遍历当前可见 .hl，用矩形命中 */
+    var all=document.querySelectorAll('.hl');
+    for(var i=0;i<all.length;i++){
+      var r=all[i].getBoundingClientRect();
+      if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){if(removeHL(all[i]))return;}
+    }
   }catch(e){}
 }
 function noteMove(e){
@@ -1650,11 +1661,12 @@ function autoPaint(){
   saveHL();sel.removeAllRanges();render();
 }
 function removeHL(el){
-  if(!teacherMode)return;
-  if(!el.classList.contains('hl'))return;
-  var gi=vis[pos];var arr=highlights[gi];if(!arr)return;
+  if(!teacherMode)return false;
+  if(!el.classList.contains('hl'))return false;
+  var gi=vis[pos];var arr=highlights[gi];if(!arr)return false;
   var i=arr.findIndex(function(h){return h.text===el.dataset.t&&h.color===el.dataset.c});
-  if(i>=0){arr.splice(i,1);saveHL();render();}
+  if(i>=0){arr.splice(i,1);saveHL();render();return true;}
+  return false;
 }
 function mergeHL(src){
   Object.keys(src).forEach(function(k){
@@ -2169,6 +2181,13 @@ $('noteSize').addEventListener('input',function(){
 });
 $('noteUndo').addEventListener('click',noteUndo);
 $('noteClear').addEventListener('click',noteClearCur);
+/* 工具面板：关闭按钮 + 点击外部收起（否则选完颜色/粗细关不掉） */
+$('penPanelClose').addEventListener('click',function(){var p=$('penPanel');if(p)p.hidden=true;});
+document.addEventListener('click',function(e){
+  var p=$('penPanel');if(!p||p.hidden)return;
+  if(e.target.closest('#penPanel')||e.target.closest('#noteBar .toolbtn'))return;
+  p.hidden=true;
+});
 var nc=$('noteCanvas');
 if(nc){
   nc.addEventListener('pointerdown',noteStart);
