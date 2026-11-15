@@ -293,7 +293,7 @@ body:not(.teacher) .sheet{display:none!important}
     </div>
     <div class="merr" id="gateMsg"></div>
     <div class="mbtns"><button id="gateCancel" class="nbtn">取消，留在学生模式</button></div>
-    <div class="mnote">默认教师口令 <b>2468</b>，请在「教师设置」里修改。授权码由老师点「给学生授权」生成、口头告诉学生，<b>有效时间由老师设置</b>。<br>按老师设置的「验证后本机保持」方式，验证一次后重新打开页面可自动进入教师模式；老师点「锁定并返回学生模式」即可取消。</div>
+    <div class="mnote">默认教师口令 <b>2468</b>，请在「教师设置」里修改。授权码由老师点「给学生授权」生成、口头告诉学生，<b>有效时间由老师设置（1 分钟～7 天，或永久有效）</b>。<br>按老师设置的「验证后本机保持」方式，验证一次后重新打开页面可自动进入教师模式；老师点「锁定并返回学生模式」即可取消。</div>
   </div>
 </div>
 
@@ -310,6 +310,7 @@ body:not(.teacher) .sheet{display:none!important}
     <div class="gate-title">给学生授权（老师自定有效时间）</div>
     <div class="mrow">
       <label>授权码有效 <input type="text" id="grantMinutes" inputmode="numeric" value="10" style="flex:0 0 64px;min-width:64px;text-align:center"> 分钟</label>
+      <label><input type="checkbox" id="grantForever"> 永久有效（不过期）</label>
       <label>验证后本机保持
         <select id="grantKeep">
           <option value="forever">一直保持，直到我锁定</option>
@@ -1220,7 +1221,7 @@ function pinHash(s){var h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCod
 function getPinHash(){var v=null;try{v=localStorage.getItem(PKEY)}catch(e){}return v||DEFAULT_PIN_HASH;}
 function getGrant(){try{return JSON.parse(localStorage.getItem(GKEY)||'null')}catch(e){return null}}
 function setGrant(g){try{if(g)localStorage.setItem(GKEY,JSON.stringify(g));else localStorage.removeItem(GKEY)}catch(e){}}
-function grantValid(g,c){return !!(g&&g.code===c&&g.exp>Date.now())}
+function grantValid(g,c){return !!(g&&g.code===c&&(g.exp===0||g.exp>Date.now()))}   /* exp=0：老师设的永久授权码 */
 /* 本机记住的教师身份；exp=0 表示一直有效，直到老师锁定 */
 function getTeacherSaved(){try{return JSON.parse(localStorage.getItem(TKEY)||'null')}catch(e){return null}}
 function setTeacherSaved(v){try{if(v)localStorage.setItem(TKEY,JSON.stringify(v));else localStorage.removeItem(TKEY)}catch(e){}}
@@ -1378,7 +1379,7 @@ function gatePinGo(){
 function gateCodeGo(){
   var v=$('gateCode').value.trim(),g=getGrant();
   if(grantValid(g,v)){teacherUnlock('code',g);return}
-  $('gateMsg').textContent=(g&&g.code===v&&g.exp<=Date.now())?'授权码已过期，请老师重新生成。':'授权码无效或未发放，请向老师索取。';
+  $('gateMsg').textContent=(g&&g.code===v&&g.exp!==0&&g.exp<=Date.now())?'授权码已过期，请老师重新生成。':'授权码无效或未发放，请向老师索取。';
 }
 function lockTeacher(){
   teacherMode=false;
@@ -1388,16 +1389,20 @@ function lockTeacher(){
 }
 function refreshGrantInfo(){
   var g=getGrant(),box=$('grantCode'),info=$('grantInfo');
-  if(g&&g.exp>Date.now()){
+  if(g&&(g.exp===0||g.exp>Date.now())){
     box.hidden=false;box.textContent=g.code;
-    info.textContent='有效中 · 剩余 '+fmtLeft(g.exp-Date.now())+'（老师设置 '+fmtLeft((g.minutes||10)*60000)+'）。把此码告诉学生，学生即可进入教师模式。';
+    info.textContent=g.exp===0
+      ?'永久有效 · 不会过期。把此码告诉学生，学生随时可进入教师模式，直到老师点「收回授权」。'
+      :'有效中 · 剩余 '+fmtLeft(g.exp-Date.now())+'（老师设置 '+fmtLeft((g.minutes||10)*60000)+'）。把此码告诉学生，学生即可进入教师模式。';
   }else{box.hidden=true;info.textContent='当前未发放授权码，学生无法进入教师模式。';}
 }
 function openTeacherSet(){
   if(!teacherMode)return;
   $('teacherSetMsg').textContent='';
+  var g=getGrant(),perm=!!(g&&g.exp===0);
   $('grantMinutes').value=String(getGrantMinutes());
-  var g=getGrant();$('grantKeep').value=(g&&g.keep)||'forever';
+  $('grantForever').checked=perm;$('grantMinutes').disabled=perm;
+  $('grantKeep').value=(g&&g.keep)||'forever';
   refreshGrantInfo();refreshRememberInfo();$('teacherSetDlg').hidden=false;
 }
 function wrapText(root,text,color){
@@ -1777,15 +1782,17 @@ $('pinSave').addEventListener('click',function(){
   try{localStorage.setItem(PKEY,pinHash(v))}catch(e){}
   $('pinNew').value='';$('teacherSetMsg').textContent='教师口令已更新，请牢记：'+v;
 });
+$('grantForever').addEventListener('change',function(){$('grantMinutes').disabled=!!this.checked;});
 $('grantGo').addEventListener('click',function(){
-  var raw=parseInt($('grantMinutes').value,10);
-  if(isNaN(raw)||raw<1||raw>10080){$('teacherSetMsg').textContent='有效时间请填 1–10080 分钟（最长 7 天）。';return}
+  var perm=!!$('grantForever').checked,raw=parseInt($('grantMinutes').value,10);
+  if(!perm&&(isNaN(raw)||raw<1||raw>10080)){$('teacherSetMsg').textContent='有效时间请填 1–10080 分钟（最长 7 天），或勾选「永久有效」。';return}
   var keep=$('grantKeep').value||'forever';
   var code=String(Math.floor(100000+Math.random()*900000));
-  setGrant({code:code,exp:Date.now()+raw*60000,minutes:raw,keep:keep});
-  saveGrantMinutes(raw);refreshGrantInfo();
+  setGrant({code:code,exp:perm?0:Date.now()+raw*60000,minutes:perm?0:raw,keep:keep});
+  if(!perm)saveGrantMinutes(raw);
+  refreshGrantInfo();
   var kn={forever:'一直保持，直到锁定',expire:'与授权码同时到期',once:'每次都要验证'}[keep]||'一直保持，直到锁定';
-  $('teacherSetMsg').textContent='已生成授权码 '+code+'：有效 '+fmtLeft(raw*60000)+'；验证后'+kn+'。';
+  $('teacherSetMsg').textContent='已生成授权码 '+code+'：'+(perm?'永久有效（不过期）':'有效 '+fmtLeft(raw*60000))+'；验证后'+kn+'。';
 });
 $('grantRevoke').addEventListener('click',function(){
   setGrant(null);refreshGrantInfo();
