@@ -513,7 +513,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
             <button id="noteToggle" class="nbtn">开笔</button>
             <div class="toolgroup">
               <button id="toolPen" class="toolbtn on" data-tool="pen" title="钢笔：可选颜色与粗细">✒ 笔</button>
-              <button id="toolMarker" class="toolbtn" data-tool="marker" title="记号笔：只有颜色">▨ 记号笔</button>
+              <button id="toolMarker" class="toolbtn" data-tool="marker" title="记号笔：半透明高亮，可调颜色与粗细">▨ 记号笔</button>
               <button id="toolEraser" class="toolbtn" data-tool="eraser" title="橡皮：只有粗细，可擦五色笔">▤ 橡皮</button>
             </div>
             <div id="penPanel" hidden>
@@ -1450,8 +1450,8 @@ var penColor=null;
 var suppressWordClick=false;   /* 画完五色笔重点后，抑制紧随的 click 误弹查词 */
 /* 画笔状态 */
 var noteOn=false,noteColor='#C4483B',noteDrawing=false,noteStroke=null;
-var penSize=4,eraserSize=14;   /* 钢笔与橡皮粗细各自独立；记号笔无粗细 */
-/* 手写工具：pen 钢笔 / marker 记号笔（只颜色、无粗细、半透明）/ eraser 橡皮（只粗细、可擦五色笔） */
+var penSize=4,eraserSize=14,markerSize=11;   /* 钢笔 / 橡皮 / 记号笔 粗细各自独立 */
+/* 手写工具：pen 钢笔 / marker 记号笔（半透明，可调粗细）/ eraser 橡皮（可擦五色笔） */
 var noteTool='pen',markerColor='#A5D6A7';
 var bySet={};FLAT.forEach(function(q){(bySet[q.si]=bySet[q.si]||[]).push(q)});
 function applyFont(){document.body.style.zoom=fontScale;setTimeout(syncNoteCanvas,0);}
@@ -1465,6 +1465,9 @@ function applyMode(){
   /* 工具默认：教师钢笔、学生记号笔；橡皮两种身份都用 */
   noteTool=teacherMode?'pen':'marker';
   Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){b.classList.toggle('on',b.dataset.tool===noteTool)});
+  var ns=$('noteSize');   /* 身份切换后，粗细滑块同步当前工具的独立值 */
+  if(ns)ns.value=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
+  var nv=$('noteSizeVal');if(nv)nv.textContent=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
   var panel=$('penPanel');if(panel)panel.hidden=true;
   if(typeof applyLayout==='function')applyLayout();   /* 身份切换时按设备重新选布局 */
   syncNoteCanvas();
@@ -1497,7 +1500,7 @@ function drawStrokes(ctx,arr,w,h){
     ctx.globalAlpha=(tool==='marker')?0.4:1;
     ctx.strokeStyle=(tool==='eraser')?'rgba(0,0,0,1)':s.c;
     var lw=(s.w||4);
-    if(tool==='marker')lw=Math.max(14,lw*4);      /* 记号笔：固定较粗，不随粗细 */
+    if(tool==='marker')lw=Math.max(6,Math.min(24,lw));   /* 记号笔：半透明荧光笔，不再 ×4 放大 */
     else if(tool==='eraser')lw=lw*5;               /* 橡皮：按粗细放大 */
     ctx.lineWidth=lw;
     ctx.lineCap='round';ctx.lineJoin='round';
@@ -1530,7 +1533,7 @@ function noteStart(e){
   e.preventDefault();
   var tool=noteTool;
   var col=(tool==='marker')?markerColor:noteColor;
-  var w=(tool==='eraser')?eraserSize:(tool==='marker')?16:penSize;
+  var w=(tool==='eraser')?eraserSize:(tool==='marker')?markerSize:penSize;
   if(tool==='eraser')eraseHLAt(e.clientX,e.clientY);           /* 橡皮同时擦五色笔文字高亮 */
   else if(tool==='pen')eraseHLAt(e.clientX,e.clientY,Math.max(10,Math.round((penSize||4)*2)));  /* 钢笔点到的五色笔圈也消失 */
   noteStroke={c:col,w:w,tool:tool,erase:(tool==='eraser'),pts:[notePt(e)]};
@@ -2188,19 +2191,19 @@ function setTool(t){
   if(colorBox)colorBox.hidden=(t==='eraser');   /* 橡皮没有颜色 */
   if(penColors)penColors.hidden=(t!=='pen');
   if(markerColors)markerColors.hidden=(t!=='marker');
-  if(sizeBox)sizeBox.hidden=(t==='marker');   /* 记号笔不用粗细 */
+  if(sizeBox)sizeBox.hidden=false;   /* 钢笔/记号笔/橡皮 都能调粗细，各自独立 */
   var s=$('noteSize');   /* 切换工具时，粗细滑块显示对应工具独立的值 */
-  if(s&&t!=='marker')s.value=(t==='eraser')?eraserSize:penSize;
+  if(s)s.value=(t==='eraser')?eraserSize:(t==='marker')?markerSize:penSize;
   updateNotePreview();
 }
 function updateNotePreview(){
   var pv=$('notePreview');if(!pv)return;
   var col=(noteTool==='marker')?markerColor:(noteTool==='eraser')?'#9AA5A1':noteColor;
-  var w=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?16:penSize;
+  var w=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
   pv.style.background=col;pv.style.height=Math.min(24,Math.max(3,w))+'px';
   pv.style.opacity=(noteTool==='marker')?'0.4':'1';
   var v=$('noteSizeVal');
-  if(v)v.textContent=(noteTool==='marker')?'':((noteTool==='eraser')?eraserSize:penSize);
+  if(v)v.textContent=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
 }
 Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){
   b.addEventListener('click',function(){setTool(b.dataset.tool||'pen')});
@@ -2215,7 +2218,9 @@ Array.prototype.forEach.call(document.querySelectorAll('#penPanel .clr'),functio
 });
 $('noteSize').addEventListener('input',function(){
   var v=parseInt(this.value,10)||4;
-  if(noteTool==='eraser')eraserSize=v;else penSize=v;   /* 各自独立保存 */
+  if(noteTool==='eraser')eraserSize=v;                       /* 各自独立保存 */
+  else if(noteTool==='marker')markerSize=v;
+  else penSize=v;
   updateNotePreview();
 });
 $('noteUndo').addEventListener('click',noteUndo);
