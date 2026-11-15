@@ -51,9 +51,9 @@ body[data-render="split"] .right-col{padding-left:24px;padding-right:4px;positio
 .blank.cur{background:var(--lime);box-shadow:0 0 0 2px rgba(44,110,99,.16)}
 .blank.cur u{border-bottom-color:var(--ink)}
 .blank.cur em,.blank.cur small{color:#3A4A20}
-/* 学生模式：横线内直接作答 */
-.blankInput{font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;border-bottom:2px solid #9AA9A4;border-radius:0;outline:none;width:92px;min-width:64px;max-width:150px;padding:2px 3px;margin:0 3px;text-align:center}
-.blankInput:focus{border-bottom-color:var(--main);background:#EAF3F0}
+/* 学生模式：横线内直接作答（输入框做成一条下划线，不显框） */
+.blankInput{font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;border-bottom:2px solid #9AA9A4;border-radius:0;outline:none;width:60px;min-width:44px;max-width:88px;padding:0 2px;margin:0 3px;text-align:center;line-height:1.5}
+.blankInput:focus{border-bottom-color:var(--main);background:transparent}
 .blankInput.ok{color:#2C6E63;border-bottom-color:#2C6E63;font-weight:700}
 .blankInput.bad{color:#C4483B;border-bottom-color:#C4483B;text-decoration:line-through}
 .stuSubmitBar{display:flex;gap:8px;align-items:center;justify-content:center;margin:14px 0 4px;flex-wrap:wrap}
