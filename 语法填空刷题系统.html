@@ -52,7 +52,7 @@ body[data-render="split"] .right-col{padding-left:24px;padding-right:4px;positio
 .blank.cur u{border-bottom-color:var(--ink)}
 .blank.cur em,.blank.cur small{color:#3A4A20}
 /* 学生模式：横线内直接作答（输入框做成一条下划线，不显框） */
-.blankInput{font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;border-bottom:2px solid #9AA9A4;border-radius:0;outline:none;width:60px;min-width:44px;max-width:88px;padding:0 2px;margin:0 3px;text-align:center;line-height:1.5}
+.blankInput{font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;border-bottom:2px solid #9AA9A4;border-radius:0;outline:none;width:60px;min-width:44px;padding:0 4px;margin:0 3px;text-align:center;line-height:1.5}
 .blankInput:focus{border-bottom-color:var(--main);background:transparent}
 .blankInput.ok{color:#2C6E63;border-bottom-color:#2C6E63;font-weight:700}
 .blankInput.bad{color:#C4483B;border-bottom-color:#C4483B;text-decoration:line-through}
@@ -96,6 +96,18 @@ input[type=text]:focus{border-color:var(--main)}
 .sheetgrid div{background:#F7FAF9;border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
 .sheetgrid div:hover{background:#EAF3F0}
 .sheetgrid b{color:var(--main);text-align:right}
+/* 教师端快捷导航：当前套 10 个题号按钮，点一下定位到短文对应空 */
+.quicknav{font-size:14px;color:var(--sub)}
+.quicknav .qnHead{font-weight:700;color:var(--main);padding:6px 0;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.quicknav .qnHead small{font-weight:400;color:var(--sub)}
+.qnGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
+.qnGrid button{position:relative;padding:9px 0;border:1px solid var(--line);border-radius:9px;background:#F7FAF9;color:var(--ink);font-weight:800;font-size:15px;cursor:pointer;line-height:1.1;transition:background .12s,border-color .12s}
+.qnGrid button:hover{background:#EAF3F0;border-color:var(--main)}
+.qnGrid button .qnMark{display:block;font-size:11px;font-weight:700;margin-top:2px;height:13px}
+.qnGrid button.ok .qnMark{color:#2C8C4A}
+.qnGrid button.bad .qnMark{color:#C4483B}
+.qnGrid button.cur{background:var(--lime);border-color:var(--main);box-shadow:0 0 0 2px rgba(44,110,99,.16)}
+.qnGrid button.cur .qnNo{color:#3A4A20}
 .tip{text-align:center;font-size:12px;color:var(--sub);margin-top:18px;line-height:1.9}
 .empty{text-align:center;padding:50px 10px;color:var(--sub);line-height:2.2}
 .empty button{margin-top:14px}
@@ -141,6 +153,23 @@ input[type=text]:focus{border-color:var(--main)}
 #printArea .wbtab th,#printArea .wbtab td{border:1px solid #BBB;padding:6px 8px;text-align:left;vertical-align:middle}
 #printArea .wbtab th{background:#F0F5F3;font-weight:700}
 #printArea .wbtab .wbwrite{min-width:120px}
+/* 错题本：打印表格 + 弹窗列表 */
+#printArea .wrtab{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px;color:#1F2A26}
+#printArea .wrtab th,#printArea .wrtab td{border:1px solid #BBB;padding:6px 8px;text-align:left;vertical-align:top}
+#printArea .wrtab th{background:#F0F5F3;font-weight:700}
+#printArea .wrtab .wrb{color:#C4483B;font-weight:700}
+#printArea .wrtab .wrwrite{min-width:56px}
+.wrItem{border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin:0 0 8px;background:#FBFCFB}
+.wrItem .wrHead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--sub);margin-bottom:5px}
+.wrItem .wrHead b{color:var(--ink);font-size:13px}
+.wrState{white-space:nowrap;border-radius:20px;padding:2px 8px;font-weight:700}
+.wrState.bad{background:#FDECEA;color:#C4483B}
+.wrState.good{background:#EAF3F0;color:#2C6E63}
+.wrState.wait{background:#F2F4F3;color:#777}
+.wrItem .wrSent{font-size:13px;line-height:1.75;color:var(--ink);word-break:break-word}
+.wrItem .wrSent .wrb{color:#C4483B;font-weight:700}
+.wrItem .wrAns{display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--sub);margin-top:6px}
+.wrItem .wrAns b{color:var(--ink)}
 @media print{
   @page{margin:14mm}
   .wrap{display:none!important}
@@ -308,6 +337,61 @@ body:not(.teacher) .right-col .result,
 body:not(.teacher) .right-col .colhead.r,
 body:not(.teacher) .right-col .sheet{display:none!important}
 .pubans{color:var(--main)!important;font-weight:700}
+/* ===== 学生答题卡：右侧作答区（竖排填写 → 提交答案 → 答案分析） ===== */
+.ansCard{background:#F7FAF9;border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px}
+.ansCard[hidden]{display:none!important}
+.acHead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.acTitle{font-size:14px;font-weight:800;color:var(--main)}
+.acTitle small{font-size:11.5px;font-weight:500;color:var(--sub);margin-left:6px}
+.acCount{font-size:12px;color:var(--sub);background:#fff;border:1px solid var(--line);border-radius:20px;padding:4px 10px;white-space:nowrap}
+.acCount b{color:var(--main);font-size:13px}
+/* 竖排作答行：56.______ */
+.acList{display:flex;flex-direction:column;gap:7px}
+.acRow{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:6px 10px;transition:border-color .15s,background .15s}
+.acRow.cur{box-shadow:0 0 0 2px rgba(44,110,99,.16);border-color:var(--main)}
+.acRow.filled{border-color:#BFDCD2}
+.acRow.right{background:#E8F5ED;border-color:#A8D8BC}
+.acRow.wrong{background:#FDEEEB;border-color:#EFC4BC}
+.acRow.need{animation:acShake .4s;border-color:#C4483B!important;background:#FDEEEB}
+.acNo{flex:none;width:34px;font-size:14px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.acInput{flex:1;min-width:0;font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;border-bottom:2px solid #9AA9A4;border-radius:0;outline:none;padding:2px 4px;line-height:1.5}
+.acInput::placeholder{color:#B6C2BE;letter-spacing:2px}
+.acInput:focus{border-bottom-color:var(--main)}
+.acRow.right .acInput{color:#1D6B45;font-weight:700;border-bottom-color:#A8D8BC}
+.acRow.wrong .acInput{color:#B03A2E;text-decoration:line-through;border-bottom-color:#EFC4BC}
+.acMark{flex:none;width:52px;text-align:right;font-size:11.5px;font-weight:700;color:var(--sub)}
+.acRow.right .acMark{color:#1D6B45}
+.acRow.wrong .acMark{color:#B03A2E}
+@keyframes acShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.acLegend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:var(--sub)}
+.acLegend i{display:inline-block;width:10px;height:10px;border-radius:3px;border:1px solid var(--line);vertical-align:-1px;margin-right:4px;background:#fff}
+.acLegend i.f{background:#EAF3F0;border-color:#BFDCD2}
+.acLegend i.r{background:#E8F5ED;border-color:#A8D8BC}
+.acLegend i.w{background:#FDEEEB;border-color:#EFC4BC}
+.blankInput.acFlash{background:#D9F542;transition:background .35s}
+.acBtns{display:flex;gap:8px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.acBtns button{font-size:14px;padding:9px 20px}
+.acBtns .primary{flex:1;min-width:120px}
+/* 答案分析：你的答案 / 正确答案（不含解析） */
+.acAnswers{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.acAnswers[hidden]{display:none!important}
+.acAnsTitle{font-size:12.5px;font-weight:800;color:var(--main);margin-bottom:8px}
+.acAnsTitle span{font-weight:500;color:var(--sub);font-size:11px;margin-left:6px}
+.acScore{display:inline-block;background:var(--main);color:#fff;font-size:13px;font-weight:800;border-radius:8px;padding:6px 14px;margin-bottom:10px}
+.acAnsGrid{display:flex;flex-direction:column;gap:6px}
+.acAnsRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:7px;padding:7px 10px}
+.acAnsRow.ok{background:#F1F9F4;border-color:#CBE7D5}
+.acAnsRow.bad{background:#FEF4F2;border-color:#F3D2CC}
+.acAnsRow em{font-style:normal;font-weight:800;color:var(--ink);flex:none;width:32px}
+.acAnsRow span{flex:1;min-width:130px;color:var(--sub)}
+.acAnsRow span b{color:var(--ink);word-break:break-word}
+.acAnsRow span.correct b{color:#1D6B45}
+.acAnsRow i{font-style:normal;font-weight:800;flex:none}
+.acAnsRow.ok i{color:#1D6B45}
+.acAnsRow.bad i{color:#B03A2E}
+@media print{.ansCard{display:none!important}}
+/* 学生模式：旧提交栏收起，统一在右侧答题卡作答与提交 */
+body:not(.teacher) #stuPanel{display:none!important}
 </style>
 </head>
 <body >
@@ -338,6 +422,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
       <button id="fontBtn" title="调整字体大小（100%–300%）">字号</button>
       <button id="dashBtn" title="查看正确率看板（教师）">正确率</button>
       <button id="wordBookTopBtn" title="打开我的单词本（点单词收藏的生词）">单词本</button>
+      <button id="wrongBookTopBtn" title="打开我的错题本（提交后自动收录做错那一空的完整句子）">错题本</button>
       <button id="teacherSetBtn" title="教师设置：口令、授权、锁定">教师设置</button>
     </div>
   </div>
@@ -369,12 +454,13 @@ body:not(.teacher) .right-col .sheet{display:none!important}
     <label class="optline"><input type="radio" name="pmode" value="q" checked><span><b>只打印题目</b><small>仅短文原文与空格，适合发给学生当练习卷</small></span></label>
     <label class="optline" id="optQA"><input type="radio" name="pmode" value="qa"><span><b>题目 + 答案一起打印</b><small>每套附答案速查与考点，适合教师讲评 <span id="qaHint"></span></small></span></label>
     <label class="optline" id="optWB"><input type="radio" name="pmode" value="wb"><span><b>打印单词本</b><small>导出收藏的生词，含音标、释义与默写横线 <span id="wbHint"></span></small></span></label>
+    <label class="optline" id="optWR"><input type="radio" name="pmode" value="wr"><span><b>打印错题本</b><small>只收录做错那一空的完整句子，附上你的答案与正确答案 <span id="wrHint"></span></small></span></label>
     <label class="optline" id="optNote"><input type="checkbox" id="pIncludeNote" checked><span><b>连同教师手写笔记</b><small>把老师的涂画批注一起印出来 <span id="noteHint"></span></small></span></label>
     <div class="mbtns">
       <button id="printCancel" class="nbtn">取消</button>
       <button id="printGo" class="primary">生成并打印</button>
     </div>
-    <div class="mnote">学生模式可打印「只打印题目」和「打印单词本」；答案与教师笔记需教师授权后使用。</div>
+    <div class="mnote">学生模式可打印「只打印题目」「打印单词本」与「打印错题本」；题目答案卷与教师手写笔记需教师授权后使用。</div>
   </div>
 </div>
 
@@ -468,7 +554,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
   </div>
 </div>
 
-<!-- 我的单词本（收藏的生词，师生均可用，均可打印） -->
+<!-- 我的单词本（收藏的生词，师生均可收藏与打印） -->
 <div id="wordBookDlg" class="modal" hidden>
   <div class="mbox">
     <h3>我的单词本</h3>
@@ -482,6 +568,23 @@ body:not(.teacher) .right-col .sheet{display:none!important}
       <button id="wbClose" class="primary">关闭</button>
     </div>
     <div class="mnote">点「打印单词本」会生成带音标、释义与默写横线的表格；也可在顶部「打印」里选「打印单词本」。</div>
+  </div>
+</div>
+
+<!-- 我的错题本（学生提交整卷后自动收录，含错空所在的完整句子） -->
+<div id="wrongBookDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>我的错题本</h3>
+    <p class="mdesc">每次提交整卷后，答错的空会自动收录<strong>它所在的那一句完整句子</strong>（不是整篇文章），并记下你的答案与正确答案。重新做对后自动标为「已订正」，仍保留在列表里供复习。</p>
+    <div class="dlist" id="wrongBookList"></div>
+    <div class="mok" id="wrongBookCount"></div>
+    <div class="mbtns">
+      <button id="wrClear" class="nbtn">清空并重做</button>
+      <button id="wrExport" class="nbtn">导出文档</button>
+      <button id="wrPrint" class="nbtn">打印错题本</button>
+      <button id="wrClose" class="primary">关闭</button>
+    </div>
+    <div class="mnote">「导出文档」会下载一个独立的 HTML 文件，双击打开即可打印；也可在顶部「打印」里选「打印错题本」。只收录句子、你的答案与正确答案，不含解析。</div>
   </div>
 </div>
 
@@ -559,7 +662,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
           <div class="scrollhint">短文较长，可在此区域内上下滑动</div>
           <div id="stuPanel" class="student-only">
             <div class="stuSubmitBar">
-              <button class="primary" id="stuSubmitBtn">提交批改</button>
+              <button class="primary" id="stuSubmitBtn">提交答案</button>
               <span class="stuScore" id="stuScore"></span>
               <button id="stuResetBtn">清空重做</button>
             </div>
@@ -585,17 +688,41 @@ body:not(.teacher) .right-col .sheet{display:none!important}
             <select id="jumpSel" aria-label="跳转题目"></select>
             <button id="nextBtn">下一题 →</button>
           </div>
+          <div class="quicknav teacher-only" id="quickNav">
+            <div class="qnHead"><span>快捷导航</span><small>点序号直达该空</small></div>
+            <div class="qnGrid" id="qnGrid"></div>
+          </div>
           <details class="sheet">
             <summary>本套答案速查（10 题，点题号可跳转）</summary>
             <div class="sheetgrid" id="sheetBody"></div>
           </details>
+          <!-- 学生答题卡：右侧作答区，竖排填写 → 提交答案 → 答案分析（你的答案/正确答案，不含解析） -->
+          <div class="ansCard student-only" id="ansCard">
+            <div class="acHead">
+              <div class="acTitle">答题卡<small>本套 10 空 · 在下方横线填写答案</small></div>
+              <div class="acCount" id="acCount"></div>
+            </div>
+            <div class="acList" id="acList"></div>
+            <div class="acLegend">
+              <span><i></i>未填</span><span><i class="f"></i>已填</span>
+              <span><i class="r"></i>正确</span><span><i class="w"></i>错误</span>
+            </div>
+            <div class="acBtns">
+              <button class="primary" id="acSubmitBtn">提交答案</button>
+              <button id="acResetBtn">清空重做</button>
+            </div>
+            <div class="acAnswers" id="acAnswers" hidden>
+              <div class="acAnsTitle">答案分析<span>提交后显示 · 不含解析</span></div>
+              <div class="acScore" id="acScore"></div>
+              <div class="acAnsGrid" id="acAnsGrid"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="empty" id="empty" hidden>当前筛选下还没有题目<br><button id="backAll">回到全部题目</button></div>
     <canvas id="noteCanvas"></canvas>
   </div>
-  <div class="tip">宽屏为<b>左原文 · 右作答</b>（右侧随滚动悬浮），窄屏自动改为上下；顶部「布局」按钮可手动切换并记住选择。<br>键盘：<b>← →</b> 翻题 · <b>Enter</b> 核对 / 下一题 · 点短文里的其他空格可直接跳到那一题<br><b>学生模式</b>（默认）：输入答案核对、看对错与错题；看不到答案速查、不能一键看答案。要进教师模式，需输入<b>教师口令</b>或老师发放的<b>授权码</b>。<br><b>教师模式</b>：一键「公布答案」核对、正确率看板、五色笔文字高亮、<b>手写笔</b>在题目卡上涂画做笔记（5 色 / 4 档粗细 / 橡皮 / 撤销 / 清空，按题保存，学生只读可见），并可选择打印答案卷。<br>「打印」可选<b>只打印题目</b>或<b>题目+答案</b>，还能把手写笔记一并印出；「字号」100%–300%；作答、高亮、笔记均可用「导出 / 导入」迁移。资料依据《2026届各地英语语法填空汇编（含答案与解析）》整理。</div>
 </div>
 
 <script id="dictPhon" type="application/json">{"accessible":"әk'sesәbl","account":"ә'kaunt","across":"ә'krɒs","actually":"'æktʃuәli","acupuncture":"'ækju.pʌŋktʃә","acupuncturist":".ækju'pʌŋktʃәrist","added":"'ædid","advanced":"әd'vɑ:nst","agency":"'eidʒәnsi","ago":"ә'gәu","alive":"ә'laiv","alongside":"ә'lɒŋ'said","amaze":"ә'meiz","amazed":"ә'meizd","american":"ә'merikәn","ancient":"'einʃәnt","another":"ә'nʌðә","anyone":"'eniwʌn","appeal":"ә'pi:l","appreciate":"ә'pri:ʃieit","appreciation":"ә.pri:ʃi'eiʃәn","approach":"ә'prәutʃ","architecture":"'ɑ:kitektʃә","area":"'єәriә","arms":"ɑ:mz","around":"ә'raund","arranges":"əˈreindʒz","art":"ɑ:t","artful":"'ɑ:tful","artificial":".ɑ:ti'fiʃәl","arts":"ɑ:ts","artworks":"'ɑ:twɜ:ks","attention":"ә'tenʃәn","attracted":"ə'træktɪd","attractions":"ət'rækʃnz","attracts":"əˈtrækts","audience":"'ɒ:diәns","audiences":"'ɔ:dɪənsɪz","australian":"ɒ'streiljәn","background":"'bækgraund","balance":"'bælәns","banks":"bæŋks","battle":"'bætl","beautiful":"'bju:tiful","beautifully":"'bju:tifuli","beauty":"'bju:ti","became":"bi'keim","become":"bi'kʌm","began":"bi'gæn","beginning":"bi'giniŋ","beijing":"beidʒiŋ","belief":"bi'li:f","believing":"bi'li:viŋ","belonged":"bɪ'lɒŋd","beloved":"bi'lʌvd","ben":"ben","beyond":"bi'jɒnd","big":"big","biological":".baiәu'lɒdʒikәl","birthplace":"'bә:θpleis","boat":"bәut","body":"'bɒdi","bond":"bɒnd","book":"buk","borders":"'bɔ:dәz","breath":"breθ","breathtaking":"'breθ.teikiŋ","bridge":"bridʒ","british":"'britiʃ","brought":"brɒ:t","cairo":"'kaiәrәu","calling":"'kɒ:liŋ","calm":"kɑ:m","came":"keim","camera":"'kæmәrә","canadian":"kә'neidiәn","captures":"ˈkæptʃəz","capturing":"'kæptʃәriŋ","care":"kєә","carefully":"'kєәfuli","carried":"'kærid","caught":"kɒ:t","cause":"kɒ:z","celebrated":"'selibreitid","celebration":".seli'breiʃәn","center":"'sentә","centuries":"'sentʃərɪz","century":"'sentʃuri","check-ups":"t'ʃek'ʌps","china":"'tʃainә","chinese":"tʃai'ni:z","chongqing":"'tʃjŋ'kiŋ","cinema":"'sinәmә","cinematic":",sini'mætik","city":"'siti","classic":"'klæsik","clay":"klei","clear":"kliә","clearly":"'kliәli","clinic":"'klinik","cloud":"klaud","coach":"kәutʃ","coaches":"kəutʃiz","collection":"kә'lekʃәn","college":"'kɒlidʒ","colorful":"'kʌlәful","comfort":"'kʌmfәt","comfortable":"'kʌmfәtәbl","complete":"kәm'pli:t","completely":"kәm'pli:tli","concluded":"kənˈklu:did","confirm":"kәn'fә:m","connect":"kә'nekt","connection":"kә'nekʃәn","connects":"kəˈnekts","constant":"'kɒnstәnt","content":"kәn'tent","contrasts":"ˈkɔntræsts","control":"kәn'trәul","conveyed":"kənˈveid","cool":"ku:l","cooperation":"kәu.ɒpә'reiʃәn","core":"kɒ:","couldn't":"'kudnt","countless":"'kauntlis","court":"kɒ:t","create":"kri:'eit","created":"kri: 'eitid","creation":"kri:'eiʃәn","critical":"'kritikәl","cultural":"'kʌltʃәrәl","culture":"'kʌltʃә","cupping":"'kʌpiŋ","curiosity":".kjuәri'ɒsiti","cutting-edge":"'kʌtɪŋ'edʒ","cyberpunk":"ˈsaɪbəpʌŋk","daily":"'deili","dance":"dæns. dɑ:ns","dancers":"'dɑ:nsəz","data":"'deitә","davy":"'deivi","day":"dei","decades":"ˈdekeidz","decayed":"di'keid","december":"di'sembә","decline":"di'klain","deep":"di:p","deepened":"ˈdi:pənd","deeply":"'di:pli","deer":"diә","delivering":"diˈlivərɪŋ","denmark":"'denmɑ:k","design":"di'zain","designed":"di'zaind","despite":"di'spait","destination":".desti'neiʃәn","developing":"di'velәpiŋ","development":"di'velәpmәnt","different":"'difәrәnt","digital":"'didʒitәl","digitization":".didʒitai'zeiʃәn. -ti'z-","direct":"di'rekt","directly":"di'rektli, dai'rektli","disciples":"dɪ'saɪplz","discipline":"'disiplin","display":"dis'plei","distant":"'distәnt","distinct":"dis'tiŋkt","district":"'distrikt","diversity":"dai'vә:siti","domestic":"dәu'mestik","drama":"'drɑ:mә","drum":"drʌm","drumbeats":"ˈdrʌmbi:ts","due":"dju:","dynamic":"dai'næmik","dynasty":"'dainæsti","earliest":"'iәliist","earned":"ә:nd","echoing":"'ekәuiŋ","educating":"ˈedju:keitɪŋ","effort":"'efәt","egypt":"'i:dʒipt","egyptian":"i'dʒipʃәn","eight":"eit","emotion":"i'mәuʃәn","emperor":"'empәrә","employs":"imˈplɔiz","enables":"iˈneiblz","encourage":"in'kʌridʒ","end":"end","enemies":"'enəmɪz","engage":"in'geidʒ","english":"'iŋgliʃ","enhanced":"in'hɑ:nst. -'hænst","enjoying":"end'ʒɔɪɪŋ","enriched":"in'ritʃt","enthusiastic":"in.θju:zi'æstik","especially":"i'speʃәli","establish":"i'stæbliʃ","event":"i'vent","eventually":"i'ventʃuәli","everyday":"'evri'dei","examine":"ig'zæmin","example":"ig'zæmpl","exceptional":"ik'sepʃәnәl","exhibition":".eksi'biʃәn","expectations":"ekspek'teɪʃnz","experience":"ik'spiәriәns","experienced":"ik'spiәriәnst","experiences":"iksˈpiəriənsiz","expert":"'ekspә:t","explore":"ik'splɒ:","extensive":"ik'stensiv","fails":"feilz","family":"'fæmәli","far":"fɑ:","february":"'februәri","feel":"fi:l","fellow":"'felәu","felt":"felt","field":"fi:ld","figure":"'figә","filled":"fild","film":"film","finest":"fi'nest","firmly":"'fә:mli","flights":"flaits","floor":"flɒ:","flow":"flәu","flowing":"flәuiŋ","focus":"'fәukәs","football":"'futbɒ:l","forced":"fɒ:st","forceful":"'fɒ:sful","foreigners":"'fɒrənəz","form":"fɒ:m","found":"faund","front":"frʌnt","fruit":"fru:t","full":"ful","fully":"'fuli","fusion":"'fju:ʒәn","future":"'fju:tʃә","gentle":"'dʒentl","geographic":",dʒiә'^ræfik","global":"'glәubl","going":"'gәuiŋ","golden":"'gәuldn","graceful":"'greisful","gradually":"'grædʒuәli","great":"greit","ground":"graund","growing":"'grәuiŋ","growth":"grәuθ","guangzhou":"'ɡwɑ:ŋ'dʒəu","guizhou":"'^wei'dʒu:","habit":"'hæbit","half":"hɑ:f","hall":"hɒ:l","hammond":"'hæmәnd","harmful":"'hɑ:mful","harmony":"'hɑ:mәni","health":"'helθ","hear":"hiә","help":"help","heritage":"'heritidʒ","hide":"haid","him":"him","himself":"him'self","historic":"hi'stɒrik","historical":"hi'stɒrikәl","history":"'histәri","hobby":"'hɒbi","hold":"hәuld","hollow":"'hɒlәu","home":"hәum","hosts":"həusts","house":"haus","however":"hau'evә","human":"'hju:mәn","humanity":"hju:'mæniti","hunt":"hʌnt","illness":"'ilnis","impression":"im'preʃәn","inbound":"'in'baund","included":"in'klu:did","increase":"in'kri:s","increased":"in'kri:st","increasingly":"in'kri:siŋli","industry":"'indәstri","influence":"'influәns","initial":"i'niʃәl","initiatives":"ɪ'nɪʃətɪvz","innovative":"'inәjveitiv","inside":"'in'said","inspired":"in'spaiәd","inspiring":"in'spaiәriŋ","instant":"'instәnt","integrate":"'intigreit","intelligence":"in'telidʒәns","intense":"in'tens","interactive":",intәr'æktiv","interest":"'intrist","invites":"inˈvaits","it's":"its","itself":"it'self","joshua":"'dʒɒʃuә","journey":"'dʒә:ni","joy":"dʒɒi","june":"dʒu:n","kapok":"'keipɒk","kicked":"kikt","kind":"kaind","king":"kiŋ","knee":"ni:","known":"nәun","lab":"læb","labour":"'leibә","labourers":"ˈleɪbrəz","landscape":"'lændskeip","landscapes":"ˈlændskeips","large":"lɑ:dʒ","last":"lɑ:st","lasting":"'lɑ:stiŋ","late":"leit","later":"'leitә","latest":"'leitist","layered":"'leiәd","learn":"lә:n","learned":"'lә:nid","leave":"li:v","led":"led","left":"left","legacy":"'legәsi","life":"laif","life-sized":"'laifsaizd","light":"lait","like":"laik","limited":"'limitid","line":"lain","live":"liv.laiv","living":"'liviŋ","local":"'lәukәl","london":"'lʌndәn","long":"lɒŋ","longing":"'lɒŋiŋ","love":"lʌv","maintains":"meinˈteinz","major":"'meidʒә","managing":"'mænidʒiŋ","map":"mæp","master":"'mɑ:stә. 'mæstә","meant":"ment","media":"'mi:diә","medical":"'medikl","medicine":"'medisin","meeting":"'mi:tiŋ","member":"'membә","memorial":"mi'mɒ:riәl","message":"'mesidʒ","million":"'miljәn","ming":"miŋ","miracle":"'mirәkl","mix":"miks","model":"'mɒdәl","modeling":"'mɔdliŋ","modern":"'mɒdәn","moment":"'mәumәnt","month":"mʌnθ","monthly":"'mʌnθli","motion":"'mәuʃәn","motionless":"'mәuʃәnlis","mountain":"'mauntin","move":"mu:v","movement":"'mu:vmәnt","movie":"'mu:vi","moving":"'mu:viŋ","multilayered":"mʌltɪ'leɪəd","multimedia":".mʌlti'mi:diә","museum":"mju:'ziәm","music":"'mju:zik","musicians":"mju:'zɪʃənz","nanjing":"'næn'dʒiŋ","nature":"'neitʃә","nearly":"'niәli","notable":"'nәutәbl","offer":"'ɒfә","official":"ә'fiʃәl","old":"әuld","onto":"'ɒntu:","opening":"'әupәniŋ","opera":"'ɒpәrә","option":"'ɒpʃәn","ordinary":"'ɒ:dinәri","original":"ә'ridʒәnl","outbreak":"'autbreik","overseas":"'әuvә'si:z","owner":"'әunә","page":"peidʒ","pain":"pein","painting":"'peintiŋ","palace":"'pælis","pardoned":"ˈpɑ:dənd","part":"pɑ:t","parts":"pɑ:ts","pass":"pæs","passed":"pɑ:st","passion":"'pæʃәn","past":"pɑ:st","peace":"pi:s","peking":"'pi:kiŋ","people":"'pi:pl","perfect":"'pә:fikt","performance":"pә'fɒ:mәns","performances":"pə'fɔ:mənsɪz","performers":"pɚ'fɔrmɚz","personal":"'pә:snl","perth":"pә:θ","phenomenon":"fi'nɒminәn","philosophy":"fi'lɒsәfi","photo":"'fәutәu","photographer":"fә'tɔ^rәfә","photography":"fә'tɒgrәfi","physical":"'fizikl","picture":"'piktʃә","plant":"plænt. plɑ:nt","platforms":"p'lætfɔ:mz","pleasant":"'pleznt","poetry":"'pәuitri","possesses":"pəˈzesiz","possibly":"'pɒsәbli","posters":"'pəʊstəz","power":"'pauә","powerful":"'pauәful","practical":"'præktikl","practices":"ˈpræktisiz","practitioner":"præk'tiʃәnә","present":"'preznt","private":"'praivit","program":"'prәugræm","projectors":"prəd'ʒektəz","properly":"'prɒpәli","public":"'pʌblik","quarterly":"'kwɔ:tәli","quiet":"'kwaiәt","rare":"rєә","rarely":"'rєәli","rather":"'ræðә","raw":"rɒ:","read":"ri:d","real":"'riәl","reality":"ri'æliti","realize":"'riәlaiz","received":"ri'si:vd","receiving":"ri'si:viŋ","recent":"'ri:snt","recommendations":"ˌrekəmenˈdeiʃənz","recommending":"ˌrekəˈmendɪŋ","recover":"ri'kʌvә","recreation":".rekri'eiʃәn","reduced":"ri'dju:st","reflect":"ri'flekt","reflection":"ri'flekʃәn","relying":"riˈlaiŋ","remained":"riˈmeind","remains":"ri'meins","remarkable":"ri'mɑ:kәbl","representing":"ˌrepriˈzentɪŋ","residential":".rezi'denʃәl","responded":"riˈspɔndid","rhythm":"'riðәm","rich":"ri:tʃ","right":"rait","robe":"rәub","root":"ru:t","run":"rʌn","said":"sed","sailed":"seild","say":"sei","scale":"skeil","scene":"si:n","see":"si:","seen":"si:n","sense":"sens","serves":"sə:vz","set":"set","seven":"'sevn","sharing":"'ʃeәriŋ","shiny":"'ʃaini","shopping":"'ʃɒpiŋ","show":"ʃәu","showing":"'ʃәuiŋ","shown":"ʃәun","significant":"sig'nifikәnt","silent":"'sailәnt","silk":"silk","six":"siks","sky":"skai","skyscrapers":"'skaɪˌskreɪpəz","slowly":"'slәuli","small":"smɒ:l","social":"'sәuʃәl","soft":"sɒft","softly":"'sɒftli","solitude":"'sɒlitju:d","something":"'sʌmθiŋ","song":"sɒŋ","soon":"su:n","sorrow":"'sɒrәu","soul":"sәul","sound":"saund","spatial":"'speiʃәl","speak":"spi:k","sped":"sped","speed":"spi:d","spent":"spent","spirit":"'spirit","spring":"spriŋ","stage":"steidʒ","star":"stɑ:","started":"s'tɑ:tɪd","state":"steit","steady":"'stedi","stepped":"stept","stepping":"'stepiŋ","stills":"stilz","story":"'stɒ:ri","storytelling":"'stɒ:riteliŋ","strength":"streŋθ","strengthen":"'streŋθәn","strike":"straik","striking":"'straikiŋ","strong":"strɒŋ","studio":"'stju:diәu","study":"'stʌdi","summer":"'sʌmә","sun":"sʌn","surgery":"'sә:dʒәri","surpass":"sә'pɑ:s","surreal":"sә'riәl","surroundings":"sә'rajndiŋz","survive":"sә'vaiv","survived":"səˈvaivd","swordplay":"'sɒ:dplei","sydney":"'sidni","tan":"tæn","tang":"tæŋ","tea":"ti:","teacher":"'ti:tʃә","team":"ti:m","technological":".teknә'lɒdʒikl","technology":"tek'nɒlәdʒi","terracotta":"terә'kɔtә","theater":"'θiәtә","themselves":"ðәm'selvz","thoughtful":"'θɒ:tful","thousand":"'θauznd","time":"taim","timeless":"'taimlis","today":"tә'dei","together":"tә'geðә","told":"tәuld","tomb":"tu:m","too":"tu:","tools":"tu:lz","top":"tɒp","touch":"tʌtʃ","touching":"'tʌtʃiŋ","tourism":"'tuәrizm","tourists":"'tʊərɪsts","tours":"tuәz","toward":"tә'wɒ:d","tradition":"trә'diʃәn","traditional":"trә'diʃәnl","traditions":"trə'dɪʃnz","transforms":"trænsˈfɔ:mz","travel":"'trævl","traveling":"'trævliŋ","treasures":"ˈtreʒəz","treatment":"'tri:tmәnt","tree":"tri:","trend":"trend","turning":"'tә:niŋ","ultimately":"'ʌltimәtli","unfolding":"ʌn'fәuldiŋ","unique":"ju:'ni:k","unit":"'ju:nit","university":".ju:ni'vә:siti","unknown":".ʌn'nәun","untouched":".ʌn'tʌtʃt","upward":"'ʌpwәd","urban":"'ә:bәn","use":"ju:s","used":"'ju:st","viewers":"'vju:əz","virtual":"'vә:tʃuәl","visit":"'vizit","visiting":"'vizitiŋ","visitor":"'vizitә","visual":"'viʒuәl","visually":"'vizjjәli","vital":"'vaitl","vivid":"'vivid","wait":"weit","waited":"weitid","walking":"'wɒ:kiŋ","warrior":"'wɒ:riә","warriors":"'wɒrɪəz","watching":"'wɔtʃiŋ","water":"'wɒ:tә","waves":"weivz","way":"wei","ways":"weiz","welcome":"'welkәm","well":"wel","well-being":"'welbiiŋ","wild":"waild","wisdom":"'wizdәm","wish":"wiʃ","witness":"'witnis","wood":"wud","woods":"wjdz","work":"wә:k","world":"wә:ld","worldwide":"'wә:ldwaid","worried":"'wʌrid","worth":"wә:θ","xi'an":"'ʃi:'ɑ:n,ʃjɑ:n","year":"jiә","young":"jʌŋ","yunnan":"'ju:n'næn"}</script>
@@ -1398,6 +1525,16 @@ DATA.sets.forEach(function(s,si){
 var KEY='grammar_fill_100_v1', rec={};
 try{rec=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){rec={}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(rec))}catch(e){}}
+/* 学生作答 / 重做次数：按套记录，随「导出 / 导入」迁移 */
+var AKEY='grammar_fill_attempts_v1', attempts={};
+try{attempts=JSON.parse(localStorage.getItem(AKEY)||'{}')||{}}catch(e){attempts={}}
+function saveAttempts(){try{localStorage.setItem(AKEY,JSON.stringify(attempts))}catch(e){}}
+/* 错题收录历史：记录「曾经错过」的空，当前对错仍以 rec 为准 */
+var W2KEY='grammar_fill_wrong_v1',wrongHist={};
+try{wrongHist=JSON.parse(localStorage.getItem(W2KEY)||'{}')||{}}catch(e){wrongHist={}}
+function saveWrong(){try{localStorage.setItem(W2KEY,JSON.stringify(wrongHist))}catch(e){}}
+function attOfById(id){if(!attempts[id]||typeof attempts[id]!=='object')attempts[id]={submit:0,redo:0};return attempts[id]}
+function attOf(si){return attOfById(DATA.sets[si].id)}
 /* 教师模式 / 字号 / 五色笔 状态 */
 var HKEY='grammar_fill_hl_v1', highlights={};
 try{highlights=JSON.parse(localStorage.getItem(HKEY)||'{}')||{}}catch(e){highlights={}}
@@ -1632,7 +1769,7 @@ function teacherUnlock(by,g){
   if(keep==='once'){setTeacherSaved(null)}
   else{setTeacherSaved({on:true,by:by,exp:(keep==='expire'&&g)?g.exp:0,at:Date.now()})}
   $('gateDlg').hidden=true;
-  applyMode();syncNoteCanvas();refreshRememberInfo();
+  applyMode();render();syncNoteCanvas();refreshRememberInfo();
 }
 function gatePinGo(){
   if(pinHash($('gatePin').value.trim())===getPinHash()){teacherUnlock('pin',null);return}
@@ -1647,7 +1784,7 @@ function lockTeacher(){
   teacherMode=false;
   setTeacherSaved(null);   /* 取消记住：下次打开回到学生模式 */
   $('teacherSetDlg').hidden=true;$('gateDlg').hidden=true;$('printDlg').hidden=true;$('dash').hidden=true;
-  setNoteOn(false);applyMode();syncNoteCanvas();refreshRememberInfo();
+  setNoteOn(false);applyMode();render();syncNoteCanvas();refreshRememberInfo();
 }
 function refreshGrantInfo(){
   var g=getGrant(),box=$('grantCode'),info=$('grantInfo');
@@ -1783,7 +1920,7 @@ function updateStats(){
 }
 function exportRec(){
   try{
-    var data=JSON.stringify({app:'grammar_fill_100',v:2,exported:Date.now(),rec:rec,hl:highlights,notes:notes});
+    var data=JSON.stringify({app:'grammar_fill_100',v:4,exported:Date.now(),rec:rec,hl:highlights,notes:notes,att:attempts,wrong:wrongHist});
     var blob=new Blob([data],{type:'application/json'});
     var a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
@@ -1818,8 +1955,32 @@ function importFile(e){
         });
         saveNotes();
       }
+      var srcAtt=(obj&&obj.att)?obj.att:null,na=0;
+      if(srcAtt){
+        Object.keys(srcAtt).forEach(function(k){
+          var a=srcAtt[k];if(!a||typeof a!=='object')return;
+          var b=attOfById(k),ps=parseInt(a.submit,10)||0,pr=parseInt(a.redo,10)||0;
+          if(ps>b.submit)b.submit=ps;
+          if(pr>b.redo)b.redo=pr;
+          na++;
+        });
+        if(na)saveAttempts();
+      }
+      var srcWrong=(obj&&obj.wrong)?obj.wrong:null,nw=0;
+      if(srcWrong){
+        Object.keys(srcWrong).forEach(function(k){
+          var a=srcWrong[k];if(!a||typeof a!=='object')return;
+          var b=wrongHist[k]||{si:0,no:'',times:0,lastAt:0};
+          var t=parseInt(a.times,10)||0;if(t>(parseInt(b.times,10)||0))b.times=t;
+          if(typeof a.si==='number')b.si=a.si;
+          if(a.no!=null)b.no=a.no;
+          b.lastAt=Math.max(parseInt(b.lastAt,10)||0,parseInt(a.lastAt,10)||0);
+          wrongHist[k]=b;nw++;
+        });
+        if(nw)saveWrong();
+      }
       save();updateStats();render();syncNoteCanvas();
-      alert('已导入 '+n+' 条作答记录'+(nh?'、'+nh+' 处五色笔重点':'')+(nn?'、'+nn+' 笔手写笔记':'')+'，已与本地合并。');
+      alert('已导入 '+n+' 条作答记录'+(nh?'、'+nh+' 处五色笔重点':'')+(nn?'、'+nn+' 笔手写笔记':'')+(na?'、'+na+' 套作答/重做次数':'')+(nw?'、'+nw+' 条错题收录':'')+'，已与本地合并。');
     }catch(err){alert('导入失败：'+err.message)}
   };
   r.readAsText(f);
@@ -1837,12 +1998,70 @@ function passageHTML(text,cur,editable,vals){
     return '<span class="'+cls+'" data-no="'+n+'"><em>'+no+'.</em><u></u>'+h+'</span> ';
   });
 }
+/* 短文横线宽度随答案长度自适应：用 canvas 量文本像素宽，避免长单词被固定宽度裁掉 */
+var _fitCv=document.createElement('canvas'),_fitCtx=_fitCv.getContext('2d');
+function fitBlank(inp){
+  if(!inp)return;
+  var cs=getComputedStyle(inp);
+  try{_fitCtx.font=(cs.fontWeight||'400')+' '+cs.fontSize+' '+cs.fontFamily}
+  catch(e){_fitCtx.font='15px sans-serif'}
+  var w=_fitCtx.measureText(inp.value||'').width;
+  var px=Math.max(44,Math.min(320,Math.ceil(w)+30));
+  inp.style.width=px+'px';
+  /* 闭环校准：canvas 估的字体宽度与浏览器实际渲染有偏差，按真实 scrollWidth 补足，确保一个字母都不被裁 */
+  var over=inp.scrollWidth-inp.clientWidth;
+  if(over>0)inp.style.width=Math.min(360,px+over+8)+'px';
+}
+function fitAllBlanks(root){
+  Array.prototype.forEach.call((root||$('passage')).querySelectorAll('.blankInput'),fitBlank);
+}
+/* 当前题高亮（荧光绿标 + 答题卡当前行）跟随实际作答位置，不再只跟着翻题 */
+function acSetCurrent(no,scroll){
+  var pEl=$('passage');
+  var o=pEl.querySelector('.blank.cur');if(o)o.classList.remove('cur');
+  var n=pEl.querySelector('.blank[data-no="'+no+'"]');if(n)n.classList.add('cur');
+  var oc=$('acList').querySelector('.acRow.cur');if(oc)oc.classList.remove('cur');
+  var nc=$('acList').querySelector('.acRow[data-no="'+no+'"]');if(nc)nc.classList.add('cur');
+  if(scroll&&n&&pEl.scrollHeight>pEl.clientHeight+4){
+    pEl.scrollTop=Math.max(0,n.offsetTop-pEl.clientHeight/2);
+  }
+}
 function jumpToGlobal(gi){
   var i=vis.indexOf(gi);
   if(i<0){mode='all';filter=0;$('setSel').value='0';syncSeg();vis=visible();i=vis.indexOf(gi)}
-  if(i>=0){pos=i;render()}
+  if(i>=0){pos=i;render();scrollPageToCur()}
 }
-var renderCache={si:-1,pKey:'',pNo:-1,jumpKey:''};
+/* 教师分栏布局：短文区自身无滚动条，主动定位后把当前空滚到整页视口中间。
+   学生窄屏（stack）短文区自身可滚，由 render 内的 scrollTop 逻辑处理，这里不插手。 */
+function scrollPageToCur(){
+  if(!teacherMode)return;
+  var pEl=$('passage');
+  if(pEl.scrollHeight>pEl.clientHeight+4)return;  // 短文区自身可滚，交给 render
+  var el=pEl.querySelector('.blank.cur');
+  if(!el)return;
+  try{el.scrollIntoView({block:'center',behavior:'auto'})}
+  catch(e){try{el.scrollIntoView({block:'center'})}catch(e2){try{el.scrollIntoView()}catch(e3){}}}
+}
+/* 教师快捷导航：当前套 10 个题号按钮（点序号直达短文对应空）；核对答案后也调用以刷新对错标记 */
+function renderQuickNav(){
+  if(!teacherMode)return;
+  var q=FLAT[vis[pos]];if(!q)return;
+  if(renderCache.qnSi!==q.si){
+    $('qnGrid').innerHTML=DATA.sets[q.si].questions.map(function(x){
+      return '<button type="button" data-no="'+x.no+'" aria-label="定位到第'+x.no+'题"><span class="qnNo">'+x.no+'</span><span class="qnMark"></span></button>';
+    }).join('');
+    renderCache.qnSi=q.si;
+  }
+  Array.prototype.forEach.call($('qnGrid').children,function(b){
+    var n=parseInt(b.dataset.no,10),rr=rec[qKeyByNo(q.si,n)];
+    b.classList.toggle('ok',!!(rr&&rr.ok===true));
+    b.classList.toggle('bad',!!(rr&&rr.ok===false));
+    b.classList.toggle('cur',n===q.no);
+    var mk=b.querySelector('.qnMark');
+    if(mk)mk.textContent=(rr&&rr.ok===true)?'✓':(rr&&rr.ok===false)?'✗':'';
+  });
+}
+var renderCache={si:-1,pKey:'',pNo:-1,jumpKey:'',qnSi:-1};
 function render(){
   vis=visible();
   if(!vis.length){$('content').hidden=true;$('empty').hidden=false;return}
@@ -1862,6 +2081,7 @@ function render(){
   if(renderCache.pKey!==pKey){
     pEl.innerHTML=passageHTML(q.passage,q.no,!teacherMode,vals);
     applyHighlights(pEl,gi);
+    fitAllBlanks(pEl);
     renderCache.pKey=pKey;renderCache.pNo=q.no;
   }else if(renderCache.pNo!==q.no){
     var oldCur=pEl.querySelector('.blank.cur'),newCur=pEl.querySelector('.blank[data-no="'+q.no+'"]');
@@ -1881,17 +2101,23 @@ function render(){
     $('jumpSel').innerHTML=opts;renderCache.jumpKey=jumpKey;
   }
   $('jumpSel').value=String(pos);
-  // 答案速查：同一套卷内容不变，翻题时不重复重建
-  if(renderCache.si!==q.si){
-    $('sheetBody').innerHTML=DATA.sets[q.si].questions.map(function(x){
-      return '<div data-no="'+x.no+'"><span>'+x.no+'. '+(x.hint?'('+x.hint+')':'')+'</span><b>'+esc(x.answer)+'</b></div>';
-    }).join('');
-    renderCache.si=q.si;
+  // 答案速查仅教师可见；学生模式连 DOM 都不写入答案，提交前无从看到
+  if(teacherMode){
+    if(renderCache.si!==q.si){
+      $('sheetBody').innerHTML=DATA.sets[q.si].questions.map(function(x){
+        return '<div data-no="'+x.no+'"><span>'+x.no+'. '+(x.hint?'('+x.hint+')':'')+'</span><b>'+esc(x.answer)+'</b></div>';
+      }).join('');
+      renderCache.si=q.si;
+    }
+  }else if(renderCache.si!==-1){
+    $('sheetBody').innerHTML='';renderCache.si=-1;
   }
+  renderQuickNav();
   $('prevBtn').disabled=(pos===0);
   $('nextBtn').disabled=(pos===vis.length-1);
-  if(r){showResult(r.ok,r.input)}else{hideResult()}
-  if(!teacherMode)studentRefreshResult();
+  /* 学生模式不生成带解析的结果块：学生端全程看不到解析 */
+  if(teacherMode){if(r){showResult(r.ok,r.input)}else{hideResult()}}else{hideResult()}
+  if(!teacherMode){studentRefreshResult();renderAnswerCard();fitAllBlanks(pEl)}
   setTimeout(syncNoteCanvas,0);   /* 题目切换后重画该题笔记（已节流合并，不再强制回顶） */
 }
 /* 学生模式：翻题后按当前套已存批改状态回填横线颜色与汇总 */
@@ -1906,8 +2132,82 @@ function studentRefreshResult(){
   if(any)$('stuScore').textContent='本题已做 '+done+'/'+qs.length+' · 答对 '+right;
   else $('stuScore').textContent='';
 }
+/* ============ 学生答题卡：竖排作答区 / 整卷判分 / 答案分析 / 重做次数 ============ */
+function escAttr(s){return esc(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+/* 整卷是否已提交判分：本套每一空都有作答且都带批改结果 */
+function isSetSubmitted(si){
+  var qs=setQuestionsOf(si);
+  if(!qs.length)return false;
+  for(var i=0;i<qs.length;i++){
+    var r=rec[qs[i].key];
+    if(!r||!r.input||(r.ok!==true&&r.ok!==false))return false;
+  }
+  return true;
+}
+function acInputVal(no){
+  var inp=$('passage').querySelector('.blankInput[data-no="'+no+'"]');
+  if(inp)return inp.value.trim();
+  var k=qKeyByNo(FLAT[vis[pos]].si,no),r=k&&rec[k];
+  return r&&r.input?r.input.trim():'';
+}
+function renderAnswerCard(){
+  if(teacherMode)return;
+  var card=$('ansCard');if(!card)return;
+  card.hidden=false;
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si),cur=FLAT[vis[pos]].no;
+  var submitted=isSetSubmitted(si),att=attOf(si);
+  var h='',filled=0,right=0;
+  qs.forEach(function(q){
+    var v=acInputVal(q.no),r=rec[q.key],cls='',lab='';
+    if(v)filled++;
+    if(submitted&&r&&r.ok===true){cls='right';right++;lab='✓ 正确'}
+    else if(submitted&&r&&r.ok===false){cls='wrong';lab='✗ 错误'}
+    else if(v){cls='filled';lab='已填'}
+    h+='<div class="acRow '+cls+(q.no===cur?' cur':'')+'" data-no="'+q.no+'">'+
+       '<span class="acNo">'+q.no+'.</span>'+
+       '<input class="acInput" type="text" data-no="'+q.no+'" value="'+escAttr(v)+'" placeholder="______" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="第'+q.no+'题答案">'+
+       '<span class="acMark">'+lab+'</span></div>';
+  });
+  $('acList').innerHTML=h;
+  $('acCount').innerHTML='已填 <b>'+filled+'/'+qs.length+'</b> · 重做 <b>'+att.redo+'</b> 次 · 提交 <b>'+att.submit+'</b> 次';
+  var ans=$('acAnswers');
+  if(submitted){
+    $('acAnsGrid').innerHTML=qs.map(function(q){
+      var v=acInputVal(q.no),r=rec[q.key],ok=!!(r&&r.ok===true);
+      return '<div class="acAnsRow '+(ok?'ok':'bad')+'">'+
+             '<em>'+q.no+'.</em>'+
+             '<span>你的答案：<b>'+esc(v||'（空）')+'</b></span>'+
+             '<span class="correct">正确答案：<b>'+esc(q.answer)+'</b></span>'+
+             '<i>'+(ok?'✓ 正确':'✗ 错误')+'</i></div>';
+    }).join('');
+    $('acScore').textContent='得分 '+right+'/'+qs.length;
+    ans.hidden=false;
+  }else{ans.hidden=true;$('acAnsGrid').innerHTML='';$('acScore').textContent=''}
+  $('stuScore').textContent=submitted?('得分 '+right+'/'+qs.length):'';
+}
+/* 输入时的轻量刷新：只改本行状态与计数，不重建输入框（否则光标会丢失） */
+function refreshAcRow(no,val){
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si);
+  var row=$('acList').querySelector('.acRow[data-no="'+no+'"]');
+  if(row){
+    row.classList.remove('right','wrong','filled','need');
+    if(val)row.classList.add('filled');
+    var m=row.querySelector('.acMark');if(m)m.textContent=val?'已填':'';
+  }
+  var filled=0;
+  qs.forEach(function(q){if(acInputVal(q.no))filled++});
+  var att=attOf(si);
+  $('acCount').innerHTML='已填 <b>'+filled+'/'+qs.length+'</b> · 重做 <b>'+att.redo+'</b> 次 · 提交 <b>'+att.submit+'</b> 次';
+}
+function acFocus(no){
+  var inp=$('acList').querySelector('.acInput[data-no="'+no+'"]')||$('passage').querySelector('.blankInput[data-no="'+no+'"]');
+  if(!inp)return;
+  inp.focus();
+  try{inp.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}
+}
 function hideResult(){$('result').hidden=true;$('result').className='result';$('result').innerHTML='';setTimeout(syncNoteCanvas,0)}
 function showResult(ok,input){
+  if(!teacherMode)return;   /* 双保险：学生端不写入任何含解析的结果块 */
   var q=FLAT[vis[pos]],el=$('result');
   var head,cls;
   if(ok===true){head='答对了';cls='right'}
@@ -1942,43 +2242,77 @@ function submit(){
   var ok=norm(v)===norm(q.answer);
   var old=rec[q.key]||{};
   rec[q.key]={ok:ok,input:v,fav:!!old.fav};
-  save();showResult(ok,v);updateStats();renderJumpMark();
+  save();showResult(ok,v);updateStats();renderJumpMark();renderQuickNav();
 }
-/* ============ 学生模式：横线作答 + 提交批改 ============ */
+/* ============ 学生模式：答题卡竖排作答 + 提交答案 ============ */
 function setQuestionsOf(si){return FLAT.filter(function(x){return x.si===si})}
 function qKeyByNo(si,no){for(var i=0;i<FLAT.length;i++)if(FLAT[i].si===si&&FLAT[i].no===no)return FLAT[i].key;return null}
-function studentSaveInput(no,val){
+function studentSaveInput(no,val,src){
   if(teacherMode)return;
   var si=FLAT[vis[pos]].si,k=qKeyByNo(si,no);if(!k)return;
-  var old=rec[k]||{ok:null,fav:false};old.input=val;rec[k]=old;save();
-  var inp=$('passage').querySelector('.blankInput[data-no="'+no+'"]');
-  if(inp){inp.classList.remove('ok','bad')}
+  /* 改动答案即视为重新作答：清掉批改结果，答案分析随之收起，需再次提交 */
+  var old=rec[k]||{ok:null,fav:false};old.input=val;old.ok=null;rec[k]=old;save();
+  /* 答题卡与短文横线双向同步，但不重建 DOM，避免打断正在进行的输入 */
+  var pin=$('passage').querySelector('.blankInput[data-no="'+no+'"]');
+  var ain=$('acList').querySelector('.acInput[data-no="'+no+'"]');
+  if(pin){if(pin.value!==val)pin.value=val;pin.classList.remove('ok','bad');fitBlank(pin)}
+  if(ain&&ain!==src){ain.value=val}
+  acSetCurrent(no,false);   /* 在答题卡作答时，荧光绿高亮跟随到该题 */
+  var box=$('stuResult');if(box){box.hidden=true;box.innerHTML=''}
+  var ans=$('acAnswers');if(ans){ans.hidden=true;$('acAnsGrid').innerHTML='';$('acScore').textContent=''}
+  refreshAcRow(no,val);
+  updateStats();
 }
 function studentSubmit(){
   if(teacherMode)return;
-  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si),right=0,done=0,h='';
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si);
+  /* 整卷做完才判分：未填的空在答题卡上标红，并聚焦到第一处 */
+  var missing=qs.filter(function(q){return !acInputVal(q.no)});
+  if(missing.length){
+    toast('还有 '+missing.length+' 个空没填完，答题卡已标出；全部做完才能提交判分');
+    missing.forEach(function(q){
+      var c=$('acList').querySelector('.acRow[data-no="'+q.no+'"]');
+      if(c){c.classList.remove('need');void c.offsetWidth;c.classList.add('need')}
+    });
+    acFocus(missing[0].no);
+    return;
+  }
+  var right=0,h='',wrongDirty=false;
   qs.forEach(function(q){
-    var inp=$('passage').querySelector('.blankInput[data-no="'+q.no+'"]');
-    var v=inp?inp.value.trim():((rec[q.key]&&rec[q.key].input)||'');
-    var ok=null;
-    if(v){done++;ok=norm(v)===norm(q.answer);if(ok)right++}
+    var v=acInputVal(q.no),ok=norm(v)===norm(q.answer);
+    if(ok)right++;
+    else{
+      var wh=wrongHist[q.key]||{si:si,no:q.no,times:0,lastAt:0};
+      wh.si=si;wh.no=q.no;wh.times=(parseInt(wh.times,10)||0)+1;wh.lastAt=Date.now();
+      wrongHist[q.key]=wh;wrongDirty=true;
+    }
     var old=rec[q.key]||{fav:false};
-    if(v)rec[q.key]={ok:ok,input:v,fav:!!old.fav};
-    if(inp){inp.classList.toggle('ok',ok===true);inp.classList.toggle('bad',ok===false)}
-    h+='<div class="sr"><b>'+q.no+'.</b><span>你的答案：'+(v?esc(v):'（空）')+'</span>'+
-       '<span class="'+(ok===true?'g':(ok===false?'x':''))+'">'+(ok===true?'✓ 正确':(ok===false?'✗ 正确：'+esc(q.answer):'未作答'))+'</span></div>';
+    rec[q.key]={ok:ok,input:v,fav:!!old.fav};
+    var inp=$('passage').querySelector('.blankInput[data-no="'+q.no+'"]');
+    if(inp){inp.classList.toggle('ok',ok);inp.classList.toggle('bad',!ok);fitBlank(inp)}
+    h+='<div class="sr"><b>'+q.no+'.</b><span>你的答案：'+esc(v)+'</span>'+
+       '<span class="'+(ok?'g':'x')+'">'+(ok?'✓ 正确':'✗ 错误')+'</span></div>';
   });
+  var att=attOf(si);att.submit++;saveAttempts();
+  if(wrongDirty)saveWrong();
   save();updateStats();renderJumpMark();
   var box=$('stuResult');box.innerHTML=h;box.hidden=false;
-  $('stuScore').textContent='本题已做 '+done+'/'+qs.length+' · 答对 '+right;
+  renderAnswerCard();
+  /* 提交后直接把「答案分析」滚到眼前，批改结果与得分一眼可见 */
+  var ansBox=$('acAnswers');
+  if(ansBox){try{ansBox.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}}
+  toast('已提交：得分 '+right+'/'+qs.length+'，逐题批改见下方「答案分析」');
 }
 function studentReset(){
   if(teacherMode)return;
-  if(!confirm('清空本题的所有作答并重做？'))return;
   var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si);
-  qs.forEach(function(q){var old=rec[q.key];if(old){delete old.input;delete old.ok;if(old.fav===false&&!old.input)delete rec[q.key];else rec[q.key]=old}});
+  var has=qs.some(function(q){var r=rec[q.key];return !!(r&&(r.input||r.ok===true||r.ok===false))});
+  if(!confirm(has?'清空本套的全部作答并重做？（重做次数 +1）':'本套还没有作答，确定开始新一轮吗？'))return;
+  qs.forEach(function(q){var old=rec[q.key];if(old){delete old.input;delete old.ok;if(!old.fav)delete rec[q.key];else rec[q.key]=old}});
+  var att=attOf(si);att.redo++;saveAttempts();
   save();updateStats();renderCache.pKey='';render();
-  var box=$('stuResult');box.hidden=true;box.innerHTML='';$('stuScore').textContent='';
+  var box=$('stuResult');box.hidden=true;box.innerHTML='';
+  toast('已清空本套作答 · 累计重做 '+att.redo+' 次');
 }
 function renderJumpMark(){
   var q=FLAT[vis[pos]];
@@ -1992,7 +2326,7 @@ function peek(){
   showResult(old?old.ok:null,old?old.input:'');
   updateStats();
 }
-function go(d){var n=pos+d;if(n>=0&&n<vis.length){pos=n;render()}}
+function go(d){var n=pos+d;if(n>=0&&n<vis.length){pos=n;render();scrollPageToCur()}}
 function syncSeg(){
   Array.prototype.forEach.call($('seg').children,function(b){b.className=(b.dataset.mode===mode?'on':'')});
 }
@@ -2006,17 +2340,36 @@ $('seg').addEventListener('click',function(e){
 });
 $('backAll').addEventListener('click',function(){mode='all';filter=0;$('setSel').value='0';syncSeg();pos=0;render()});
 $('checkBtn').addEventListener('click',submit);
-/* 学生横线作答：输入即存、提交批改、清空重做 */
+/* 学生答题卡作答：在右侧竖排输入框填写（与短文横线双向同步）、提交答案、清空重做 */
 $('passage').addEventListener('input',function(e){
   var t=e.target;if(!t.classList||!t.classList.contains('blankInput'))return;
-  studentSaveInput(parseInt(t.dataset.no,10),t.value);
+  studentSaveInput(parseInt(t.dataset.no,10),t.value,t);
+});
+$('passage').addEventListener('focusin',function(e){
+  var t=e.target;
+  if(t&&t.classList&&t.classList.contains('blankInput'))acSetCurrent(parseInt(t.dataset.no,10),false);
+});
+$('acList').addEventListener('input',function(e){
+  var t=e.target;if(!t.classList||!t.classList.contains('acInput'))return;
+  studentSaveInput(parseInt(t.dataset.no,10),t.value,t);
+});
+$('acList').addEventListener('focusin',function(e){
+  var t=e.target;
+  if(t&&t.classList&&t.classList.contains('acInput'))acSetCurrent(parseInt(t.dataset.no,10),true);
+});
+$('acList').addEventListener('click',function(e){
+  var row=e.target.closest('.acRow');if(!row)return;
+  if(e.target.tagName==='INPUT')return;
+  var inp=row.querySelector('.acInput');if(inp)inp.focus();
 });
 $('stuSubmitBtn').addEventListener('click',studentSubmit);
 $('stuResetBtn').addEventListener('click',studentReset);
+$('acSubmitBtn').addEventListener('click',studentSubmit);
+$('acResetBtn').addEventListener('click',studentReset);
 $('revealBtn').addEventListener('click',peek);
 $('prevBtn').addEventListener('click',function(){go(-1)});
 $('nextBtn').addEventListener('click',function(){go(1)});
-$('jumpSel').addEventListener('change',function(){pos=parseInt(this.value,10);render()});
+$('jumpSel').addEventListener('change',function(){pos=parseInt(this.value,10);render();scrollPageToCur()});
 $('passage').addEventListener('click',function(e){
   if(e.target.closest('input'))return;   /* 学生横线输入框：点击不跳题 */
   var b=e.target.closest('.blank');if(!b)return;
@@ -2030,19 +2383,28 @@ $('sheetBody').addEventListener('click',function(e){
   var gi=-1;for(var i=0;i<FLAT.length;i++){if(FLAT[i].si===q.si&&FLAT[i].no===n){gi=i;break}}
   if(gi>=0)jumpToGlobal(gi);
 });
+$('qnGrid').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-no]');if(!b)return;
+  var n=parseInt(b.dataset.no,10),q=FLAT[vis[pos]];
+  var gi=-1;for(var i=0;i<FLAT.length;i++){if(FLAT[i].si===q.si&&FLAT[i].no===n){gi=i;break}}
+  if(gi>=0)jumpToGlobal(gi);
+});
 $('resetBtn').addEventListener('click',function(){
-  if(!confirm('确定清空全部作答记录、错题和收藏吗？此操作不可撤销。'))return;
-  rec={};save();pos=0;updateStats();render();
+  if(!confirm('确定清空全部作答记录、错题、收藏和重做次数吗？此操作不可撤销。'))return;
+  rec={};attempts={};wrongHist={};save();saveAttempts();saveWrong();pos=0;updateStats();render();
 });
 $('exportBtn').addEventListener('click',exportRec);
 $('importBtn').addEventListener('click',function(){$('importFile').click()});
 $('importFile').addEventListener('change',importFile);
 function buildPrint(opt){
   opt=opt||{};
-  /* 双保险：无论打印选项怎么被改动，学生模式一律不出答案、不出教师笔记；单词本师生均可打印 */
+  /* 双保险：无论打印选项怎么被改动，学生模式一律不出题目答案、不出教师手写笔记。
+     单词本只含收藏的生词（音标 / 释义 / 默写横线），与题目答案无关，师生均可打印。 */
   opt.answers=!!opt.answers&&teacherMode;
   opt.notes=!!opt.notes&&teacherMode;
   opt.wordbook=!!opt.wordbook;
+  opt.wrong=!!opt.wrong;
+  if(opt.wrong){$('printArea').innerHTML=wrongHTML(wrongList(),false);return;}
   if(opt.wordbook){
     var wb='<h1>2026届各地英语语法填空 · 我的单词本</h1>'
       +'<p class="pdate">生成于 '+new Date().toLocaleDateString('zh-CN')+' ｜ 共 '+wordBook.length+' 词 ｜ 姓名：____________</p>';
@@ -2091,20 +2453,25 @@ function openPrintDlg(){
   wb.disabled=false;
   $('optWB').classList.remove('disabled');
   $('wbHint').textContent='（已收藏 '+wordBook.length+' 词）';
+  var wr=document.querySelector('input[name=pmode][value=wr]');
+  wr.disabled=false;
+  $('optWR').classList.remove('disabled');
+  $('wrHint').textContent='（已收录 '+wrongList().length+' 题）';
   if(!teacherMode)document.querySelector('input[name=pmode][value=q]').checked=true;
   var inc=$('pIncludeNote');
-  inc.disabled=!hasNotes;inc.checked=!!hasNotes;
-  $('optNote').classList.toggle('disabled',!hasNotes);
-  $('noteHint').textContent=hasNotes?'':'（当前还没有手写笔记）';
+  inc.disabled=!hasNotes||!teacherMode;inc.checked=!!(hasNotes&&teacherMode);
+  $('optNote').classList.toggle('disabled',!hasNotes||!teacherMode);
+  $('noteHint').textContent=!teacherMode?'（需教师授权）':(hasNotes?'':'（当前还没有手写笔记）');
   $('printDlg').hidden=false;
 }
 function doPrint(){
   var sel=document.querySelector('input[name=pmode]:checked');
   var mode=sel&&!sel.disabled?sel.value:'q';
-  if(!teacherMode&&mode!=='q'&&mode!=='wb')mode='q';
+  if(!teacherMode&&mode==='qa')mode='q';
   var withNotes=teacherMode&&!!($('pIncludeNote').checked&&!$('pIncludeNote').disabled);
   $('printDlg').hidden=true;
   if(mode==='wb')buildPrint({wordbook:true});
+  else if(mode==='wr')buildPrint({wrong:true});
   else buildPrint({answers:mode==='qa',notes:withNotes});
   setTimeout(function(){window.print()},80);
 }
@@ -2246,7 +2613,8 @@ $('dashBtn').addEventListener('click',openDash);
 $('dashClose').addEventListener('click',closeDash);
 $('dash').addEventListener('click',function(e){if(e.target===$('dash'))closeDash();});
 document.addEventListener('keydown',function(e){
-  var ae=document.activeElement,inAnswer=ae&&ae.id==='answerInput',inBlank=ae&&ae.classList&&ae.classList.contains('blankInput');
+  var ae=document.activeElement,inAnswer=ae&&ae.id==='answerInput',
+      inBlank=ae&&ae.classList&&(ae.classList.contains('blankInput')||ae.classList.contains('acInput'));
   var shown=!$('result').hidden;
   /* 翻页笔：多数翻页笔发 PageUp/PageDown；教师模式用它前后翻题 */
   if(e.key==='PageUp'||e.key==='PageDown'){
@@ -2256,7 +2624,7 @@ document.addEventListener('keydown',function(e){
   if(e.key==='ArrowLeft'&&!inAnswer&&!inBlank){e.preventDefault();go(-1);return}
   if(e.key==='ArrowRight'&&!inAnswer&&!inBlank){e.preventDefault();go(1);return}
   if(e.key==='Enter'){
-    if(inBlank){e.preventDefault();studentSubmit();return}   /* 学生横线输入回车 = 提交批改 */
+    if(inBlank){e.preventDefault();studentSubmit();return}   /* 答题卡 / 横线输入回车 = 提交答案 */
     e.preventDefault();
     if(shown){go(1)}
     else if(inAnswer){submit()}
@@ -2320,6 +2688,96 @@ function renderWordBook(){
   var c=$('wordBookCount');if(c)c.textContent='已收藏 '+wordBook.length+' 个单词'+(wordBook.length?'（按收藏顺序）':'');
 }
 function openWordBook(){renderWordBook();$('wordBookDlg').hidden=false;}
+
+/* ============ 错题收录：错空所在的完整句子 / 打印 / 导出文档 ============ */
+/* 从整篇短文里抽出某一空所在的那一句（按句末标点切分，不取整篇） */
+function wrongSentence(text,no){
+  var t=String(text||''),mark=String(no)+'.____',i=t.indexOf(mark);
+  if(i<0)return '';
+  var a=0,j,c;
+  for(j=i-1;j>=0;j--){
+    c=t.charAt(j);
+    if((c==='.'||c==='!'||c==='?')&&/\s/.test(t.charAt(j+1))){a=j+1;break}
+  }
+  while(a<t.length&&/\s/.test(t.charAt(a)))a++;
+  var b=t.length;
+  for(j=i+mark.length;j<t.length;j++){
+    c=t.charAt(j);
+    if(c==='.'||c==='!'||c==='?'){b=j+1;break}
+  }
+  return t.slice(a,b).replace(/\s+/g,' ').trim();
+}
+/* 错题表：以当前批改状态为准，同时合并「曾经错过」的历史 */
+function wrongList(){
+  var keys={},out=[],k,i,x;
+  Object.keys(wrongHist).forEach(function(key){keys[key]=true});
+  Object.keys(rec).forEach(function(key){if(rec[key]&&rec[key].ok===false)keys[key]=true});
+  Object.keys(keys).forEach(function(key){
+    x=null;
+    for(i=0;i<FLAT.length;i++){if(FLAT[i].key===key){x=FLAT[i];break}}
+    if(!x)return;
+    var r=rec[key]||{},h=wrongHist[key]||{};
+    var state=(r.ok===false)?'待订正':((r.ok===true)?'已订正':'待重做');
+    out.push({key:key,si:x.si,no:x.no,set:x.set,answer:x.answer,point:x.point,
+      input:r.input||'',sentence:wrongSentence(x.passage,x.no),state:state,
+      times:parseInt(h.times,10)||0});
+  });
+  out.sort(function(p,q){return (p.si-q.si)||(parseInt(p.no,10)-parseInt(q.no,10))});
+  return out;
+}
+function wrongCounts(items){
+  var bad=0,good=0,wait=0;
+  items.forEach(function(it){if(it.state==='待订正')bad++;else if(it.state==='已订正')good++;else wait++});
+  return {bad:bad,good:good,wait:wait};
+}
+var WR_STYLE='body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:#1F2A26;margin:24px;line-height:1.75}'
+ +'h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;margin:18px 0 6px}'
+ +'.pdate{color:#666;font-size:12px;margin:0 0 16px}'
+ +'table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}'
+ +'th,td{border:1px solid #BBB;padding:6px 8px;text-align:left;vertical-align:top}'
+ +'th{background:#F0F5F3;font-weight:700}'
+ +'.wrb{color:#C4483B;font-weight:700}'
+ +'.wrwrite{min-width:56px}'
+ +'@media print{@page{margin:14mm}}';
+/* 生成错题表 HTML；standalone=true 时为可独立打开/打印的完整文档 */
+function wrongHTML(items,standalone){
+  var c=wrongCounts(items),h='';
+  if(standalone)h='<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>语法填空错题本</title><style>'+WR_STYLE+'</style></head><body>';
+  h+='<h1>2026届各地英语语法填空 · 我的错题本</h1>'
+    +'<p class="pdate">生成于 '+new Date().toLocaleDateString('zh-CN')+' ｜ 共 '+items.length+' 题（待订正 '+c.bad+' · 已订正 '+c.good+'）｜ 姓名：____________　得分：__________</p>';
+  if(!items.length){
+    h+='<p class="pblanknote">（还没有收录错题。学生提交整卷后，答错的空会自动收录它所在的完整句子。）</p>';
+  }else{
+    h+='<table class="wrtab"><thead><tr><th>序号</th><th>来源 / 题号</th><th>错空所在的完整句子</th><th>你的答案</th><th>正确答案</th><th>订正</th></tr></thead><tbody>';
+    items.forEach(function(it,i){
+      var sent=esc(it.sentence).replace(/(\d+\.____)/g,'<span class="wrb">$1</span>');
+      h+='<tr><td>'+(i+1)+'</td><td>'+esc(it.set)+'<br><b>'+it.no+'</b></td><td>'+sent+'</td>'
+        +'<td>'+esc(it.input||'（未填）')+'</td><td><b>'+esc(it.answer)+'</b></td><td class="wrwrite"></td></tr>';
+    });
+    h+='</tbody></table>';
+  }
+  if(standalone)h+='</body></html>';
+  return h;
+}
+function renderWrongBook(){
+  var items=wrongList(),el=$('wrongBookList'),h='';
+  items.forEach(function(it,i){
+    var cls=(it.state==='待订正')?'bad':((it.state==='已订正')?'good':'wait');
+    var sent=esc(it.sentence).replace(/(\d+\.____)/g,'<span class="wrb">$1</span>');
+    h+='<div class="wrItem">'
+      +'<div class="wrHead"><b>'+(i+1)+'. '+esc(it.set)+' · '+it.no+'</b>'
+      +'<span class="wrState '+cls+'">'+it.state+(it.times?' · 累计错 '+it.times+' 次':'')+'</span></div>'
+      +'<div class="wrSent">'+sent+'</div>'
+      +'<div class="wrAns"><span>你的答案：<b>'+esc(it.input||'（空）')+'</b></span>'
+      +'<span>正确答案：<b>'+esc(it.answer)+'</b></span></div>'
+      +'</div>';
+  });
+  el.innerHTML=h||'<div class="drow none"><span>还没有错题。提交整卷后，答错的空会自动收录它所在的那一句完整句子。</span></div>';
+  var c=wrongCounts(items);
+  $('wrongBookCount').textContent='共 '+items.length+' 题 · 待订正 '+c.bad+' · 已订正 '+c.good+(c.wait?' · 待重做 '+c.wait:'');
+  $('wrHint').textContent='（已收录 '+items.length+' 题）';
+}
+function openWrongBook(){renderWrongBook();$('wrongBookDlg').hidden=false;}
 function wordNorm(s){return String(s||'').trim().toLowerCase().replace(/^[^a-z]+|[^a-z'-]+$/g,'')}
 function dictGuess(w){
   var a=[];
@@ -2506,6 +2964,36 @@ $('wbPrint').addEventListener('click',function(){
   buildPrint({wordbook:true});
   setTimeout(function(){window.print()},80);
 });
+/* 错题本入口与操作 */
+$('wrongBookTopBtn').addEventListener('click',openWrongBook);
+$('wrClose').addEventListener('click',function(){$('wrongBookDlg').hidden=true});
+$('wrongBookDlg').addEventListener('click',function(e){if(e.target===$('wrongBookDlg'))$('wrongBookDlg').hidden=true});
+$('wrPrint').addEventListener('click',function(){
+  if(!wrongList().length){toast('还没有错题可打印');return}
+  $('wrongBookDlg').hidden=true;
+  buildPrint({wrong:true});
+  setTimeout(function(){window.print()},80);
+});
+$('wrExport').addEventListener('click',function(){
+  var items=wrongList();if(!items.length){toast('还没有错题可导出');return}
+  var blob=new Blob([wrongHTML(items,true)],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='语法填空错题本_'+new Date().toISOString().slice(0,10)+'.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+  toast('已导出错题本文档（可用浏览器打开后打印）');
+});
+$('wrClear').addEventListener('click',function(){
+  var items=wrongList();if(!items.length)return;
+  if(!confirm('清空错题本？将移除这 '+items.length+' 条收录记录，并把当前答错的空恢复为未作答（重新提交后会再次收录）。'))return;
+  wrongHist={};saveWrong();
+  items.forEach(function(it){
+    var r=rec[it.key];
+    if(r&&r.ok===false){delete r.ok;delete r.input;if(!r.fav)delete rec[it.key];else rec[it.key]=r}
+  });
+  save();updateStats();render();renderWrongBook();
+  toast('错题本已清空，可以重新作答');
+});
 /* 卡片内按钮统一事件委托（动态生成，不用 id） */
 $('dictTip').addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-act]');if(!b)return;
@@ -2594,6 +3082,8 @@ $('dictFile').addEventListener('change',function(e){
   };
   rd.readAsText(f,'utf-8');e.target.value='';
 });
+/* 学生模式：题库明文只保留在内存 DATA/FLAT 中，移除页面 DOM 里的 script 文本，防止 F12 直接翻到答案与解析 */
+if(!teacherMode){var dn=document.getElementById('data');if(dn)dn.textContent='';}
 applyFont();applyMode();applyLayout();updateStats();render();
 })();
 </script>
