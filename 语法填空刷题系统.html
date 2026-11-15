@@ -1,0 +1,2602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>语法填空 · 一题一页｜2026届各地汇编 10套/100题</title>
+<style>
+:root{--bg:#F2F5F3;--card:#fff;--ink:#1F2A26;--sub:#6E7C77;--main:#2C6E63;--lime:#D9F542;--line:#E2EAE7;--red:#C4483B}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px 60px}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hd{max-width:1180px;margin:0 auto;padding:12px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.brand{font-size:17px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
+.brand span{font-size:12px;font-weight:500;color:var(--sub);margin-left:8px}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+select,button{font-family:inherit;font-size:13px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:7px 11px;cursor:pointer}
+button:hover{border-color:var(--main)}
+button.primary{background:var(--main);border-color:var(--main);color:#fff;font-weight:700}
+button:disabled{opacity:.4;cursor:not-allowed}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{border:0;border-radius:0;padding:7px 10px;font-size:12px}
+.seg button.on{background:var(--main);color:#fff}
+.stats{font-size:13px;color:var(--sub);white-space:nowrap}
+.stats b{color:var(--main);font-size:15px}
+.bar{height:4px;background:var(--line)}
+.bar i{display:block;height:100%;background:var(--lime);width:0;transition:width .3s}
+.card{background:var(--card);border-radius:16px;box-shadow:0 8px 30px rgba(31,58,56,.07);margin-top:20px;padding:24px 26px}
+.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;padding-bottom:14px;border-bottom:1px dashed var(--line);margin-bottom:18px}
+.meta .set{font-size:15px;font-weight:800;color:var(--main)}
+.meta .topic{font-size:13px;color:var(--sub)}
+.meta .qn{margin-left:auto;font-size:14px;font-weight:800}
+.meta .pos{font-size:12px;color:var(--sub);min-width:62px;text-align:right}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr);row-gap:20px}
+.left-col,.right-col{min-width:0}
+.right-col{display:flex;flex-direction:column;gap:16px}
+.colhead{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:var(--sub);letter-spacing:1px;margin-bottom:12px}
+.colhead::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--main)}
+.colhead.r::before{background:#B9D43B}
+.colhead small{font-weight:500;letter-spacing:0;color:#9AA9A4;font-size:11px;margin-left:auto}
+.scrollhint{display:none;text-align:center;font-size:11px;color:#9AA9A4;margin-top:8px;letter-spacing:.5px}
+body[data-render="split"] .main-grid{grid-template-columns:minmax(0,1.28fr) minmax(300px,1fr);row-gap:0}
+body[data-render="split"] .left-col{padding-right:24px;border-right:1px dashed var(--line)}
+body[data-render="split"] .right-col{padding-left:24px;padding-right:4px;position:sticky;top:var(--hdH,80px);align-self:start;max-height:calc(100vh - var(--hdH,80px) - 20px);overflow-y:auto;scrollbar-width:thin}
+.passage{margin:0;font-size:17px;line-height:2.05;letter-spacing:.2px;color:#25322E;background:#FBFCFB;border:1px solid var(--line);border-radius:12px;padding:20px 22px;position:relative}
+.blank{display:inline-flex;align-items:baseline;gap:2px;cursor:pointer;padding:1px 4px;border-radius:5px;transition:.15s;white-space:nowrap}
+.blank em{font-style:normal;font-size:12px;color:var(--sub);font-weight:700}
+.blank u{text-decoration:none;display:inline-block;min-width:56px;border-bottom:2px solid #9AA9A4;margin:0 3px}
+.blank small{font-size:12px;color:var(--sub)}
+.blank:hover{background:#EAF3F0}
+.blank.cur{background:var(--lime);box-shadow:0 0 0 2px rgba(44,110,99,.16)}
+.blank.cur u{border-bottom-color:var(--ink)}
+.blank.cur em,.blank.cur small{color:#3A4A20}
+/* 学生模式：横线内直接作答（输入框做成一条下划线，不显框） */
+.blankInput{font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;border-bottom:2px solid #9AA9A4;border-radius:0;outline:none;width:60px;min-width:44px;max-width:88px;padding:0 2px;margin:0 3px;text-align:center;line-height:1.5}
+.blankInput:focus{border-bottom-color:var(--main);background:transparent}
+.blankInput.ok{color:#2C6E63;border-bottom-color:#2C6E63;font-weight:700}
+.blankInput.bad{color:#C4483B;border-bottom-color:#C4483B;text-decoration:line-through}
+.stuSubmitBar{display:flex;gap:8px;align-items:center;justify-content:center;margin:14px 0 4px;flex-wrap:wrap}
+.stuSubmitBar button{font-size:15px;padding:9px 22px}
+.stuScore{font-size:14px;font-weight:700;color:var(--main)}
+.stuResult{margin-top:12px;padding:12px 14px;background:#F7FAF9;border:1px solid var(--line);border-radius:10px;font-size:13px;line-height:1.9}
+.stuResult[hidden]{display:none}
+.stuResult .sr{display:flex;gap:8px;padding:3px 0;border-bottom:1px dotted var(--line)}
+.stuResult .sr:last-child{border-bottom:0}
+.stuResult .sr b{min-width:38px}
+.stuResult .sr .g{color:#2C6E63;font-weight:700}
+.stuResult .sr .x{color:#C4483B;font-weight:700}
+.ansbox{background:#F7FAF9;border:1px solid var(--line);border-radius:12px;padding:18px}
+.anslabel{font-size:14px;font-weight:700;margin-bottom:10px}
+.anslabel .hint{font-weight:500;color:var(--sub);font-size:13px;margin-left:8px}
+.inputrow{display:flex;gap:10px}
+input[type=text]{flex:1;min-width:0;font-size:16px;padding:11px 14px;border:2px solid var(--line);border-radius:10px;outline:none;font-family:inherit;background:#fff}
+input[type=text]:focus{border-color:var(--main)}
+.subrow{display:flex;gap:18px;margin-top:12px;flex-wrap:wrap}
+.subrow button{border:0;background:none;padding:2px 0;color:var(--sub);font-size:13px}
+.subrow button:hover{color:var(--main);border:0}
+.result{border-radius:12px;padding:18px;border:1px solid}
+.result.right{background:#F1F8F4;border-color:#C9E6D6}
+.result.wrong{background:#FDF3F1;border-color:#F1D2CC}
+.result.peek{background:#F7F9F8;border-color:var(--line)}
+.verdict{font-size:15px;font-weight:800;margin-bottom:10px}
+.verdict::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:currentColor;margin-right:9px;vertical-align:middle}
+.verdict.bad{color:var(--red)}
+.verdict.good{color:var(--main)}
+.ansline{font-size:15px;margin-bottom:12px}
+.ansline b{font-size:19px;color:var(--main)}
+.point{display:inline-block;font-size:12px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 10px;margin-left:8px;color:var(--sub)}
+.explain{font-size:14.5px;line-height:1.9;color:#3A4844;border-top:1px dashed var(--line);padding-top:12px;white-space:pre-wrap}
+.nav{display:flex;gap:10px;align-items:center;padding-top:16px;border-top:1px solid var(--line)}
+.nav select{flex:1;min-width:0}
+.nav button{flex:1;font-weight:700}
+.sheet{font-size:14px;color:var(--sub)}
+.sheet summary{cursor:pointer;font-weight:700;color:var(--main);padding:6px 0}
+.sheetgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-top:12px}
+.sheetgrid div{background:#F7FAF9;border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.sheetgrid div:hover{background:#EAF3F0}
+.sheetgrid b{color:var(--main);text-align:right}
+.tip{text-align:center;font-size:12px;color:var(--sub);margin-top:18px;line-height:1.9}
+.empty{text-align:center;padding:50px 10px;color:var(--sub);line-height:2.2}
+.empty button{margin-top:14px}
+@media(max-width:900px){
+ .card{padding:18px 18px}
+ body[data-render="split"] .main-grid{grid-template-columns:minmax(0,1.15fr) minmax(280px,1fr)}
+ body[data-render="split"] .left-col{padding-right:16px}
+ body[data-render="split"] .right-col{padding-left:16px}
+ body[data-render="split"] .passage{font-size:15.5px;line-height:1.95;padding:16px}
+}
+@media(max-width:600px){
+ .wrap{padding:0 10px 40px}
+ .card{padding:18px 16px;margin-top:14px;border-radius:12px}
+ .passage{font-size:16px;line-height:1.98;padding:16px}
+ .hd{padding:10px 12px;gap:8px}
+ .brand{width:100%}
+ .tools{width:100%}
+ .sheetgrid{grid-template-columns:1fr}
+ .inputrow{flex-direction:column}
+ .nav{flex-wrap:wrap}
+ .nav button{flex:1 1 40%}
+ .nav select{flex:1 1 100%;order:3}
+ .meta .qn{margin-left:0}
+ .colhead small{display:none}
+ body[data-render="stack"] .main-grid{row-gap:16px}
+ body[data-render="stack"] .passage{max-height:38vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+ body[data-render="stack"] .scrollhint{display:block}
+}
+
+/* 打印 / 导出 PDF */
+#printArea{display:none}
+#printArea h1{font-size:22px;margin:0 0 4px;color:#1F2A26}
+#printArea .pdate{color:#666;font-size:12px;margin:0 0 18px}
+#printArea h2{font-size:16px;margin:22px 0 8px;border-left:4px solid #2C6E63;padding-left:8px;color:#1F2A26}
+#printArea .ppass{line-height:2.2;font-size:14px;text-align:justify;color:#1F2A26}
+#printArea .pb{display:inline-block;text-decoration:none;border-bottom:1px solid #000;min-width:54px;text-align:center;margin:0 2px;font-weight:700;color:#1F2A26}
+#printArea .pnotes{margin:6px 0 10px;font-size:12px;color:#1F2A26}
+#printArea .pnotes img{max-width:100%;border:1px solid #DDD;border-radius:4px}
+#printArea .pblanknote{color:#888;font-size:12px}
+#printArea .pans{margin-top:8px;font-size:13px;line-height:1.9;color:#1F2A26}
+#printArea .pans .pt{color:#888;font-size:12px}
+#printArea .wbtab{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;color:#1F2A26}
+#printArea .wbtab th,#printArea .wbtab td{border:1px solid #BBB;padding:6px 8px;text-align:left;vertical-align:middle}
+#printArea .wbtab th{background:#F0F5F3;font-weight:700}
+#printArea .wbtab .wbwrite{min-width:120px}
+@media print{
+  @page{margin:14mm}
+  .wrap{display:none!important}
+  #printArea{display:block}
+}
+
+/* 教师模式 / 字号 / 五色笔 */
+.hl{background:#FFD54F;color:inherit;border-radius:2px;padding:0 1px}
+#penUndo{font-weight:bold;color:#666;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;padding:2px 6px;margin:0 4px;}
+body.teacher .hl{cursor:pointer}
+body{overflow-x:hidden}
+#penBar{display:none;position:relative;z-index:12;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 8px;padding:8px 10px;background:#FBFCFB;border:1px solid var(--line);border-radius:10px}
+body.teacher #penBar{display:flex}
+#penBar .pen-tip{font-size:12px;color:var(--sub);margin-right:4px}
+.pen{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.pen.active{outline:2px solid var(--main);outline-offset:2px}
+.pen-clear{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;color:var(--sub)}
+#fontPanel{display:none;position:fixed;right:14px;top:60px;z-index:60;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:14px 16px;width:240px}
+#fontPanel.show{display:block}
+#fontPanel input[type=range]{width:100%}
+#fontPanel .presets{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+#fontPanel .presets button{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 8px;cursor:pointer}
+#dashBtn{display:none}
+body.teacher #dashBtn{display:inline-block}
+#dash{position:fixed;inset:0;z-index:80;background:rgba(20,30,28,.45);display:flex;align-items:center;justify-content:center}
+#dash[hidden]{display:none}
+.dbox{background:#fff;border-radius:16px;max-width:560px;width:92%;max-height:86vh;overflow:auto;padding:20px 22px}
+.dbox h3{margin:0 0 12px}
+.dtotal{font-size:15px;margin-bottom:12px}
+.dtotal b{color:var(--main);font-size:20px}
+.drow{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:13px}
+.drow .dn{width:118px;flex:none;color:var(--ink)}
+.drow .dbar{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.drow .dbar i{display:block;height:100%;background:var(--main)}
+.drow .dd{width:128px;flex:none;text-align:right;color:var(--sub)}
+.dtip{font-size:12px;color:var(--sub);margin-top:14px;line-height:1.6}
+.dclose{float:right;cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:8px;padding:3px 10px;font-size:13px}
+
+/* 手写笔记：画板 + 工具条（教师） */
+.card{position:relative}
+#noteCanvas{position:absolute;left:0;top:0;z-index:9;pointer-events:none;touch-action:none}
+body.note-on #noteCanvas{pointer-events:auto;cursor:crosshair}
+body.note-on .card{box-shadow:0 8px 30px rgba(44,110,99,.22)}
+#noteBar{display:none;position:relative;z-index:12;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 8px;padding:8px 10px;background:#FFFDF3;border:1px solid #EADFA8;border-radius:10px}
+body.teacher #noteBar{display:flex}
+body.student-locked #noteBar{display:flex}   /* 学生也有记号笔 + 橡皮 */
+/* 钢笔只给教师：学生在工具栏里看不到「✒ 笔」 */
+body.student-locked #toolPen{display:none}
+/* 提示文案按身份切换 */
+body.teacher #noteTipStudent{display:none}
+body.student-locked #noteTipTeacher{display:none}
+/* 全局浮层提示：学生点词收藏要有可见反馈（noteStatus 也在工具栏内，需双保险） */
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:9999;max-width:86vw;text-align:center;background:rgba(44,110,99,.95);color:#fff;padding:9px 18px;border-radius:20px;font-size:14px;line-height:1.5;box-shadow:0 6px 22px rgba(0,0,0,.24);pointer-events:none}
+#toast[hidden]{display:none!important}
+#noteBar .pen-tip{font-size:12px;color:var(--sub);margin-right:4px}
+.npen{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.toolgroup{display:inline-flex;gap:4px}
+.toolbtn{font-size:12px;padding:5px 9px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer;color:var(--sub)}
+.toolbtn.on{background:var(--main);border-color:var(--main);color:#fff}
+#penPanel{position:absolute;top:calc(100% - 4px);left:60px;z-index:30;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(31,42,38,.18);padding:10px 12px;min-width:220px}
+#penPanel .pp-title{font-size:12px;color:var(--sub);margin:2px 0 6px}
+#penPanel .pp-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+[hidden]{display:none!important}   /* 保证 hidden 属性优先于 display:flex，颜色分组只显示当前工具那一组 */
+#penPanel .clr{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+#penPanel .clr.active{outline:2px solid var(--main);outline-offset:2px}
+#penPanel input[type=range]{flex:1;min-width:100px;accent-color:var(--main);cursor:pointer}
+#penPanel .pp-preview{height:28px;display:flex;align-items:center;justify-content:center;background:#F5FBF7;border-radius:6px;overflow:hidden}
+#penPanel .pp-preview span{display:block;width:70%;border-radius:99px;background:#C4483B;height:4px}
+#penPanel .pp-close{position:absolute;top:6px;right:6px;width:22px;height:22px;line-height:20px;text-align:center;border:0;background:#F0F4F2;border-radius:6px;color:var(--sub);cursor:pointer;font-size:16px;padding:0}
+#penPanel .pp-close:hover{background:var(--line);color:var(--ink)}
+.wbrow em{color:var(--sub);font-size:12px;margin-left:8px;font-style:normal}
+.wbdel{float:right;margin:0!important;padding:0 8px!important;font-size:13px!important;line-height:1.4;color:#B04A3A!important}
+.nbtn{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;cursor:pointer;color:var(--ink)}
+.nbtn.on{background:var(--main);border-color:var(--main);color:#fff;font-weight:700}
+.nbtn:disabled{opacity:.4;cursor:not-allowed}
+#noteSize{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 6px;cursor:pointer}
+#noteStatus{font-size:11px;color:var(--sub)}
+
+/* 通用弹窗 */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(20,30,28,.5);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal[hidden]{display:none}
+.mbox{background:#fff;border-radius:16px;width:100%;max-width:440px;max-height:88vh;overflow:auto;padding:22px 24px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.mbox h3{margin:0 0 6px;font-size:17px}
+.mbox .mdesc{font-size:12px;color:var(--sub);line-height:1.7;margin:0 0 16px}
+.mrow{display:flex;align-items:center;gap:10px;margin:10px 0;flex-wrap:wrap}
+.mrow label{font-size:14px;display:flex;align-items:center;gap:6px;cursor:pointer}
+.mrow input[type=text],.mrow input[type=password]{flex:1;min-width:140px;font-size:15px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;outline:none;font-family:inherit}
+.mrow input[type=text]:focus,.mrow input[type=password]:focus{border-color:var(--main)}
+.mrow select{font-size:14px;padding:9px 10px;border:2px solid var(--line);border-radius:10px;outline:none;font-family:inherit;background:#fff;color:var(--ink);max-width:100%}
+.mbtns{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.mnote{font-size:12px;color:var(--sub);line-height:1.7;background:#F7FAF9;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:12px}
+.merr{font-size:13px;color:var(--red);min-height:18px;margin-top:8px}
+.mok{font-size:13px;color:var(--main);min-height:18px;margin-top:8px}
+.codebox{font-size:26px;font-weight:800;letter-spacing:6px;text-align:center;color:var(--main);background:#F1F8F4;border:1px dashed var(--main);border-radius:12px;padding:12px;margin:10px 0}
+.optline{display:flex;align-items:flex-start;gap:9px;font-size:14px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:pointer}
+.optline:has(input:checked){border-color:var(--main);background:#F1F8F4}
+.optline input{margin-top:3px}
+.optline b{display:block;font-size:14px}
+.optline small{display:block;color:var(--sub);font-size:12px;margin-top:2px;line-height:1.5}
+.optline.disabled{opacity:.45;cursor:not-allowed}
+/* 离线生词翻译 */
+#dictBar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0;padding:8px 10px;background:#F5FBF7;border:1px solid var(--line);border-radius:10px}
+#dictBar .pen-tip{flex:1;min-width:170px;color:var(--sub);font-size:12px}
+#dictBar button{font-size:12px;padding:5px 10px}
+#dictTip{position:fixed;z-index:60;width:290px;max-width:calc(100vw - 20px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(31,42,38,.2);font-size:13px;color:var(--ink);overflow:hidden}
+#dictTip .dh{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--main);color:#fff;padding:9px 11px}
+#dictTip .dh b{font-size:15px;letter-spacing:.2px;word-break:break-all}
+#dictTip .dx{flex:0 0 auto;margin:0;padding:0;border:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.2);color:#fff;font-size:13px;line-height:1;cursor:pointer}
+#dictTip .db{padding:10px 12px}
+#dictTip .dp{display:block;color:var(--sub);font-size:12px}
+#dictTip .dt{display:block;margin-top:3px;font-size:15px;font-weight:600;line-height:1.5;white-space:pre-wrap}
+#dictTip .dt.none{color:var(--sub);font-size:13px;font-weight:400;font-style:italic}
+#dictTip .dmeta{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px}
+#dictTip .tag{font-size:11px;padding:2px 8px;border-radius:20px;background:#EAF3F0;color:var(--main)}
+#dictTip .tag.warn{background:#FFF2D9;color:#8A6100}
+#dictTip .dexa{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font-size:12px;color:var(--sub);line-height:1.6;max-height:96px;overflow:auto}
+#dictTip .dexa b{color:var(--main)}
+#dictTip .dgloss{margin-top:4px;max-height:170px;overflow:auto;font-size:12px;line-height:1.6}
+#dictTip .dgloss div{padding:2px 0;border-bottom:1px dotted var(--line)}
+#dictTip .dgloss b{display:inline-block;min-width:88px;color:var(--main)}
+#dictTip .dacts{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;background:#F7FAF9;border-top:1px solid var(--line)}
+#dictTip .dacts button{margin:0;font-size:12px;padding:5px 9px}
+#dictTip .dacts button.hi{background:var(--main);color:#fff;border-color:var(--main)}
+#dictTip .dacts button.faved{background:#FFF2D9;color:#8A6100;border-color:#E8C98A}
+#dictTip .dgloss button.wfav{float:right;margin:0 0 0 6px;padding:0 6px;font-size:11px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--main);cursor:pointer}
+#dictTip .dedit{padding:9px 10px;background:#FFF9E8;border-top:1px solid var(--line)}
+#dictTip .dedit input{width:100%;font-size:13px;padding:7px 9px;border:2px solid var(--line);border-radius:8px;outline:none;font-family:inherit}
+#dictTip .dedit .mbtns{display:flex;gap:6px;margin-top:7px}
+#dictTip .dedit button{font-size:12px;padding:5px 10px;margin:0}
+#dictDlg .mbox{max-width:560px}
+.dlist{max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+.drow{display:flex;gap:10px;padding:7px 10px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer}
+.drow:last-child{border-bottom:0}
+.drow:hover{background:#F1F8F4}
+.drow b{min-width:112px;color:var(--main);word-break:break-all}
+.drow span{flex:1;color:var(--ink)}
+.drow.none span{color:var(--sub);font-style:italic}
+#wordBookList .wbrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);font-size:13px}
+#wordBookList .wbrow:last-child{border-bottom:0}
+#wordBookList .wbrow b{min-width:110px;color:var(--main);word-break:break-all}
+#wordBookList .wbph{color:var(--sub);font-size:12px;min-width:88px}
+#wordBookList .wbdef{flex:1;color:var(--ink)}
+#wordBookList .wbdel{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--sub);border-radius:6px;width:24px;height:24px;line-height:1;cursor:pointer;font-size:15px;padding:0}
+#wordBookList .wbdel:hover{background:#FDECEA;color:#C4483B;border-color:#E8B4AE}
+@media print{#dictBar,#dictTip{display:none!important}}
+#teacherSetBtn{display:none}
+body.teacher #teacherSetBtn{display:inline-block}
+body.student-locked #modeSeg button[data-mode=teacher]{opacity:.55}
+body.student-locked #modeSeg button[data-mode=teacher]::after{content:" ·需授权"}
+.gate-title{font-size:13px;font-weight:800;color:var(--main);margin-top:14px}
+/* 学生模式：隐藏看答案类入口，只能输入答案后核对 */
+body:not(.teacher) #revealBtn,
+body:not(.teacher) #pubAnsBtn,
+body:not(.teacher) .sheet,
+body:not(.teacher) .teacher-only{display:none!important}
+/* 手写工具按身份区分：教师用钢笔+橡皮，学生用记号笔+橡皮 */
+body:not(.teacher) #toolPen{display:none!important}
+body.teacher #toolMarker{display:none!important}
+/* 五色笔文字高亮为教师专属 */
+body:not(.teacher) #penBar{display:none!important}
+/* 学生横线作答面板：仅学生可见；右侧传统作答区仅教师可见 */
+body.teacher .student-only{display:none!important}
+body:not(.teacher) .right-col .ansbox,
+body:not(.teacher) .right-col .result,
+body:not(.teacher) .right-col .colhead.r,
+body:not(.teacher) .right-col .sheet{display:none!important}
+.pubans{color:var(--main)!important;font-weight:700}
+</style>
+</head>
+<body >
+<div id="toast" hidden></div>
+<script>
+/* 首屏先定布局，避免分栏闪动 */
+(function(){document.body.setAttribute('data-render',(function(){var l='auto';try{l=localStorage.getItem('grammar_fill_layout_v1')||'auto'}catch(e){}return (l==='auto')?(window.innerWidth>=720?'split':'stack'):l})());})();
+</script>
+<header>
+  <div class="hd">
+    <div class="brand">语法填空 · 一题一页<span>2026届各地汇编 · 10套/100题</span></div>
+    <div class="tools">
+      <select id="setSel" aria-label="选择套卷"></select>
+      <div class="seg" id="seg">
+        <button data-mode="all" class="on">全部</button>
+      </div>
+      <span class="stats">已做 <b id="done">0</b>/100 · 正确率 <b id="acc">--</b></span>
+      <div class="seg" id="modeSeg" title="切换身份：学生 / 教师">
+        <button data-mode="student" class="on">学生</button>
+        <button data-mode="teacher">教师</button>
+      </div>
+      <button id="layoutBtn" title="切换：自动 / 左右分栏 / 上下堆叠">布局：自动</button>
+      <button id="exportBtn" title="导出作答记录（含五色笔重点），可换设备导入">导出</button>
+      <button id="importBtn" title="导入作答记录（含五色笔重点）">导入</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+      <button id="resetBtn" title="清空所有作答记录">重置</button>
+      <button id="printBtn" title="打印 / 导出 PDF（按当前所选套卷）">打印</button>
+      <button id="fontBtn" title="调整字体大小（100%–300%）">字号</button>
+      <button id="dashBtn" title="查看正确率看板（教师）">正确率</button>
+      <button id="wordBookTopBtn" title="打开我的单词本（点单词收藏的生词）">单词本</button>
+      <button id="teacherSetBtn" title="教师设置：口令、授权、锁定">教师设置</button>
+    </div>
+  </div>
+  <div class="bar"><i id="progressBar"></i></div>
+</header>
+<div id="fontPanel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <b>字体大小</b><span id="fontVal">100%</span>
+  </div>
+  <input type="range" id="fontRange" min="100" max="300" step="10" value="100">
+  <div class="presets">
+    <button data-f="100">100%</button><button data-f="150">150%</button>
+    <button data-f="200">200%</button><button data-f="300">300%</button>
+  </div>
+</div>
+<div id="dash" hidden>
+  <div class="dbox">
+    <button class="dclose" id="dashClose">关闭</button>
+    <h3>正确率看板（教师）</h3>
+    <div id="dashBody"></div>
+  </div>
+</div>
+
+<!-- 打印选项 -->
+<div id="printDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>打印 / 导出 PDF</h3>
+    <p class="mdesc">按当前所选套卷生成，可在系统打印框里选「另存为 PDF」。</p>
+    <label class="optline"><input type="radio" name="pmode" value="q" checked><span><b>只打印题目</b><small>仅短文原文与空格，适合发给学生当练习卷</small></span></label>
+    <label class="optline" id="optQA"><input type="radio" name="pmode" value="qa"><span><b>题目 + 答案一起打印</b><small>每套附答案速查与考点，适合教师讲评 <span id="qaHint"></span></small></span></label>
+    <label class="optline" id="optWB"><input type="radio" name="pmode" value="wb"><span><b>打印单词本</b><small>导出收藏的生词，含音标、释义与默写横线 <span id="wbHint"></span></small></span></label>
+    <label class="optline" id="optNote"><input type="checkbox" id="pIncludeNote" checked><span><b>连同教师手写笔记</b><small>把老师的涂画批注一起印出来 <span id="noteHint"></span></small></span></label>
+    <div class="mbtns">
+      <button id="printCancel" class="nbtn">取消</button>
+      <button id="printGo" class="primary">生成并打印</button>
+    </div>
+    <div class="mnote">学生模式可打印「只打印题目」和「打印单词本」；答案与教师笔记需教师授权后使用。</div>
+  </div>
+</div>
+
+<!-- 教师模式验证 -->
+<div id="gateDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>进入教师模式</h3>
+    <p class="mdesc">教师模式可看答案/正确率、用五色笔与手写笔做笔记、打印答案卷。为防止学生随意切换，需老师授权。</p>
+    <div class="gate-title">方式一 · 教师口令</div>
+    <div class="mrow">
+      <input type="password" id="gatePin" placeholder="输入教师口令" autocomplete="off">
+      <button id="gatePinGo" class="primary">进入</button>
+    </div>
+    <div class="gate-title">方式二 · 学生授权码（老师发放）</div>
+    <div class="mrow">
+      <input type="text" id="gateCode" placeholder="输入 6 位授权码" autocomplete="off" inputmode="numeric">
+      <button id="gateCodeGo" class="nbtn">验证</button>
+    </div>
+    <div class="merr" id="gateMsg"></div>
+    <div class="mbtns"><button id="gateCancel" class="nbtn">取消，留在学生模式</button></div>
+    <div class="mnote">默认教师口令 <b>2468</b>，请在「教师设置」里修改。授权码由老师点「给学生授权」生成、口头告诉学生，<b>有效时间由老师设置（1 分钟～7 天，或永久有效）</b>。<br>按老师设置的「验证后本机保持」方式，验证一次后重新打开页面可自动进入教师模式；老师点「锁定并返回学生模式」即可取消。</div>
+  </div>
+</div>
+
+<!-- 教师设置 -->
+<div id="teacherSetDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>教师设置</h3>
+    <p class="mdesc">仅教师模式可见。验证一次后本机自动保持教师模式，学生拿不到口令或授权码就进不来。</p>
+    <div class="gate-title">修改教师口令</div>
+    <div class="mrow">
+      <input type="password" id="pinNew" placeholder="新口令（4 位以上）" autocomplete="off">
+      <button id="pinSave" class="nbtn">保存</button>
+    </div>
+    <div class="gate-title">给学生授权（老师自定有效时间）</div>
+    <div class="mrow">
+      <label>授权码有效 <input type="text" id="grantMinutes" inputmode="numeric" value="10" style="flex:0 0 64px;min-width:64px;text-align:center"> 分钟</label>
+      <label><input type="checkbox" id="grantForever"> 永久有效（不过期）</label>
+      <label>验证后本机保持
+        <select id="grantKeep">
+          <option value="forever">一直保持，直到我锁定</option>
+          <option value="expire">与授权码同时到期</option>
+          <option value="once">不记住，每次都验证</option>
+        </select>
+      </label>
+    </div>
+    <div class="mrow">
+      <button id="grantGo" class="nbtn">生成 6 位授权码</button>
+      <button id="grantRevoke" class="nbtn">收回授权</button>
+    </div>
+    <div class="codebox" id="grantCode" hidden>------</div>
+    <div class="mok" id="grantInfo">当前未发放授权码，学生无法进入教师模式。</div>
+    <div class="gate-title">本机记住状态</div>
+    <div class="mok" id="teacherRemember"></div>
+    <div class="gate-title">退出</div>
+    <div class="mrow"><button id="lockGo" class="nbtn">锁定并返回学生模式</button></div>
+    <div class="mok" id="teacherSetMsg"></div>
+    <div class="mbtns"><button id="teacherSetClose" class="primary">完成</button></div>
+    <div class="mnote">说明：这是纯前端课堂管理工具，口令/授权码保存在本机浏览器，技术性绕过不在防护范围内；适合防止学生随手点击切换，不适合作为考试防作弊。「收回授权」只影响尚未验证的设备，已记住教师模式的设备需各自点「锁定并返回学生模式」。</div>
+  </div>
+</div>
+
+<!-- 离线生词翻译：查词气泡 -->
+<div id="dictTip" hidden></div>
+
+<!-- 本套生词表 -->
+<div id="dictDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>本套生词表</h3>
+    <p class="mdesc">词库内嵌在本页面里，断网、飞行模式、双击本地文件都能查。点任一行可看释义。</p>
+    <div class="mrow"><input type="text" id="dictSearch" placeholder="搜索单词（支持部分匹配）"></div>
+    <div class="dlist" id="dictList"></div>
+    <div class="mok" id="dictCount"></div>
+    <div class="mbtns"><button id="dictClose" class="primary">关闭</button></div>
+    <div class="mnote">词典释义裁剪自 ECDICT（MIT License · © Linwei / skywind3000），只保留本页短文用到的词；专有名词、所有格等可能未收录。</div>
+  </div>
+</div>
+
+<!-- 补充 / 修改释义 -->
+<div id="dictEditDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>补充 / 修改释义</h3>
+    <div class="mrow"><input type="text" id="dictWord" placeholder="英文单词（小写）"></div>
+    <div class="mrow"><input type="text" id="dictDef" placeholder="中文释义"></div>
+    <div class="mok" id="dictEditMsg"></div>
+    <div class="mbtns">
+      <button id="dictEditCancel" class="nbtn">取消</button>
+      <button id="dictEditSave" class="primary">保存</button>
+    </div>
+    <div class="mnote">自定义词条存在本机浏览器，会覆盖内嵌词库；导出后可发给别的设备导入。</div>
+  </div>
+</div>
+
+<!-- 我的单词本（收藏的生词，师生均可用，均可打印） -->
+<div id="wordBookDlg" class="modal" hidden>
+  <div class="mbox">
+    <h3>我的单词本</h3>
+    <p class="mdesc">点短文里的单词即可收藏到这里（教师点词出查词卡片再点收藏；学生点词直接收藏），按收藏顺序排列，保存在本机浏览器。</p>
+    <div class="dlist" id="wordBookList"></div>
+    <div class="mok" id="wordBookCount"></div>
+    <div class="mbtns">
+      <button id="wbClear" class="nbtn">清空</button>
+      <button id="wbExport" class="nbtn">导出 CSV</button>
+      <button id="wbPrint" class="nbtn">打印单词本</button>
+      <button id="wbClose" class="primary">关闭</button>
+    </div>
+    <div class="mnote">点「打印单词本」会生成带音标、释义与默写横线的表格；也可在顶部「打印」里选「打印单词本」。</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <div id="content">
+      <div class="meta">
+        <span class="set" id="mSet"></span>
+        <span class="topic" id="mTopic"></span>
+        <span class="qn" id="mQn"></span>
+        <span class="pos" id="mPos"></span>
+      </div>
+      <div class="main-grid">
+        <div class="left-col">
+          <div class="colhead">短文原文 · 题目 <small>点短文里的空格可跳到那一题</small></div>
+          <div id="penBar">
+            <span class="pen-tip">五色笔：在原文或解析里选中文字，自动画重点（点已画处可擦除，教师模式）</span>
+            <button class="pen" data-c="#FFD54F" style="background:#FFD54F" title="黄"></button>
+            <button class="pen" data-c="#FF8A80" style="background:#FF8A80" title="红"></button>
+            <button class="pen" data-c="#80DEEA" style="background:#80DEEA" title="蓝"></button>
+            <button class="pen" data-c="#A5D6A7" style="background:#A5D6A7" title="绿"></button>
+            <button class="pen" data-c="#CE93D8" style="background:#CE93D8" title="紫"></button>
+            <button id="penUndo" class="pen-clear" title="撤销上一步">↶ 撤销</button>
+            <button id="penClear" class="pen-clear">清空本页</button>
+          </div>
+          <div id="noteBar">
+            <span class="pen-tip" id="noteTipTeacher">手写工具：钢笔/记号笔点工具选颜色，开笔后涂画；橡皮可擦掉五色笔高亮</span>
+            <span class="pen-tip" id="noteTipStudent">手写工具：记号笔涂画重点、橡皮擦掉；未开笔时点短文里的单词可直接收藏到单词本</span>
+            <button id="noteToggle" class="nbtn">开笔</button>
+            <div class="toolgroup">
+              <button id="toolPen" class="toolbtn on" data-tool="pen" title="钢笔：可选颜色与粗细">✒ 笔</button>
+              <button id="toolMarker" class="toolbtn" data-tool="marker" title="记号笔：半透明高亮，可调颜色与粗细">▨ 记号笔</button>
+              <button id="toolEraser" class="toolbtn" data-tool="eraser" title="橡皮：只有粗细，可擦五色笔">▤ 橡皮</button>
+            </div>
+            <div id="penPanel" hidden>
+              <button id="penPanelClose" class="pp-close" title="关闭">×</button>
+              <div id="ppColors">
+                <div class="pp-title">颜色</div>
+                <div class="pp-row" id="ppPenColors">
+                  <button class="clr active" data-c="#C4483B" style="background:#C4483B" title="红"></button>
+                  <button class="clr" data-c="#222222" style="background:#222222" title="黑"></button>
+                  <button class="clr" data-c="#2F6DB5" style="background:#2F6DB5" title="蓝"></button>
+                </div>
+                <div class="pp-row" id="ppMarkerColors" hidden>
+                  <button class="clr" data-c="#FFD54F" style="background:#FFD54F" title="黄"></button>
+                  <button class="clr active" data-c="#A5D6A7" style="background:#A5D6A7" title="绿"></button>
+                  <button class="clr" data-c="#80DEEA" style="background:#80DEEA" title="蓝"></button>
+                  <button class="clr" data-c="#F48FB1" style="background:#F48FB1" title="粉"></button>
+                  <button class="clr" data-c="#FFB74D" style="background:#FFB74D" title="橙"></button>
+                </div>
+              </div>
+              <div id="ppSize">
+                <div class="pp-title">粗细 <span id="noteSizeVal">4</span> px</div>
+                <div class="pp-row"><input type="range" id="noteSize" min="1" max="24" value="4"></div>
+              </div>
+              <div class="pp-preview"><span id="notePreview"></span></div>
+            </div>
+            <button id="noteUndo" class="nbtn">撤销</button>
+            <button id="noteClear" class="nbtn">清空本题</button>
+            <span id="noteStatus"></span>
+          </div>
+          <div id="dictBar" class="teacher-only">
+            <span class="pen-tip">教师词句翻译：点短文里的单词就地出中文，划选一句话看逐词释义（离线词库，断网可用）</span>
+            <button id="dictListBtn" class="nbtn">本套词表</button>
+            <button id="wordBookBtn" class="nbtn">单词本</button>
+            <button id="dictMoreBtn" class="nbtn" hidden>词库管理</button>
+            <span id="dictAdvanced" hidden>
+              <button id="dictEditBtn" class="nbtn">加词</button>
+              <button id="dictImportBtn" class="nbtn">导入</button>
+              <button id="dictExportBtn" class="nbtn">导出</button>
+            </span>
+            <input type="file" id="dictFile" accept=".csv,.json,.txt" hidden>
+          </div>
+          <div class="passage" id="passage"></div>
+          <div class="scrollhint">短文较长，可在此区域内上下滑动</div>
+          <div id="stuPanel" class="student-only">
+            <div class="stuSubmitBar">
+              <button class="primary" id="stuSubmitBtn">提交批改</button>
+              <span class="stuScore" id="stuScore"></span>
+              <button id="stuResetBtn">清空重做</button>
+            </div>
+            <div class="stuResult" id="stuResult" hidden></div>
+          </div>
+        </div>
+        <div class="right-col">
+          <div class="colhead r">作答区 <small>← → 翻题 · Enter 核对</small></div>
+          <div class="ansbox">
+            <div class="anslabel">第 <span id="curNo"></span> 题 <span class="hint" id="hintLabel"></span></div>
+            <div class="inputrow">
+              <input type="text" id="answerInput" placeholder="输入答案，回车核对" autocomplete="off" autocapitalize="off" spellcheck="false">
+              <button class="primary" id="checkBtn">核对答案</button>
+            </div>
+            <div class="subrow">
+              <button id="revealBtn">直接看解析</button>
+              <button id="pubAnsBtn" class="pubans" title="教师讲评：一键显示本题答案与解析">公布答案（教师）</button>
+            </div>
+          </div>
+          <div class="result" id="result" hidden></div>
+          <div class="nav">
+            <button id="prevBtn">← 上一题</button>
+            <select id="jumpSel" aria-label="跳转题目"></select>
+            <button id="nextBtn">下一题 →</button>
+          </div>
+          <details class="sheet">
+            <summary>本套答案速查（10 题，点题号可跳转）</summary>
+            <div class="sheetgrid" id="sheetBody"></div>
+          </details>
+        </div>
+      </div>
+    </div>
+    <div class="empty" id="empty" hidden>当前筛选下还没有题目<br><button id="backAll">回到全部题目</button></div>
+    <canvas id="noteCanvas"></canvas>
+  </div>
+  <div class="tip">宽屏为<b>左原文 · 右作答</b>（右侧随滚动悬浮），窄屏自动改为上下；顶部「布局」按钮可手动切换并记住选择。<br>键盘：<b>← →</b> 翻题 · <b>Enter</b> 核对 / 下一题 · 点短文里的其他空格可直接跳到那一题<br><b>学生模式</b>（默认）：输入答案核对、看对错与错题；看不到答案速查、不能一键看答案。要进教师模式，需输入<b>教师口令</b>或老师发放的<b>授权码</b>。<br><b>教师模式</b>：一键「公布答案」核对、正确率看板、五色笔文字高亮、<b>手写笔</b>在题目卡上涂画做笔记（5 色 / 4 档粗细 / 橡皮 / 撤销 / 清空，按题保存，学生只读可见），并可选择打印答案卷。<br>「打印」可选<b>只打印题目</b>或<b>题目+答案</b>，还能把手写笔记一并印出；「字号」100%–300%；作答、高亮、笔记均可用「导出 / 导入」迁移。资料依据《2026届各地英语语法填空汇编（含答案与解析）》整理。</div>
+</div>
+
+<script id="dictPhon" type="application/json">{"accessible":"әk'sesәbl","account":"ә'kaunt","across":"ә'krɒs","actually":"'æktʃuәli","acupuncture":"'ækju.pʌŋktʃә","acupuncturist":".ækju'pʌŋktʃәrist","added":"'ædid","advanced":"әd'vɑ:nst","agency":"'eidʒәnsi","ago":"ә'gәu","alive":"ә'laiv","alongside":"ә'lɒŋ'said","amaze":"ә'meiz","amazed":"ә'meizd","american":"ә'merikәn","ancient":"'einʃәnt","another":"ә'nʌðә","anyone":"'eniwʌn","appeal":"ә'pi:l","appreciate":"ә'pri:ʃieit","appreciation":"ә.pri:ʃi'eiʃәn","approach":"ә'prәutʃ","architecture":"'ɑ:kitektʃә","area":"'єәriә","arms":"ɑ:mz","around":"ә'raund","arranges":"əˈreindʒz","art":"ɑ:t","artful":"'ɑ:tful","artificial":".ɑ:ti'fiʃәl","arts":"ɑ:ts","artworks":"'ɑ:twɜ:ks","attention":"ә'tenʃәn","attracted":"ə'træktɪd","attractions":"ət'rækʃnz","attracts":"əˈtrækts","audience":"'ɒ:diәns","audiences":"'ɔ:dɪənsɪz","australian":"ɒ'streiljәn","background":"'bækgraund","balance":"'bælәns","banks":"bæŋks","battle":"'bætl","beautiful":"'bju:tiful","beautifully":"'bju:tifuli","beauty":"'bju:ti","became":"bi'keim","become":"bi'kʌm","began":"bi'gæn","beginning":"bi'giniŋ","beijing":"beidʒiŋ","belief":"bi'li:f","believing":"bi'li:viŋ","belonged":"bɪ'lɒŋd","beloved":"bi'lʌvd","ben":"ben","beyond":"bi'jɒnd","big":"big","biological":".baiәu'lɒdʒikәl","birthplace":"'bә:θpleis","boat":"bәut","body":"'bɒdi","bond":"bɒnd","book":"buk","borders":"'bɔ:dәz","breath":"breθ","breathtaking":"'breθ.teikiŋ","bridge":"bridʒ","british":"'britiʃ","brought":"brɒ:t","cairo":"'kaiәrәu","calling":"'kɒ:liŋ","calm":"kɑ:m","came":"keim","camera":"'kæmәrә","canadian":"kә'neidiәn","captures":"ˈkæptʃəz","capturing":"'kæptʃәriŋ","care":"kєә","carefully":"'kєәfuli","carried":"'kærid","caught":"kɒ:t","cause":"kɒ:z","celebrated":"'selibreitid","celebration":".seli'breiʃәn","center":"'sentә","centuries":"'sentʃərɪz","century":"'sentʃuri","check-ups":"t'ʃek'ʌps","china":"'tʃainә","chinese":"tʃai'ni:z","chongqing":"'tʃjŋ'kiŋ","cinema":"'sinәmә","cinematic":",sini'mætik","city":"'siti","classic":"'klæsik","clay":"klei","clear":"kliә","clearly":"'kliәli","clinic":"'klinik","cloud":"klaud","coach":"kәutʃ","coaches":"kəutʃiz","collection":"kә'lekʃәn","college":"'kɒlidʒ","colorful":"'kʌlәful","comfort":"'kʌmfәt","comfortable":"'kʌmfәtәbl","complete":"kәm'pli:t","completely":"kәm'pli:tli","concluded":"kənˈklu:did","confirm":"kәn'fә:m","connect":"kә'nekt","connection":"kә'nekʃәn","connects":"kəˈnekts","constant":"'kɒnstәnt","content":"kәn'tent","contrasts":"ˈkɔntræsts","control":"kәn'trәul","conveyed":"kənˈveid","cool":"ku:l","cooperation":"kәu.ɒpә'reiʃәn","core":"kɒ:","couldn't":"'kudnt","countless":"'kauntlis","court":"kɒ:t","create":"kri:'eit","created":"kri: 'eitid","creation":"kri:'eiʃәn","critical":"'kritikәl","cultural":"'kʌltʃәrәl","culture":"'kʌltʃә","cupping":"'kʌpiŋ","curiosity":".kjuәri'ɒsiti","cutting-edge":"'kʌtɪŋ'edʒ","cyberpunk":"ˈsaɪbəpʌŋk","daily":"'deili","dance":"dæns. dɑ:ns","dancers":"'dɑ:nsəz","data":"'deitә","davy":"'deivi","day":"dei","decades":"ˈdekeidz","decayed":"di'keid","december":"di'sembә","decline":"di'klain","deep":"di:p","deepened":"ˈdi:pənd","deeply":"'di:pli","deer":"diә","delivering":"diˈlivərɪŋ","denmark":"'denmɑ:k","design":"di'zain","designed":"di'zaind","despite":"di'spait","destination":".desti'neiʃәn","developing":"di'velәpiŋ","development":"di'velәpmәnt","different":"'difәrәnt","digital":"'didʒitәl","digitization":".didʒitai'zeiʃәn. -ti'z-","direct":"di'rekt","directly":"di'rektli, dai'rektli","disciples":"dɪ'saɪplz","discipline":"'disiplin","display":"dis'plei","distant":"'distәnt","distinct":"dis'tiŋkt","district":"'distrikt","diversity":"dai'vә:siti","domestic":"dәu'mestik","drama":"'drɑ:mә","drum":"drʌm","drumbeats":"ˈdrʌmbi:ts","due":"dju:","dynamic":"dai'næmik","dynasty":"'dainæsti","earliest":"'iәliist","earned":"ә:nd","echoing":"'ekәuiŋ","educating":"ˈedju:keitɪŋ","effort":"'efәt","egypt":"'i:dʒipt","egyptian":"i'dʒipʃәn","eight":"eit","emotion":"i'mәuʃәn","emperor":"'empәrә","employs":"imˈplɔiz","enables":"iˈneiblz","encourage":"in'kʌridʒ","end":"end","enemies":"'enəmɪz","engage":"in'geidʒ","english":"'iŋgliʃ","enhanced":"in'hɑ:nst. -'hænst","enjoying":"end'ʒɔɪɪŋ","enriched":"in'ritʃt","enthusiastic":"in.θju:zi'æstik","especially":"i'speʃәli","establish":"i'stæbliʃ","event":"i'vent","eventually":"i'ventʃuәli","everyday":"'evri'dei","examine":"ig'zæmin","example":"ig'zæmpl","exceptional":"ik'sepʃәnәl","exhibition":".eksi'biʃәn","expectations":"ekspek'teɪʃnz","experience":"ik'spiәriәns","experienced":"ik'spiәriәnst","experiences":"iksˈpiəriənsiz","expert":"'ekspә:t","explore":"ik'splɒ:","extensive":"ik'stensiv","fails":"feilz","family":"'fæmәli","far":"fɑ:","february":"'februәri","feel":"fi:l","fellow":"'felәu","felt":"felt","field":"fi:ld","figure":"'figә","filled":"fild","film":"film","finest":"fi'nest","firmly":"'fә:mli","flights":"flaits","floor":"flɒ:","flow":"flәu","flowing":"flәuiŋ","focus":"'fәukәs","football":"'futbɒ:l","forced":"fɒ:st","forceful":"'fɒ:sful","foreigners":"'fɒrənəz","form":"fɒ:m","found":"faund","front":"frʌnt","fruit":"fru:t","full":"ful","fully":"'fuli","fusion":"'fju:ʒәn","future":"'fju:tʃә","gentle":"'dʒentl","geographic":",dʒiә'^ræfik","global":"'glәubl","going":"'gәuiŋ","golden":"'gәuldn","graceful":"'greisful","gradually":"'grædʒuәli","great":"greit","ground":"graund","growing":"'grәuiŋ","growth":"grәuθ","guangzhou":"'ɡwɑ:ŋ'dʒəu","guizhou":"'^wei'dʒu:","habit":"'hæbit","half":"hɑ:f","hall":"hɒ:l","hammond":"'hæmәnd","harmful":"'hɑ:mful","harmony":"'hɑ:mәni","health":"'helθ","hear":"hiә","help":"help","heritage":"'heritidʒ","hide":"haid","him":"him","himself":"him'self","historic":"hi'stɒrik","historical":"hi'stɒrikәl","history":"'histәri","hobby":"'hɒbi","hold":"hәuld","hollow":"'hɒlәu","home":"hәum","hosts":"həusts","house":"haus","however":"hau'evә","human":"'hju:mәn","humanity":"hju:'mæniti","hunt":"hʌnt","illness":"'ilnis","impression":"im'preʃәn","inbound":"'in'baund","included":"in'klu:did","increase":"in'kri:s","increased":"in'kri:st","increasingly":"in'kri:siŋli","industry":"'indәstri","influence":"'influәns","initial":"i'niʃәl","initiatives":"ɪ'nɪʃətɪvz","innovative":"'inәjveitiv","inside":"'in'said","inspired":"in'spaiәd","inspiring":"in'spaiәriŋ","instant":"'instәnt","integrate":"'intigreit","intelligence":"in'telidʒәns","intense":"in'tens","interactive":",intәr'æktiv","interest":"'intrist","invites":"inˈvaits","it's":"its","itself":"it'self","joshua":"'dʒɒʃuә","journey":"'dʒә:ni","joy":"dʒɒi","june":"dʒu:n","kapok":"'keipɒk","kicked":"kikt","kind":"kaind","king":"kiŋ","knee":"ni:","known":"nәun","lab":"læb","labour":"'leibә","labourers":"ˈleɪbrəz","landscape":"'lændskeip","landscapes":"ˈlændskeips","large":"lɑ:dʒ","last":"lɑ:st","lasting":"'lɑ:stiŋ","late":"leit","later":"'leitә","latest":"'leitist","layered":"'leiәd","learn":"lә:n","learned":"'lә:nid","leave":"li:v","led":"led","left":"left","legacy":"'legәsi","life":"laif","life-sized":"'laifsaizd","light":"lait","like":"laik","limited":"'limitid","line":"lain","live":"liv.laiv","living":"'liviŋ","local":"'lәukәl","london":"'lʌndәn","long":"lɒŋ","longing":"'lɒŋiŋ","love":"lʌv","maintains":"meinˈteinz","major":"'meidʒә","managing":"'mænidʒiŋ","map":"mæp","master":"'mɑ:stә. 'mæstә","meant":"ment","media":"'mi:diә","medical":"'medikl","medicine":"'medisin","meeting":"'mi:tiŋ","member":"'membә","memorial":"mi'mɒ:riәl","message":"'mesidʒ","million":"'miljәn","ming":"miŋ","miracle":"'mirәkl","mix":"miks","model":"'mɒdәl","modeling":"'mɔdliŋ","modern":"'mɒdәn","moment":"'mәumәnt","month":"mʌnθ","monthly":"'mʌnθli","motion":"'mәuʃәn","motionless":"'mәuʃәnlis","mountain":"'mauntin","move":"mu:v","movement":"'mu:vmәnt","movie":"'mu:vi","moving":"'mu:viŋ","multilayered":"mʌltɪ'leɪəd","multimedia":".mʌlti'mi:diә","museum":"mju:'ziәm","music":"'mju:zik","musicians":"mju:'zɪʃənz","nanjing":"'næn'dʒiŋ","nature":"'neitʃә","nearly":"'niәli","notable":"'nәutәbl","offer":"'ɒfә","official":"ә'fiʃәl","old":"әuld","onto":"'ɒntu:","opening":"'әupәniŋ","opera":"'ɒpәrә","option":"'ɒpʃәn","ordinary":"'ɒ:dinәri","original":"ә'ridʒәnl","outbreak":"'autbreik","overseas":"'әuvә'si:z","owner":"'әunә","page":"peidʒ","pain":"pein","painting":"'peintiŋ","palace":"'pælis","pardoned":"ˈpɑ:dənd","part":"pɑ:t","parts":"pɑ:ts","pass":"pæs","passed":"pɑ:st","passion":"'pæʃәn","past":"pɑ:st","peace":"pi:s","peking":"'pi:kiŋ","people":"'pi:pl","perfect":"'pә:fikt","performance":"pә'fɒ:mәns","performances":"pə'fɔ:mənsɪz","performers":"pɚ'fɔrmɚz","personal":"'pә:snl","perth":"pә:θ","phenomenon":"fi'nɒminәn","philosophy":"fi'lɒsәfi","photo":"'fәutәu","photographer":"fә'tɔ^rәfә","photography":"fә'tɒgrәfi","physical":"'fizikl","picture":"'piktʃә","plant":"plænt. plɑ:nt","platforms":"p'lætfɔ:mz","pleasant":"'pleznt","poetry":"'pәuitri","possesses":"pəˈzesiz","possibly":"'pɒsәbli","posters":"'pəʊstəz","power":"'pauә","powerful":"'pauәful","practical":"'præktikl","practices":"ˈpræktisiz","practitioner":"præk'tiʃәnә","present":"'preznt","private":"'praivit","program":"'prәugræm","projectors":"prəd'ʒektəz","properly":"'prɒpәli","public":"'pʌblik","quarterly":"'kwɔ:tәli","quiet":"'kwaiәt","rare":"rєә","rarely":"'rєәli","rather":"'ræðә","raw":"rɒ:","read":"ri:d","real":"'riәl","reality":"ri'æliti","realize":"'riәlaiz","received":"ri'si:vd","receiving":"ri'si:viŋ","recent":"'ri:snt","recommendations":"ˌrekəmenˈdeiʃənz","recommending":"ˌrekəˈmendɪŋ","recover":"ri'kʌvә","recreation":".rekri'eiʃәn","reduced":"ri'dju:st","reflect":"ri'flekt","reflection":"ri'flekʃәn","relying":"riˈlaiŋ","remained":"riˈmeind","remains":"ri'meins","remarkable":"ri'mɑ:kәbl","representing":"ˌrepriˈzentɪŋ","residential":".rezi'denʃәl","responded":"riˈspɔndid","rhythm":"'riðәm","rich":"ri:tʃ","right":"rait","robe":"rәub","root":"ru:t","run":"rʌn","said":"sed","sailed":"seild","say":"sei","scale":"skeil","scene":"si:n","see":"si:","seen":"si:n","sense":"sens","serves":"sə:vz","set":"set","seven":"'sevn","sharing":"'ʃeәriŋ","shiny":"'ʃaini","shopping":"'ʃɒpiŋ","show":"ʃәu","showing":"'ʃәuiŋ","shown":"ʃәun","significant":"sig'nifikәnt","silent":"'sailәnt","silk":"silk","six":"siks","sky":"skai","skyscrapers":"'skaɪˌskreɪpəz","slowly":"'slәuli","small":"smɒ:l","social":"'sәuʃәl","soft":"sɒft","softly":"'sɒftli","solitude":"'sɒlitju:d","something":"'sʌmθiŋ","song":"sɒŋ","soon":"su:n","sorrow":"'sɒrәu","soul":"sәul","sound":"saund","spatial":"'speiʃәl","speak":"spi:k","sped":"sped","speed":"spi:d","spent":"spent","spirit":"'spirit","spring":"spriŋ","stage":"steidʒ","star":"stɑ:","started":"s'tɑ:tɪd","state":"steit","steady":"'stedi","stepped":"stept","stepping":"'stepiŋ","stills":"stilz","story":"'stɒ:ri","storytelling":"'stɒ:riteliŋ","strength":"streŋθ","strengthen":"'streŋθәn","strike":"straik","striking":"'straikiŋ","strong":"strɒŋ","studio":"'stju:diәu","study":"'stʌdi","summer":"'sʌmә","sun":"sʌn","surgery":"'sә:dʒәri","surpass":"sә'pɑ:s","surreal":"sә'riәl","surroundings":"sә'rajndiŋz","survive":"sә'vaiv","survived":"səˈvaivd","swordplay":"'sɒ:dplei","sydney":"'sidni","tan":"tæn","tang":"tæŋ","tea":"ti:","teacher":"'ti:tʃә","team":"ti:m","technological":".teknә'lɒdʒikl","technology":"tek'nɒlәdʒi","terracotta":"terә'kɔtә","theater":"'θiәtә","themselves":"ðәm'selvz","thoughtful":"'θɒ:tful","thousand":"'θauznd","time":"taim","timeless":"'taimlis","today":"tә'dei","together":"tә'geðә","told":"tәuld","tomb":"tu:m","too":"tu:","tools":"tu:lz","top":"tɒp","touch":"tʌtʃ","touching":"'tʌtʃiŋ","tourism":"'tuәrizm","tourists":"'tʊərɪsts","tours":"tuәz","toward":"tә'wɒ:d","tradition":"trә'diʃәn","traditional":"trә'diʃәnl","traditions":"trə'dɪʃnz","transforms":"trænsˈfɔ:mz","travel":"'trævl","traveling":"'trævliŋ","treasures":"ˈtreʒəz","treatment":"'tri:tmәnt","tree":"tri:","trend":"trend","turning":"'tә:niŋ","ultimately":"'ʌltimәtli","unfolding":"ʌn'fәuldiŋ","unique":"ju:'ni:k","unit":"'ju:nit","university":".ju:ni'vә:siti","unknown":".ʌn'nәun","untouched":".ʌn'tʌtʃt","upward":"'ʌpwәd","urban":"'ә:bәn","use":"ju:s","used":"'ju:st","viewers":"'vju:əz","virtual":"'vә:tʃuәl","visit":"'vizit","visiting":"'vizitiŋ","visitor":"'vizitә","visual":"'viʒuәl","visually":"'vizjjәli","vital":"'vaitl","vivid":"'vivid","wait":"weit","waited":"weitid","walking":"'wɒ:kiŋ","warrior":"'wɒ:riә","warriors":"'wɒrɪəz","watching":"'wɔtʃiŋ","water":"'wɒ:tә","waves":"weivz","way":"wei","ways":"weiz","welcome":"'welkәm","well":"wel","well-being":"'welbiiŋ","wild":"waild","wisdom":"'wizdәm","wish":"wiʃ","witness":"'witnis","wood":"wud","woods":"wjdz","work":"wә:k","world":"wә:ld","worldwide":"'wә:ldwaid","worried":"'wʌrid","worth":"wә:θ","xi'an":"'ʃi:'ɑ:n,ʃjɑ:n","year":"jiә","young":"jʌŋ","yunnan":"'ju:n'næn"}</script>
+<!-- 离线词典：裁剪自 ECDICT，MIT License，Copyright (c) 2025 Linwei / skywind3000；仅保留本页短文用到的词，运行时不发起任何网络请求 -->
+<script id="dictData" type="application/json">{"accessible":"a. 易接近的, 可进入的, 可使用的, 易受影响的, 可理解的","accompanied":"v. 陪伴, 伴随；伴奏（accompany的过去分词）；a. 伴随的；相伴的","account":"n. 报告, 解释, 估价, 理由, 利润, 算账, 帐目；vi. 报帐, 解释, 导致, 报偿, 占, 杀死","achievements":"n. 业绩；获得（achievement的复数）","across":"prep. 越过, 穿过, 与...相交叉, 在...的对面；adv. 交叉, 到另一边, 在对面, 成十字","actually":"adv. 事实上, 竟然, 如今, 现在","acupuncture":"n. 针刺, 针刺疗法；vt. 施以针灸","acupuncturist":"n. 针灸医生","added":"a. 额外的；更多的","advanced":"a. 在前的, 高级的, 先进的, 年老的；[法] 预付的, 预支的, 垫付的","agency":"n. 代理机构, 经销商, 中介；[化] 办事处","ago":"adv. 以前","alive":"a. 活着的, 活泼的, 敏感的, 热闹的","allows":"n. 允许","alongside":"adv. 在旁边, 靠拢着；prep. 在...旁边, 与...在一起","amaze":"vt. 使吃惊","amazed":"a. 吃惊的, 惊奇的","american":"n. 美国人；a. 美国的, 美洲的","americans":"n. 美国人（American的复数形式）","ancient":"a. 古代的, 古老的, 年老的, 旧的","another":"a. 另外的, 再一的, 不同的；pron. 又一个, 另一个, 类似的另一个","anyone":"pron. 任何人","appeal":"n. 恳求, 诉请, 上诉, 吸引力；vi. 呼吁, 诉请, 要求, 上诉, 有吸引力","appears":"v. 出现；呈现；看上去好像（appear的三单形式）","appreciate":"vt. 赏识, 鉴别, 为...而感激, 领会, 欣赏；vi. 增值, 涨价","appreciation":"n. 感激, 赏识, 鉴别；[经] 涨价, 增值","approach":"n. 接近, 入门；vt. 接近, 近似, 找...商量","architecture":"n. 建筑学, 建筑式样；[计] 体系结构","area":"n. 区域, 面积, 范围, 空地；[计] 区域","arms":"n. 武器, 军事行动；[机] 武器, 军械, 枪械","around":"prep. 包围, 在...周围, 四处；adv. 兜着圈子, 在附近, 到处","arranges":"v. 安排, 准备( arrange的第三人称单数 ); 把…（系统地）分类; 整理; 改编（剧本等）","art":"n. 艺术, 人文科学, 技术, 巧妙, 诡计, 美术；[计] 实际保持时间, 特许权和资源表, 平均检索时间, 平均运行时间","artful":"a. 巧妙的, 狡猾的","artificial":"a. 人造的, 假的, 非原地产的；[医] 人工的, 人造的, 伟牟","arts":"n. 文科","artworks":"n. （书, 杂志等的）插图( artwork的复数形式 ); 艺术作品, 美术作品","attention":"n. 注意, 注意力；[计] 引起注意信号","attracted":"吸引；的兴趣","attracting":"n. 吸引","attractions":"n. 吸引( attraction的复数形式 ); 具有吸引力的事物; 有吸引力的特征（或品质、人）; （尤指两性间的）爱慕","attracts":"v. 吸引( attract的第三人称单数 ); 使喜爱; 引起…的好感（或爱慕）; 具有吸引力","audience":"n. 听众, 观众, 读者；[法] 听讼, 观众, 听众","audiences":"n. 观众, 听众, 读者( audience的复数形式 )","australian":"n. 澳大利亚人；a. 澳大利亚的, 澳洲的, 澳洲人的","background":"n. 背景, 背景资料；[计] 背景, 后台","balance":"n. 平衡, 差额；vi. 平衡, 相等","banks":"n. 银行；斜床；岸, 堤（bank的复数形式）","battle":"n. 战役；v. 战斗","beautiful":"a. 美丽的","beautifully":"adv. 美好地, 漂亮地","beauty":"n. 美, 美人","became":"become的过去式","become":"vi. 变成, 变得；vt. 适合","began":"begin的过去式","beginning":"n. 开始","beijing":"[经] 北京","belief":"n. 信念, 相信, 信仰","believing":"a. 信任他人的, 有信仰的","belonged":"v. 属于( belong的过去式和过去分词 ); 是…的成员; 应被放在; 适应","beloved":"a. 心爱的；n. 心爱的人","ben":"n. 内室；[医] 贝昂(俗名,一般指辣木Moringa oleifera,有时也指一些不同属的植物)","beyond":"prep. 超过, 在那一边, 迟于；adv. 在远处","big":"a. 大的, 重要的；adv. 大量地","biggest":"a. 最大的（big的最高级）","biological":"a. 生物学的；[医] 生物学的","birthplace":"n. 诞生地","boat":"n. 船；vi. 乘船","body":"n. 身体, 人, 尸体, 主要部分, 团体；vt. 赋以形体","bond":"n. 捆绑物, 结合, 债券, 契约, 粘合剂, 保证人, 键, 关栈保留；vt. 存入关栈, 使黏合","book":"n. 书, 书籍, 帐簿, 名册, 工作簿；v. 登记, 预订","bookings":"[经] 未交定货","borders":"n. 边界；边缘地区（border的复数）","breath":"n. 呼吸, 气息, 瞬间；[医] 呼气, 呵气, 口气, 呼吸","breathtaking":"a. 惊人的, 惊险的","bridge":"n. 桥, 舰桥, 桥梁, 桥牌；vt. 架桥于, 跨越","brings":"v. 带来；使发生（bring的三单形式）","british":"a. 英国的；n. 英国人, 英国英语","brought":"bring的过去式和过去分词","buildings":"n. 建筑物（building的复数）","cairo":"n. 开罗","calling":"n. 职业, 行业, 呼唤, 召集；[计] 呼叫","calm":"n. 平稳, 风平浪静；a. 平静的, 冷静的","came":"come的过去式","camera":"n. 照相机, 摄影机, 密谈室, 暗箱；[计] 摄影","cameras":"照相机, 暗箱, 摄像机, 摄影机","canadian":"a. 加拿大的","captures":"v. 俘获( capture的第三人称单数 ); 夺取; 夺得; 引起（注意、想像、兴趣）","capturing":"v. 捕捉（capture的ing形式）","care":"n. 小心, 照料, 忧虑；vi. 关心, 介意","carefully":"adv. 小心地, 谨慎地","carried":"a. 入神的；被运的；忘我的","caught":"catch的过去式和过去分词","cause":"n. 原因, 目标；vt. 引起, 使产生, 使遭受","ceased":"v. 中止；中断；停止（cease的过去式及过去分词形式）","celebrated":"a. 驰名的, 有名的","celebration":"n. 庆祝, 庆典","center":"n. 中心, 中心点, 中锋；a. 中央的, 位在正中的","centuries":"n. 100年, 一世纪( century的名词复数 ); 100分; 千秋","century":"n. 世纪, 百年","changes":"n. 变化, 改变（change的复数）","chapters":"n. 章；回；章节（chapter的复数形式）","check-ups":"n. 体检（check-up的复数形式）","chemicals":"n. 化学品, 化学制品；化学药品；化工产品（chemical的复数）","chen":"n. 陈","china":"n. 中国, 瓷器；a. 中国的","chinese":"n. 中文, 中国话, 中国人；a. 中国的, 中国话的","chongqing":"重庆(中国最大的直辖市)","cinema":"n. 电影院, 电影","cinemas":"n. 电影院（cinema的复数）","cinematic":"a. 电影的, 影片的","citizens":"n. 市民；公民（citizen的复数）","city":"n. 城市, 市；[法] 都市, 城市, 市","classic":"n. 古典作品, 杰作, 大艺术家；a. 第一流的, 最优秀的, 古典的","clay":"n. 泥土, 肉体, 黏土；[化] 粘土","clear":"a. 清楚的, 明确的, 澄清的；adv. 清晰地","clearly":"adv. 清楚地","clinic":"n. 诊所, 临床教学；[医] 诊所(门诊部); 临床(讲解); 临床(学)科","cloud":"n. 云, 阴暗, 烟雾, 疑团；vt. 以云遮敝, 笼罩, 使黯然","coach":"n. 四轮大马车, 教练；vt. 训练, 指导","coaches":"n. 长途客运汽车( coach的复数形式 ); （铁路）旅客车厢; 教练; 指导；v. 训练, 辅导( coach的第三人称单数 )","collection":"n. 收集, 采集, (一批)收藏品, 募捐；[医] 收集; 收集品, 标本","collections":"n. 集合物件；收集（collection的复数）","college":"n. 学院, 大学, 学会","colorful":"a. 华美的, 富有色彩的, 有趣的","comfort":"n. 舒适, 安慰, 安慰者；vt. 安慰","comfortable":"a. 舒服的, 轻松的；n. 盖被","communities":"n. 社区；团体, 群体（community的复数形式）","complete":"a. 完全的, 十足的, 完成的；vt. 完成, 完工, 使圆满","completed":"a. 完整的；完全的","completely":"adv. 完全地, 十分地, 圆满地","concerns":"n. 关注；关注点；关注者（concern的复数形式）","concluded":"v. 结束( conclude的过去式和过去分词 ); 得出结论; 断定; 推断出","confirm":"vt. 证实, 确定, 批准, 使巩固；[计] 确认","connect":"v. 连接, 联合, 联系","connection":"n. 连接, 关系, 前后关系；[计] 连接","connects":"v. 连接( connect的第三人称单数 ); 把…看作有关联; 由…联想到; 给…接通电话","constant":"n. 常数, 恒量；a. 不变的, 一定的, 时常的","content":"n. 内容, 满足, 意义, 要旨；a. 满足的, 满意的","continues":"v. 继续；扩展；连续（continue的三单形式）","contrasts":"n. 对比( contrast的名词复数 ); 差异; [摄影术]反差; [物理学]对比度；v. （靠近或作比较时）显出明显的差异, 形成对比( contrast的第三人称单数 ); 对比, 对照","control":"n. 控制, 管理, 克制, 控制器, 操纵装置；vt. 控制, 操纵, 抑制","conveyed":"v. 运输( convey的过去式和过去分词 ); 运送; 输送; 表达","cool":"n. 凉爽, 凉爽的空气；a. 凉爽的, 冷淡的, 冷静的","cooperation":"n. 合作, 协力, 配合；[化] 合作","core":"n. 核心, 果心, 要点；vt. 挖...的核","couldn't":"(=could not)不能","countless":"a. 数不尽的, 无数的","court":"n. 法院, 庭院, 奉承；vt. 献殷勤, 追求, 招致","create":"vt. 创造, 建造, 引起, 任命","created":"a. 创造的；[电] 创造的, 建立的","creation":"n. 创造, 创作物, 发明；[化] 产生","creatively":"adv. 创造性地；有创造力地","critical":"a. 批评的, 决定性的, 危险的, 临界的；[医] 危象的; 临界的, 极期的","cultural":"a. 文化的, 教养的, 修养的；[医] 培养的","culture":"n. 文化, 修养, 耕种；vt. 耕种, 培养","cultures":"n. 文明, 文化（culture复数）","cupping":"n. 杯吸法, 拔火罐；[化] 采脂","curiosity":"n. 好奇心, 新奇的事物, 珍品","cutting-edge":"a. 前沿的, 最前沿的","cyberpunk":"n. 计算机科幻小说； 网络黑客","daily":"a. 每日的, 日常的；adv. 每日地, 日常地","dance":"n. 跳舞, 舞蹈, 舞会；v. 跳舞","dancers":"n. 跳舞者, 舞蹈演员( dancer的复数形式 )","data":"pl. 资料, 数据；[计] 数据; DOS内部命令:用于显示或设定系统的日期","davy":"n. 宣誓书","day":"n. 天, 日子, 白天, 工作日；[医] 日(一昼夜), 昼, 白天","decades":"n. 十年, 十年间( decade的复数形式 )","decayed":"a. 腐烂的；腐败的；衰退的","december":"n. 十二月","decline":"n. 衰退, 跌落, 下降；vt. 使降低, 婉谢","deep":"a. 深的；adv. 深入地","deepened":"v. 变深, 加深( deepen的过去式和过去分词 ); 加浓","deeply":"adv. 深刻地, 在深处, 深沉地","deer":"n. 鹿","delivering":"v. 递送, 交付( deliver的现在分词 ); 发表; 交出; 发动","denmark":"n. 丹麦","describes":"v. 描述, 记述；形容, 作图（describe的复数形式）","design":"n. 设计, 图样, 方案, 企图；v. 设计, 计划","designed":"a. 故意的, 有计划的, 特意的","despite":"n. 轻视, 憎恨；prep. 虽然, 尽管","destination":"n. 目的地, 目标, 目的；[计] 目的文件, 目的单元","developing":"a. 发展中的；[计] 显影","development":"n. 发展；[化] 展开","different":"a. 不同的；[机] 差动, 微分的, 差速器","digital":"a. 数字显示的, 数字的；n. 数字仪表, 数字式电子表(或时钟)","digitization":"n. 数字化, 数位化, 数码化","direct":"a. 直接的, 坦白的；vt. 指示, 指挥, 命令, 导演","directly":"adv. 径直地, 直接地, 直率地, 正好地, 直截了当地, (非正式)立即, 马上；conj. 一...(就...), 一当...就...","disciples":"n. 信徒( disciple的复数形式 ); 门徒; 耶稣的信徒; （尤指）耶稣十二门徒之一","discipline":"n. 训练, 纪律；vt. 训练, 惩罚","display":"n. 显示, 陈列, 炫耀, 显示器；vt. 陈列, 显示, 表现, 夸示","displaying":"v. 展出；使展现；显示（display的现在分词形式）","distant":"a. 远的, 疏远的；[经] 远期的","distinct":"a. 清楚的, 显著的, 不同的","district":"n. 区域, 地方；[医] 地区, 地段","diversity":"n. 差异, 多样性；[化] 多样性","domestic":"a. 家庭的, 国内的, 驯养的；[医] 家庭的, 家用的","drama":"n. 戏剧, 戏剧艺术","drum":"n. 鼓, 鼓声；vi. 击鼓, 作鼓声","drumbeats":"n. 鼓声, 打鼓( drumbeat的复数形式 ); 鼓点子","drums":"n. 鼓；鼓声（drum的复数）","due":"n. 应得的东西, 应付款；a. 到期的, 应得的, 应付的, 约定的","dynamic":"a. 动态的, 有活力的, 有力的, 动力的, 不断变化的；n. 动力, 动态","dynasty":"n. 朝代, 王朝","earliest":"a. 早的；初期的","earned":"a. 挣得的","echoing":"n. 回音；反照现象；呼应","educating":"v. 教育( educate的现在分词 ); 训练, 培养; 教导, 教养","effort":"n. 努力, 成就","efforts":"n. 努力；转向力（effort的复数）","egypt":"n. 埃及","egyptian":"n. 埃及人；a. 埃及的, 埃及人的","eight":"num. 八, 八个","emerging":"[法] 出现的, 发生的, 形成的","emotion":"n. 情绪, 激动, 强烈的情感；[医] 情绪, 情感","emperor":"n. 皇帝, 君主","employed":"vt. 雇佣（employ的过去分词）","employs":"v. 雇用( employ的第三人称单数 ); 使用, 利用","enables":"v. 使能够, 提供做…的权利[措施]( enable的第三人称单数 ); 使可能","encourage":"vt. 鼓励, 支持, 激励；[法] 怂恿, 煽动, 助长","end":"n. 结束, 终点, 目标, 末端, 梢, 死亡, 残余；v. 结束, 终结, 终止","enemies":"n. 仇敌( enemy的名词复数 ); 敌军; 危害物; 大敌","engage":"vi. 答应, 从事, 交战；vt. 使忙碌, 雇佣, 预定, 使从事于, 使参加","english":"n. 英语；a. 英文的, 英国人的","enhanced":"a. 增大的；加强的","enjoying":"v. 享有( enjoy的现在分词 ); 玩得快乐; 喜欢; enjoy yourself （祝愿时说）玩痛快些","enriched":"a. 浓缩的；强化的","enthusiastic":"a. 狂热的, 热心的, 热烈的","erhu":"n. 二胡（一种中国乐器）","especially":"adv. 尤其, 特别, 格外","establish":"vt. 建立, 确立, 制定；vi. 移植生长","event":"n. 事件, 结果, 事情的进程, 竞赛项目；[计] 事件","eventually":"adv. 最后, 终于","everyday":"a. 每天的, 日常的, 平常的","evolved":"n. 进化了的","examine":"v. 检查, 调查, 考试","example":"n. 例子, 样本, 实例；[化] 实例","exceptional":"a. 例外的, 异常的, 特别的","exhibition":"n. 表现, 展览会, 展览品；[医] 投药, 展览, 展出","exhibitions":"n. 与展览, 展示会；展示会（exhibition复数）","expectations":"n. 希望( expectation的复数形式 ); 预料; （被）预期; [常作复数] 期望的事情","experience":"n. 经历, 经验, 体验；vt. 经历, 经验, 体验","experienced":"a. 富有经验的, 老练的, 熟练的","experiences":"n. 经历( experience的名词复数 ); 经验; 亲身经历; 传统","experiencing":"n. 体验","expert":"n. 专家, 行家；a. 老练的, 内行的, 专门的","explained":"v. 解释（explain的过去式及过去分词）","explains":"v. 解释；说明（explain的三单形式）","explore":"v. 探险, 探测, 探究","extensive":"a. 广的, 广泛的, 多方面的；[经] 广大的, 扩大的","fails":"v. 在…中失败( fail的第三人称单数 ); 衰退; 衰弱; 破产","family":"n. 家庭, 家人, 族；a. 家庭的","far":"a. 远的, 久远的, 遥远的；adv. 甚远地, 很, 到很深的程度, 到很远的距离","february":"n. 二月","feel":"vt. 感觉, 觉得, 触摸, 以为；vi. 有知觉, 摸索, 同情","feels":"v. 觉得；体会；触摸（feel的第三人称单数）","fellow":"n. 男人, 朋友, 同事；a. 同伴的, 同事的, 同道的","felt":"n. 毛毯, 毡；vt. 制毡, 使粘结","field":"n. 领域, 田地, 场地, 战场, 场, 域；vt. 使...晒在场上, 使上场","fields":"n. 域, 字段；场设置（field复数形式）","figure":"n. 数字, 价格, 图形, 形状；vt. 描绘, 表示, 演算, 认为","figures":"n. 图形, 图表；价格, 金额, 数字；规定动作；人物（figure的复数）","filled":"a. 加满的；装满的；满的","film":"n. 软片, 薄膜, 胶卷, 电影；vt. 覆以薄膜, 拍摄","finest":"n. [总称]警察","firmly":"adv. 坚固, 坚定, 断然","flights":"n. （物体的）飞行( flight的名词复数 ); 航班; 飞翔; 楼梯的一段","floated":"a. 浮动的","floor":"n. 地板, 楼层, 底部, 底价；vt. 铺地板, 打倒","flow":"n. 流程, 流动, 流量, 洋溢, 泛滥, 涨潮；vi. 流动, 流泄, 畅流, 川流不息, 飘扬, 涌出","flowers":"[医] 花; 升华制成的药物; 月经","flowing":"a. 流动的, 如流的, 平滑的","focus":"n. 焦点, 焦距；vi. 聚焦, 注视","focuses":"pl. 焦点, 焦距, 对焦点, 聚焦, 活动中心, 集中点, 兴趣中心, 病灶, 震源, 疫源地","football":"n. 足球, 橄榄球","forced":"a. 被迫的, 强迫的, 用力的；[法] 强制的, 法定的, 强迫的","forceful":"a. 有力的, 强烈的, 有说服力的","foreigners":"n. 外国人( foreigner的复数形式 ); 外来人, 外地人; 老外; 蕃","form":"n. 形状, 形体, 类型, 方式, 表格, 形式；v. 形成, 排列, (使)组成","formed":"a. 成形的, 成形","found":"vt. 建立, 创立, 铸造；find的过去式和过去分词","friends":"n. 老友记（剧集）","front":"n. 前面, 开头, 前线, 阵线, 态度；vt. 面对, 朝向, 对抗","fruit":"n. 水果, 果类, 结果；[医] 果实, 种实","full":"n. 全部, 完整；a. 充满的, 完全的, 丰富的, 完美的, 丰满的, 详尽的","fully":"adv. 十分地, 完全地, 充分地","fusion":"n. 熔合物, 结合, 熔合；[化] 熔融; 熔化; 聚变","future":"n. 未来, 将来；a. 将来的, 未来的","generations":"n. 世代（generation的复数）","gentle":"a. 温和的, 文雅的","geographic":"a. 地理(学)的, 地区(性)的","global":"a. 通用的, 全球的, 球形的, 综合的, 普遍的；[计] 共用","going":"n. 去, 离去, 工作情况, 地面状况, 行为；a. 进行中的, 流行的, 成功的, 现存的","golden":"a. 金的, 含金的, 金色的, 贵重的, 繁盛的；[法] 金制的, 金色的, 兴隆的","graceful":"a. 优美的","gradually":"adv. 逐渐地","great":"a. 大的, 非常的, 主要的, 重大的, 崇高的, 伟大的；adv. 顺利地, 得意地","ground":"n. 土地, 战场, 场地, 地面, 范围；a. 土地的, 地面上的","growing":"a. 成长的","growth":"n. 生长, 栽培, 增长；[计] 等比级数","guangzhou":"n. 广州（广东省省会）","guizhou":"贵州(位于中国西南部)","habit":"n. 习惯, 嗜好, 习性；vt. 使穿衣","half":"n. 一半, 半场, 不完全；a. 一半的, 不完全的, 部分的, 半场的","hall":"n. 门厅, 走廊, 会堂","hammond":"n. 哈蒙德（美国城市）","harmful":"a. 有害的, 伤害的","harmony":"n. 协调, 和睦, 调和；[电] 和声学","he'd":"他将, 他会, 他已经, 他有","health":"n. 健康, 卫生, 蓬勃, 健康状态；[医] 健康","hear":"vt. 听到, 倾听, 听说, 审理；vi. 听见, 听","hearts":"n. 心；中心；内心；同情心；心形物（heart的复数）","help":"n. 帮忙, 帮助者, 补救办法, 有益的东西；vt. 帮助, 帮忙, 接济, 治疗, 款待","helped":"v. 帮助（help的过去分词）","helps":"abbr. 高端激光打印解决方案（High-End Laser Printing Solutions）","heritage":"n. 遗产, 祖先遗留物, 继承物；[医] 遗传性","hide":"n. 兽皮, 迹象, 躲藏处；vt. 藏, 隐瞒, 遮避, 剥...的皮, 隐藏","highlighting":"[计] 突出性, 醒目性, 高明亮部分, 图象最亮处","hills":"n. 丘陵（hill的复数形式）","him":"pron. 他","himself":"pron. 他自己, 他亲自","historic":"a. 历史上著名的, 有历史性的","historical":"a. 历史的, 史实的, 历史上的；[法] 历史性的","history":"n. 历史, 过去, 经历, 发展过程, 历史学, 过去的事, 历史记录；[计] 历史记录","hobby":"n. 嗜好, 癖好, 爱好","hold":"n. 把握, 把持力, 柄, 控制, 掌握, 监禁；vt. 保存, 握住, 拿住, 占据, 持有, 拥有","hollow":"n. 洞, 窟窿, 山谷；a. 空的, 虚伪的, 空腹的, 凹的","home":"n. 家, 避难所, 故乡；a. 家庭的, 国内的, 打中目标的","honors":"n. 优等成绩, (英)优等成绩奖金, 给予优等生的荣誉, 荣誉标志","hopes":"v. 希望（hope的第三人称单数）","hosts":"n. [计算机]主机( host的名词复数 ); 军队; （寄生动植物的）寄主; 主办人[地方, 机构等]","house":"n. 房子, 住宅, 机构, 议院, 家族, 家庭；vt. 给...房子住, 收藏","however":"adv. 然而, 无论如何, 究竟怎样；conj. 然而, 可是","human":"n. 人, 人类；a. 人类的, 似人类的, 人性的, 有同情心的","humanity":"n. 人性, 人类, 博爱","hundreds":"n. 数百","hunt":"n. 狩猎, 追捕, 搜寻, 猎区；vt. 狩猎, 打猎, 搜索","illness":"n. 疾病, 恶意；[医] 病","impression":"n. 印象, 意念, 盖印, 印记, 印数, 底色, 效果；[医] 压迹, 印模, 印象, 影响","inbound":"a. 归本国的, 入境的；[计] 不装订","included":"a. 包括在内；[计] 包含的","increase":"n. 增加, 增进, 利益；vt. 增加, 加大","increased":"a. 增强的（increase的过去分词）","increasingly":"adv. 逐渐地, 渐增地","industry":"n. 勤劳, 工业, 企业, 产业, 有组织的劳动；[经] 工业, 实业","influence":"n. 影响力, 权力, 势力；vt. 影响, 改变","informs":"abbr. 运筹学和管理学研究协会（Institute for Operations Research and the Management Sciences）","initial":"n. 字首, 首字母；a. 开始的, 最初的, 字首的","initiatives":"n. 主动性( initiative的复数形式 ); 主动的行动; 初步; 主动权","innovative":"a. 革新的, 创新的, 富有革新精神的","insects":"n. 昆虫；昆虫类, 昆虫纲（insect的复数形式）","inside":"n. 内部, 内脏, 内幕；a. 内部的, 秘密的, 户内的","insights":"n. 洞察力；眼力；深刻见解（insight的复数）","inspired":"a. 得到灵感的, 有灵感的, 官方授意的","inspiring":"a. 鼓舞人心的","instant":"n. 立即, 瞬间；a. 紧急的, 立即的, 即时的","integrate":"vt. 综合, 使完整, 使成整体；vi. 成一体","intelligence":"n. 智力, 情报, 信息；[医] 智力","intense":"a. 非常的, 强烈的, 紧张的, 热情的；[医] 强的","interactive":"a. 相互作用的, 相互影响的；[计] 交互, 人机对话的","interest":"n. 兴趣, 嗜好, 利息, 利益, 爱好, 趣味, 势力；vt. 使感兴趣, 与...有关系","invited":"v. 邀请；引起, 招致（invite的过去分词）","invites":"v. 邀请( invite的第三人称单数 ); 请求; 引诱; 招致","it's":"it is的缩写, it has的缩写","items":"n. 项目；名目；所有物品（item的复数形式）","itself":"pron. 它本身, 它自己","joshua":"n. 约书亚(<<圣经>>人物), <<约书亚记>>","journey":"n. 旅程, 旅行, 行程；vi. 旅行","joy":"n. 欢喜, 乐事, 高兴；vt. 使快乐, 令人高兴","june":"n. 六月","kapok":"n. 木棉","keke":"n. (Keke)人名；(匈)凯克","kicked":"v. 踢( kick的过去式和过去分词 ); 踢蹬, 踢（腿）; （因干了蠢事、失去良机等）对（自己）生气; 体育运动","kind":"n. 种类, 性质, 方式；a. 亲切的, 仁慈的, 和蔼的","king":"n. 国王, 君主；vt. 使...成为君主","knee":"n. 膝, 膝盖；vt. 膝行, 用膝盖碰","known":"a. 已知的, 有名的；know的过去分词","knows":"v. 知道（know的第三人称单数形式）","lab":"n. 实验室, 研究室；[医] 凝乳酶","labour":"n. 劳动, 努力, 工作, 劳工, 分娩；vi. 劳动, 努力, 苦干","labourers":"n. （尤指户外的）体力劳动者, 劳工, 工人( labourer的复数形式 )","landscape":"n. 风景, 山水, 风景画；vi. 从事景观美化","landscapes":"n. 风景( landscape的名词复数 ); 风景画; 乡村风景画; 地形","large":"a. 大的, 大量的, 宽大的, 广博的；adv. 大大地, 夸大地","last":"a. 最后的, 末尾的, 最近的；vi. 持续, 支持, 维持","lasting":"a. 永久的, 永恒的, 持久的；n. 厚实斜纹织物","late":"a. 迟的, 晚的, 已故的；adv. 很晚, 很迟, 晚","later":"adv. 以后, 随后","latest":"a. 最近的","layered":"a. 层状的；分层的","learn":"vt. 学习；认识到；得知","learned":"a. 有学问的, 学术上的；learn的过去式和过去分词","leave":"n. 许可, 告别, 请假, 休假；vt. 离开, 剩下, 遗忘, 委托, 丢弃","led":"lead的过去式和过去分词；[计] 发光二极管","left":"a. 左边的, 左倾的, 左侧的, 左派的；adv. 在左面","legacy":"n. 祖先传下来之物, 遗赠物；[经] 遗产, 遗赠物","liberated":"a. 解放的, 自由的","life":"n. 生活, 生命, 人生, 世事, 生物, 寿命, 一生, 生命力, 灵魂, 无期徒刑；[医] 生活, 生存, 生命, 寿命","life-sized":"a. 与原物一样大小的","lifted":"a. 提升的","light":"n. 光, 光亮, 灯, 日光, 发光体, 光源, 杰出人物, 火花, 眼光；a. 轻的, 少量的, 轻微的, 轻快的, 轻浮的, 明亮的, 淡色的, 容易的","like":"a. 相似的, 同样的；vt. 喜欢, 愿意, 想","limited":"a. 有限制的, 有限的, 有限责任的；n. 特别快车","line":"n. 列, 线, 绳, 电线, 线路, 路线, 航线, 作业线, 界线, 战线, 外形, 排, 家系；vt. 排成一行, 顺...排列, 划线于, 加衬里, 使有线条, 使起皱纹","lines":"n. 台词","live":"a. 活的, 生动的, 精力充沛的, 实况转播的；vi. 活, 生存, 居住","living":"n. 生活, 生计, 生存；a. 活的, 逼真的, 现存的","local":"a. 地方性的, 当地的, 局部的, 乡土的, 本地的；n. 当地居民, 本地新闻, 局部","locals":"n. 当地人；区域变量","located":"a. 处于, 位于；坐落的","london":"n. 伦敦","long":"a. 长的, 长久的, 冗长的, 做多头的；vi. 渴望, 热望, 极想","long-term":"a. 长期的；[经] 长期, (通常指一年以上)","longing":"n. 渴望, 热望, 憧憬；a. 渴望的, 热望的","love":"n. 爱, 恋爱, 爱情, 爱好, 性爱；vt. 爱, 爱好, 爱慕","maintains":"v. 保持( maintain的第三人称单数 ); 保养; 坚持; 保卫","major":"n. 主修课, 成年人, 陆军少校；a. 主要的, 较多的, 大部分的, 成年的, 严重的","makes":"v. 做, 制作（make的第三人称单数）","managing":"a. 管理的, 节约的；[法] 管理的, 主管的, 善于经营的","map":"n. 地图, 天体图, 映像；vt. 映射, 绘制...地图, 计划","master":"n. 主人, 硕士, 大师, 母机；a. 主人的, 主要的","meant":"mean的过去式和过去分词","media":"n. 媒体；[计] 媒质","medical":"n. 医生, 体格检查；a. 医学的, 内科的, 药的","medicine":"n. 药, 医学, 内科；vt. 给...用药","meeting":"n. 会议, 会面；[法] 会议, 会谈, 集会","member":"n. 成员, 会员；[医] │肢, 肢体","memorial":"n. 纪念物, 请愿书；a. 记念的, 记忆的","message":"n. 消息, 通讯, 讯息, 教训, 预言, 广告词；vt. 通知","meters":"n. 米；公尺（meter的复数形式）","methods":"n. 方法, 方式；研究方法（method的复数）","million":"n. 百万, 无数；num. 百万","millions":"n. 数百万","ming":"n. 明朝","miracle":"n. 奇迹, 奇事","mirroring":"[计] 反射","mix":"n. 混合物, 混乱, 糊涂；vt. 使混合, 弄混, 使结合, 混淆","model":"n. 模型, 模范, 模特儿；a. 模范的, 作模型用的","modeling":"n. 模特儿职业, 立体感；[计] 建模, 模型化, 模拟","modern":"n. 现代人, 有思想的人；a. 现代的, 时髦的","moment":"n. 片刻, 瞬间, 重要, 阶段, 力矩；[医] 片刻, 瞬间, 时机, 因素, 矩","monkeys":"n. 猴子（monkey的复数）","month":"n. 月；[经] 月","monthly":"n. 月刊；a. 每月的, 每月一次的","motion":"n. 移动, 手势, 动作, 意向, 请求, 提议；v. 打手势","motionless":"a. 不动的, 静止的；[机] 不动的, 静止的","mountain":"n. 山, 山脉, 大堆","move":"n. 移动, 迁居, 步骤；vt. 移动, 开动, 感动, 搬(家)","moved":"v. 移动, 移动到；感动（move的过去式, 过去分词）","movement":"n. 运动, 动作, 运转, 移动, 倾向, 变化, 活动, 乐章；[医] 运动","movements":"n. 运动, 运转；运动健身；动作（movement的复数形式）","movie":"n. 电影","moving":"a. 动人的, 令人感动的, 鼓动的, 原动的, [无比较级]活动的, 转动的","multilayered":"a. 多层的","multimedia":"n. 多媒体；[计] 多媒体","museum":"n. 博物馆","museums":"n. 博物馆（museum的复数形式）","music":"n. 音乐, 乐曲","musicians":"n. 音乐家( musician的复数形式 )","must-read":"必读的；不可不看的","mysteries":"n. 神秘的事物；难以理解的事；古代的秘密宗教仪式（mystery的复数）","nails":"n. 钉子（nail的复数）","nanjing":"n. 南京（等于Nanking, Nanching）","nature":"n. 自然, 大自然, 本性, 性格, 性质；[医] 自然, 大自然; 本性, 性能","nearly":"adv. 几乎, 密切地","needles":"n. 针数, 千针本；折页顶针（needle复数形式）","notable":"n. 著名人士, 值得注意之事物；a. 值得注意的, 显著的","notes":"n. 票据；注释, 说明（note复数）","objects":"n. 目标；物体（object的复数）","offer":"n. 给予(物), 出价, 提议, 意图, 报价；vt. 提供, 出价, 奉献, 试图, 使出现, 演出","offers":"n. 提议；出价；求婚；试图（offer的复数）","official":"n. 官员, 公务员, 职员；a. 公务的, 官方的, 正式的","old":"n. 以前, 往昔；a. 老的, 旧的, 古老的, 年长的, 老练的","online":"[计] 联机","onto":"prep. 在...之上","opened":"v. 打开, 开启（open过去分词形式）","opening":"n. 开始, 口子, 穴, 揭幕；a. 开始的","opera":"n. 歌剧","option":"n. 选择权, 挑选, 选项；[计] 选项","orders":"n. 牧师职, 神职","ordinary":"a. 平常的, 普通的, 平凡的；n. 平常的人(或事)","original":"a. 最初的, 原始的, 有创意的；n. 原物, 原作","originating":"[计] 起源, 始发, 发信","outbreak":"n. 爆发, 暴动；[医] 暴发","overheard":"overhear的过去式和过去分词","overseas":"a. 海外的, 国外的；adv. 在海外, 在国外","overseen":"oversee的过去分词","owner":"n. 拥有者, 物主, 所有人；[经] 所有者, 物主, 业主","page":"n. 页, 记录, 事件, 专栏, 男侍；vt. 标明...的页数, 翻...的书页, 分页排版, 呼叫, 侍候","pages":"n. 页数；青年侍从（page的复数）","pain":"n. 痛苦, 疼痛, 辛苦；vt. 使痛苦, 痛苦","painting":"n. 画, 绘画, 油漆；[化] 涂漆","palace":"n. 宫, 宫殿, 华丽大厦","pardoned":"v. 宽恕( pardon的过去式和过去分词 ); 原谅; 赦免; 特赦","part":"n. 部分, 局部, 零件, 要素, 等分, 职责, 角色, 部位；vt. 分开, 分离, 断绝, 区别, 分配","parts":"n. 零件, 部件","pass":"n. 经过, 要隘, 途径, 通行, 护照, 及格；vt. 经过, 越过, 通过, 批准, 度过, 传递, 忽略","passed":"a. 已被传递的；已经通过的；已经过去的","passion":"n. 激情, 酷爱, 热爱, 强烈感情, 耶稣受难(故事)","past":"n. 过去, 昔时, 往事, 早年经历, 过去时；a. 过去的, 结束的, 卸任的, 过去时的","patients":"n. 病人（patient的复数形式）","peace":"n. 和平, 和约, 治安, 和睦, 安宁, 静寂；vi. 安静下来, 不作声","peking":"n. 北京","people":"n. 人, 人民, 民族, 平民；vt. 使住满人, 居住于","perfect":"n. 完成时；a. 完美的, 完好的, 理想的, 熟练的, 精确的, 完成式的","performance":"n. 施行, 工作情况, 成绩, 行为, 表现, 演出；[电] 绩效, 性能","performances":"n. 履行( performance的复数形式 ); 性能; 表现; 演出","performers":"n. 演出者( performer的复数形式 ); 演奏者; 表演者; 履行者","personal":"a. 私人的, 涉及隐私的, 有人性的, 人称的, 亲自的, 身体的；[医] 人的; 个人的, 自身的","perth":"n. 珀斯, 佩斯（澳大利亚城市）","phd":"abbr. 哲学博士学位（Doctor of Philosophy）","phenomenon":"n. 现象, 迹象, 表现, 奇迹, 奇才；[化] 现象","philosophy":"n. 哲学, 人生观, 哲学思想, 哲理, 基本原理, 见解, 达观, 沉着","photo":"n. 相片, 照片, 逼真的描绘；v. 照相","photographer":"n. 摄影师, 摄影者","photography":"n. 摄影, 摄影术；[化] 照相术","physical":"a. 身体的, 物质的, 自然的, 物理学的, 好色的；n. 体格检查","picture":"n. 图画, 照片, 景色, 美丽如画的人(或物), 化身, 生动的描述, 想像, 形象思维；vt. 画, 拍摄, 用图说明, 描写, 想像","places":"n. 地点；位置；[数]位数（place的复数）","plant":"n. 植物, 作物, 工厂, 树枝, 生长, 设施, 成套设备；vt. 种植, 栽培, 播种, 培养, 安置, 殖民于, 使位于","platforms":"n. 台( platform的复数形式 ); 站台; （公开表达意见或在某方面发展的）机会; 纲领","players":"n. 队员, 参与者；迷你音碟机, 雷射唱盘（player的复数形式）；玩家（player的复数形式）","pleasant":"a. 愉快的, 可爱的, 活泼的, 亲切的","poems":"n. 诗歌, 诗集（poem复数形式）","poetry":"n. 诗, 韵文, 诗歌艺术","points":"n. 转轨器, 道岔；[计] 磅","possesses":"v. 有( possess的第三人称单数 ); 具有; 占据; 感觉","possibly":"adv. 可能, 也许","posters":"n. 招贴, 海报( poster的复数形式 ); 印成的大幅画","posts":"n. 标杆；岗位；帖子；邮件（post的复数）","power":"n. 力, 体力, 力量, 势力, 动力, 权力, 强国, 乘方, 强度, 幂, 功率；vt. 使...有力量, 供以动力, 激励","powerful":"a. 有力的, 有权力的, 强大的；[机] 强力的","practical":"a. 实际的, 现实的, 实用性的；[法] 事实上的, 实际上的, 接近...的","practices":"n. 练习( practice的名词复数 ); 实践; （医生或律师的）业务; 惯例","practising":"a. 在从事职业的, 在从事活动的","practitioner":"n. 从业者, 开业者；[医] 行医者, 医师","present":"n. 现在, 礼品, 瞄准；a. 现在的, 出席的","private":"a. 私人的, 秘密的, 私立的, 隐蔽的；n. 士兵, 隐士, 阴部","products":"n. 产品；商品（product的复数）","professionals":"n. 专业人员（professional的复数）","program":"n. 节目, 节目单, 程序, 纲要, 大纲, 计划；vt. 规划, 拟...计划","projectors":"n. 电影放映机, 幻灯机( projector的复数形式 )","properly":"adv. 适当地, 相当地","provinces":"n. 外省, 边远地区, 乡间","public":"n. 公众, 民众；a. 公众的, 公共的, 公立的, 公用的","pulled":"a. 牵引的；扯下来的","qin":"n. 秦（姓氏）","quarterly":"a. 季度的, 按季度的, 每季的；adv. 按季, 每三个月, 每季一次","quiet":"n. 安静, 闲适, 平静；a. 安静的, 静止的, 寂静的, 朴素的, 从容的, 暗中的","rare":"a. 稀罕的, 罕有的, 珍奇的, 稀薄的, 半熟的, 非常好的；adv. 非常","rarely":"adv. 很少地, 罕有地","rather":"adv. 宁可, 稍微, 相当","raw":"n. 擦伤处, 半成品；a. 生的, 未加工的, 生疏的, 不成熟的, 阴冷的, 刺痛的, 擦掉皮的","read":"v. 读, 阅读, 理解；a. 有学问的","real":"a. 真的, 真实的, 实际的, 实在的, 不动(产)的, 实数的；n. 实数, 现实","reality":"n. 实在, 事实, 实体, 逼真；[法] 现实, 实在存在的事物, 实在性","realize":"vt. 了解, 实现, 使显得逼真, 变卖；vi. 变卖","received":"a. 被一般承认的, 公认的","receiving":"[计] 接收","recent":"a. 最近的, 近代的, 最新的；[经] 最近的, 新进的","recognized":"a. 经过验证的；公认的","recommendations":"n. 推荐( recommendation的复数形式 ); 推荐信; 正式建议; 提议","recommending":"v. 托( recommend的现在分词 ); 推荐; 劝告; 使显得吸引人","recover":"vt. 重新获得, 恢复, 复原, 拯救；vi. 痊愈, 复原, 胜诉","recreation":"n. 娱乐, 消遣, 休息, 再创造；[医] 娱乐, 休养","reduced":"a. 减少的；简化的；缩减的","reflect":"vt. 反射, 反映, 招致, 深思；vi. 被反射, 映出, 深思, 考虑, 指责","reflection":"n. 反映, 沉思, 映像, 想法, 责难；[计] 反射","releasing":"n. 释放；松释动作；脱扣释放","relying":"v. 信任( rely的现在分词 ); 信赖; 依赖; 依靠","remained":"v. 留下( remain的过去式和过去分词 ); 保持; 留待; 仍然是","remains":"n. 剩余物, 废墟, 残余；[法] 遗体, 尸体, 遗骸","remarkable":"a. 不平常的, 值得注意的, 显著的","ren":"[计] DOS内部命令:更改文件名；[医] 肾","replaced":"v. 取代；替换；放回（replace的过去分词）","reports":"n. 报表；专题；报告（report的复数）","representing":"v. 表现( represent的现在分词 ); 代表; 体现; 作为…的代表","requesting":"n. 要求；请求","residential":"a. 住宅的, 与居住有关的；[法] 有关居住的, 房产的:居所的, 适于居住的","responded":"v. 回答, 回报, 响应( respond的过去式和过去分词 ); 有反应; 有效果; 有影响","revealed":"v. 透露（reveal的过去式）；显示","rhythm":"n. 旋律, 节奏, 韵律, 匀称, 张弛节律；[医] 节律","rich":"a. 富裕的, 富饶的, 浓厚的, 贵重的","right":"n. 权利, 右边, 正义, 右派, 公正；a. 正确的, 对的, 恰当的, 正常的, 正直的, 正面的, 右方的","riverbanks":"(riverbank 的复数) n.河堤, 河岸","robe":"n. 宽松长袍, 礼服, 披肩, 覆盖物；v. (给)穿长袍","rocketed":"a. 利用火箭运载的）；借火箭起动的（火箭助推的","root":"n. 根, 根本, 根源, 基础, 底部；vt. 使扎根, 使固定, 根除, 肃清, 搜出, 用鼻拱","roots":"n. 乡土感情, 归根之情","run":"n. 跑, 赛跑, 奔跑, 奔跑的路程, 趋向, 流出, 运转时间, 连续；vi. 跑, 奔跑, 跑步, 赛跑, 竞赛, 行驶, 运转, 进行, 蔓延","runs":"n. 顺串；泻肚子；流量（run的复数形式）","safeguarding":"n. 安全防护；安全措施","said":"a. 上述的；say的过去式和过去分词","sailed":"v. 驾驶( sail的过去式和过去分词 ); 起航; 坐船旅行; 掠","say":"vt. 说, 讲, 念, 说明, 指明；vi. 说, 讲","scale":"n. 刻度, 衡量, 比例, 比例尺, 数值范围, 等级, 规模, 天平, 秤, 鳞, 积垢；vt. 依比例决定, 攀登, 测量, 绘制, 刮鳞, 使生垢, 过秤","scans":"abbr. 网络系统自动程序控制（scheduling control automation by network system）","scene":"n. 场, 情景, 镜头, 发生地点, 道具, 布景, 景色；[化] 现场","scenes":"n. 现场, 景色；场景（scene的复数）","screenings":"n. 筛后残余的物；筛屑；残渣","see":"vt. 看见, 查看, 参观, 游览, 理解, 知道, 同意；vi. 看, 观看, 注意, 知道, 考虑","seeking":"[计] 查找, 寻找, 故障检查","seemed":"v. 装作；似乎（seem的过去式）","seen":"see的过去分词","sense":"n. 感应, 感觉, 感官, 意识, 观念, 情理, 知觉, 理智；vt. 感觉, 觉察, 检测","serves":"v. （为…）服务( serve的第三人称单数 ); 任（职）; 提供; 端上","set":"n. 日落, 同伙, 组合, 集合, 装置；vt. 放, 安置, 放置, 设定, 使凝结, 点燃, 确定, 点缀, 使就位, 树立, 分配, 调整","seven":"num. 七, 七个","sharing":"[计] 共享, 公用","shiny":"a. 有光泽的, 发光的, 辉煌的, 磨光的, 磨损的","shopping":"n. 买东西, 购物；[经] 购物, 买东西","show":"n. 显示, 表现, 展览, 卖弄, 炫耀, 外观, 演出, 洋相；vt. 表示, 显示, 展现, 陈列, 演出, 表明, 指出, 带领","showcased":"(showcase 的过去分词) n. 陈列橱；[经] 商品陈列所, 货物陈列架","showing":"n. 显示, 陈列, 展览, 成绩, 表现, 表演, 夸耀, 陈述, 叙述, 外表, 迹象","shown":"show的过去分词","significant":"a. 重要的, 有效的, 有含义的, 暗示的, 值得注意的","silent":"a. 沉默的, 安静的, 无声的, 静止的；[医] 静止的, 无症状的","silk":"n. 丝, 绸, 绸锻类, 丝织品；a. 丝的, 丝织的","six":"num. 六, 六个","skills":"n. 技术；技能；技巧（skill的复数形式）","sky":"n. 天空, 天色, 天堂；vt. 击向空中, 挂在高处","skyscrapers":"n. 摩天大楼( skyscraper的复数形式 ); 层楼高耸; 广厦高楼","slowly":"adv. 慢慢地, 迟缓地","small":"a. 小的, 少的, 小型的, 低微的, 小气的, 细微的；adv. 些微地","social":"a. 社会的, 群居的, 社交的；n. 联欢会","soft":"a. 软的, 温和的, 柔和的, 柔滑的, 温柔的, 软弱的, 坡度小的, 笨的, 纸币的；n. 柔软的东西, 笨人, 纸币","softly":"adv. 柔和地, 静静地, 温柔地","solitude":"n. 孤独, 单独, 孤寂","something":"pron. 某事, 某物","song":"n. 歌, 曲, 鸣声, 歌唱, 歌曲, 诗歌","soon":"adv. 不久, 早, 快, 宁可","sorrow":"n. 悲伤, 哀惜, 不幸；vi. 悲伤, 懊悔, 遗憾","soul":"n. 灵魂, 心灵, 精神, 精髓, 人, 化身, 典型, 鬼魂；a. 黑人的","sound":"n. 声音, 语音, 吵闹, 声调, 听力范围, 探条, 海峡；a. 健全的, 可靠的, 合理的, 健康的, 彻底的, 资金充实的","spatial":"a. 空间的, 受空间条件限制的, 占地位的；[医] 隙的, 间隙的, 腔的; 空间的, 立体的","speak":"vi. 说, 说话, 演说, 发言；vt. 说, 讲, 说出","sped":"speed的过去式和过去分词","speed":"n. 速率, 速度, 迅速；vi. 加速, 超速, 快进","spent":"a. 用尽的, 精疲力竭的；spend的过去式和过去分词","spirit":"n. 精神, 心灵, 灵魂, 态度, 志气, 人格, 情绪, 心情, 烈酒；vt. 诱拐, 鼓励, 鼓舞","spring":"n. 春天, 弹簧, 跳跃, 弹性, 活力, 泉, 源泉；a. 春天的","stage":"n. 阶段, 舞台, 场所, 戏剧, 站, 驿站, 级, 层, 脚手架；vt. 上演, 表演, 筹划","star":"n. 星, 恒星, 星形物, 运气, 明星；vt. 以星状物装饰, 用星号标, 使成为明星","started":"v. 出发, 启程( start的过去式和过去分词 ); 起动; 提出（问题）; 开办","state":"n. 州, 状态, 情形, 国家, 政府, 领土, 国务, 社会地位；a. 国家的, 正式的, 礼仪用的, 州的","stayed":"v. 停留, 制止（stay的过去分词形式）","steady":"a. 稳定的, 不动摇的, 沉着的, 稳固的, 坚定的, 经常的；vt. 使稳定, 使坚定","stepped":"v. 踏；行走（step的过去式和过去分词）","stepping":"[计] 步进式, 改变","stills":"n. 平静( still的名词复数 ); （电影片中某一镜头的）剧照; [摄影术]静止摄影; （制酒的）蒸馏器","stories":"n. 故事（story的复数）","story":"n. 故事, 小说, 传奇, 描述, 阅历, 经历, 层","storytelling":"n. 说故事, 说谎话","strength":"n. 力量, 实力, 强度, 浓度, 人数, 抵抗力；[化] 强度","strengthen":"vt. 加强, 变坚固；vi. 变强, 股票上涨","stretched":"a. 拉伸的, 伸展了的","strike":"n. 罢工, 打击, 殴打；vt. 打, 撞击, 冲击, 侵袭, 取消, 结算, 打掉, 罢工, 刺透, 使生根, 遇见","striking":"a. 醒目的, 惊人的, 打击的, 罢工的；[法] 罢工的, 罢市的, 罢课的","strong":"a. 强壮的, 坚固的, 坚强的, 强烈的, 有力的, 优良的；adv. 强劲地, 有力地, 猛烈地","studio":"n. 工作室, 画室, 演播室, 电影制片厂","study":"n. 学习, 研究, 学科, 论文, 求学, 书房, 试作；vt. 学习, 读书, 研究, 考虑, 计划","summer":"n. 夏季, 全盛时期；vi. 避暑, 过夏天","sun":"n. 太阳, 日, 日光, 阳光；vt. 晒","surgery":"n. 外科, 手术, 手术室, 换球术","surpass":"vt. 超越, 凌驾, 胜过","surreal":"a. 超现实主义的；离奇的；不真实的","surroundings":"n. 环境, 周围的事物；[化] 环境","survive":"vt. 比...活得长, 生存, 生还, 幸免于；vi. 活下来, 幸存","survived":"v. 幸存, 活下来( survive的过去式和过去分词 ); 比…活得长, 经历…之后还存在; 幸免于难; 挺过","swordplay":"n. 剑术, 击剑, 巧辩","sydney":"n. 悉尼（澳大利亚港市）","symptoms":"n. 病徵；症状；症候","tan":"n. 黄褐色, 鞣料, 马戏团；a. 黄褐色的, 鞣皮的","tang":"n. 强烈味道, 特殊的气味, 特性, 柄脚, 当的一声, 墨角藻；vt. 使发气味, 装刀柄于, 使发出当的一声","tcm":"[计] 网络编码调制","tea":"n. 茶, 茶叶；[医] 茶, 茶剂, 浸剂","teacher":"n. 教师, 老师, 导师","team":"n. 队, 组；vt. 把马(牛)套在同一辆车上, 把...编成一组","technological":"a. 技术的；[经] 工艺的, 技术的","technologies":"n. 技术；科技（technology的复数）","technology":"n. 技术, 工业技术, 术语；[医] 技术学, 工艺学","terracotta":"n. 赤土, 赤陶器, 赤陶, 赤褐色, 一种带褐色的柑子","theater":"n. 戏院, 电影院, 剧场, 全体观众, 戏剧, 戏剧效果, 阶梯式讲堂, 场所","theatre":"n. 戏院, 电影院, 剧场, 全体观众, 戏剧, 戏剧效果, 阶梯式讲堂, 场所","themselves":"pron. 他们自己, 她们自己, 它们自己","thoughtful":"a. 深思的, 体贴的","thousand":"num. 千；a. 成千的, 许多的","ties":"n. 结","time":"n. 时间, 时侯, 时机, 时期, 期限, 次数, 节拍, 暂停, 规定时间；vt. 测定...的时间, 记录...的时间, 计时, 定时","timeless":"a. 无时间限制的, 不受时间影响的, 永恒的","today":"n. 今天, 当今, 现在；adv. 今天, 当今","together":"adv. 一起, 共同, 彼此","told":"tell的过去式和过去分词","tomb":"n. 坟墓, 死亡；vt. 埋葬","too":"adv. 也, 非常, 太","tools":"n. 工具, 工具菜单；工具箱（tool的复数形式）","top":"n. 顶部, 顶端, 极点, 上面, 上部, 顶篷, 最高地位, 首位, 陀螺；a. 最高的, 顶上的, 头等的","touch":"n. 触觉, 碰, 触, 机灵, 轻触, 格调, 少许, 缺点, 弹力；vt. 接触, 触摸, 触及, 使接触, 达到, 涉及, 影响到, 使轻度受害, 感动","touching":"a. 动人的, 令人同情的","tourism":"n. 观光业, 游览；[经] 旅游业","tourists":"n. 旅行者, 观光客( tourist的名词复数 )","tours":"n. 图尔斯（姓氏）；图尔市（法国城市名）","toward":"prep. 向, 对于, 为了；a. 即将来临的, 进行中的","tradition":"n. 传说, 传统, 交付；[法] 传统, 惯例, 移交","traditional":"a. 传统的, 惯例的；[经] 传统的, 惯例的","traditions":"n. 传统( tradition的复数形式 ); 惯例","trains":"n. 火车；行列（train的复数形式）","transforms":"v. 改变( transform的第三人称单数 ); 使改变形态, 使改变外观（或性质）, 使改观","translated":"n. 译本","travel":"n. 旅行, 游历, 行进；vi. 旅行, 行进, 移动, 被传播","traveling":"a. 旅行的, 旅行用的, 移动的","treasures":"n. 金银财宝( treasure的名词复数 ); 宝藏; 珍宝; 不可多得的人才；v. 重视( treasure的第三人称单数 ); 珍惜; 珍视; 珍爱","treatment":"n. 治疗, 待遇, 处理；[医] 疗法, 治疗; 处理","tree":"n. 树, 木料, 树状物；vt. 把...赶上树","trees":"n. 树木；乔木；树状结构（tree的复数）","trend":"n. 趋势, 倾向, 走向；vi. 倾向, 转向","tries":"n. 尝试, 试验（try的复数）","turning":"n. 旋转, 转弯处, 车削工作；[化] 车削","ultimately":"adv. 最后, 最终；[法] 最后, 终究, 总之","unfolded":"a. 展开的；未折叠的；[石油]未褶皱的","unfolding":"[化] 解折叠; 开折; 伸展","unique":"a. 独一无二的, 独特的, 稀罕的","unit":"n. 单位, 分队, 部队, 单元, 部件, 装置；a. 单位的, 单元的","university":"n. 大学","unknown":"a. 不知道的, 未知的, 陌生的；n. 未知物, 未知数","untouched":"a. 未触摸过的, 未改变的, 未受影响的","up-close":"adj. 在很近距离内的","upward":"a. 向上的；adv. 以上","urban":"a. 都市的, 住在都市的, 习惯于都市的；[法] 城市的, 都市的, 市区的","use":"n. 使用, 习惯, 使用价值, 用法, 使用权；vt. 使用, 利用, 运用, 耗费","used":"a. 使用过的, 二手的, 习惯的","viewers":"n. 电视观众( viewer的复数形式 ); 观看者; 勘查孔; 看片机（把幻灯片等放大观看的装置）","virtual":"a. 实际上起作用的, 虚的, 实质的, 有效的, 事实上生效的；[计] 虚拟","visit":"n. 拜访, 访问, 游览, 视察；vt. 拜访, 访问, 参观, 视察, 降临","visiting":"n. 参观, 拜访, 访问","visitor":"n. 参观者, 游客, 访客；[法] 视察人, 检视人, 检查员","visitors":"n. 访问者, 游客（visitor 复数）","visits":"v. 参观；拜访；视察（visit的第三人称单数）","visual":"a. 视觉的；[医] 视觉的, 视力的, 视觉性记忆优势者","visually":"adv. 看, 视力, 视觉, 可见, 凭视力, 看到, 看得见, 光学, 形象化, 栩栩如生","vital":"a. 生命的, 重要的, 充满活力的, 生死攸关的, 致命的；[医] 生命的, 生活的, 生活上必需的, 紧要的","vivid":"a. 生动的, 鲜明的, 鲜艳的, 活泼的, 逼真的, 清晰的","voices":"n. 声音","wait":"n. 等待, 等候；vt. 等候, 期待, 延缓, 伺候, 推迟","waited":"v. 等候( wait的过去式和过去分词 ); 等待; （尤指长期地）希望; 盼望","walking":"n. 步行, 步态；a. 步行的, 步行用的","walks":"n. 搭板, 跳板","wang":"n. 王（姓氏）；王安电脑公司","warrior":"n. 战士, 勇士, 武士, 鼓吹战争的人, 战斗, 尚武","warriors":"n. 武士, 勇士, 战士( warrior的复数形式 )","watching":"vt. 观看, 守望；监视, 注意（watch现在分词）","water":"n. 水, 雨水, 海水, 水位, 水面, 流水；vt. 给...浇水, 供以水, 注入水, 使湿","waves":"n. 波（wave的复数形式）","way":"n. 路, 路线, 路途, 方法, 道路, 情形, 规模, 习惯, 行业, 方面；adv. 远远地, 非常","ways":"n. 方法（way的复数）；滑路","welcome":"n. 欢迎, 欢迎词；a. 受欢迎的, 可随意的, 可喜的","well":"n. 井, 泉水, 源泉, 好；v. 涌出","well-being":"a. 安宁的, 康乐的","wild":"n. 荒野, 荒地；a. 野性的, 野蛮的, 野生的, 失控的, 任性的, 杂乱的, 轻率的, 狂热的, 疯狂的","wisdom":"n. 智慧, 明智行为, 学识, 名言, 贤人","wish":"n. 希望, 愿望, 祝愿, 命令, 请求；vt. 愿, 想要, 希望, 祝愿","witness":"n. 证人, 目击者, 证据, 证词；vt. 目击, 作证, 证明, 表明","wood":"n. 木材, 木制品；vt. 植林于, 给...添加木柴","woods":"n. 森林, 树林","words":"n. 言语；话语；字（word的复数）","work":"n. 工作, 劳动, 职业, 行为, 功, 作品, 成果, 产品, 工程；vi. 工作, 劳动, 做, 运转, 起作用, 被加工","world":"n. 世界, 地球, 宇宙, 万物, 世人, 人间, 领域, 世事, 世故, 社会生活, 大量；[法] 世界, 地球, 世人","worldwide":"a. 全世界的","worried":"a. 担心的, 闷闷不乐的","worth":"n. 价值, 财产；a. 值...的, 值得的","xi'an":"西安","year":"n. 年, 年度, 年龄；[经] 年度","years":"n. 年代；岁月；年；年龄","young":"a. 年轻的, 无经验的, 朝气蓬勃的；n. 青年们, 幼小动物, 崽","yunnan":"n. 云南（中国西南部一省）","zhao":"n. 赵（姓氏）"}</script>
+<script id="data" type="application/json">{
+ "sets": [
+  {
+   "id": 1,
+   "name": "广州一模",
+   "topic": "舞蹈剧《天工开物》",
+   "passage": "Distant pleasant music floated above the Sydney Opera House stage. Soft light gradually revealed motionless figures at work, as if lifted 56.____ the pages of a Ming-dynasty book. Slowly they began to move. Accompanied by the soft sound of page turning and the gentle flow of water, their graceful 57.____ (gesture) formed a living picture of labour. This breathtaking opening of the dance drama Tiangong Kaiwu pulled me 58.____ (instant) into that world of ancient creation. Through 59.____ (express) movement, the performance conveyed the book's core message—60.____ (value) the skills passed down by countless unknown labourers and the power of practical tools. The beautiful scenes of golden fields and shiny silk made me feel the deep bond between humanity and nature. The most moving moment came 61.____ Song Yingxing took off his official robe and stepped into a \"field\" formed by the other dancers. All motion ceased; only his figure remained, arms stretched upward, silent yet full of strength. At that instant, history 62.____ (it) seemed to hold its breath. As I left the theatre I overheard a visitor say, \"This is beauty that 63.____ (go) beyond borders.\" His words deepened my belief: art 64.____ (root) in a culture's finest traditions possesses a timeless power to move anyone. This was more than 65.____ ancient book brought to life—it was a celebration of Chinese wisdom and its spirit of sharing with the world.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "from",
+     "point": "介词",
+     "explain": "as if lifted 56.____ the pages... 意为\"仿佛从书页中被抬起/浮现\"。固定搭配 lift from...表示\"从……中抬起/取出\"，故填 from。",
+     "hint": ""
+    },
+    {
+     "no": 57,
+     "answer": "gestures",
+     "point": "名词复数",
+     "explain": "gesture 为可数名词，前面 their graceful 与复数谓语 formed 表明指多个舞者的多个动作，需用复数 gestures。",
+     "hint": "gesture"
+    },
+    {
+     "no": 58,
+     "answer": "instantly",
+     "point": "副词",
+     "explain": "空格修饰动词 pulled，需用副词，instant 的副词为 instantly（立刻、瞬间）。",
+     "hint": "instant"
+    },
+    {
+     "no": 59,
+     "answer": "expressive",
+     "point": "形容词",
+     "explain": "空格修饰名词 movement，需用形容词，express 的形容词为 expressive（富有表现力的）。",
+     "hint": "express"
+    },
+    {
+     "no": 60,
+     "answer": "valuing",
+     "point": "非谓语·动名词",
+     "explain": "破折号后解释 core message，与后面 the power of practical tools 并列，表示\"珍视……\"这一理念，用动名词 valuing。",
+     "hint": "value"
+    },
+    {
+     "no": 61,
+     "answer": "when",
+     "point": "连词",
+     "explain": "The most moving moment came 后接完整句子，表\"时刻出现在……的时候\"，需时间状语从句引导词 when。",
+     "hint": ""
+    },
+    {
+     "no": 62,
+     "answer": "itself",
+     "point": "反身代词",
+     "explain": "修饰主语 history，表\"历史本身\"，用反身代词 itself。",
+     "hint": "it"
+    },
+    {
+     "no": 63,
+     "answer": "goes",
+     "point": "时态与主谓一致",
+     "explain": "that 引导定语从句修饰先行词 beauty（不可数），表达客观现象用一般现在时，谓语用三单 goes。",
+     "hint": "go"
+    },
+    {
+     "no": 64,
+     "answer": "rooted",
+     "point": "过去分词作定语",
+     "explain": "句子主干为 art ... possesses a timeless power；空格处为后置定语修饰 art，固定搭配 be rooted in（植根于），表被动用过去分词 rooted。",
+     "hint": "root"
+    },
+    {
+     "no": 65,
+     "answer": "an",
+     "point": "冠词",
+     "explain": "ancient book 为单数可数名词，ancient 以元音音素开头，泛指\"一本\"，用 an。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "name": "广州二模",
+   "topic": "中山纪念堂木棉王",
+   "passage": "Every spring, the 356-year-old kapok tree in Sun Yat-sen Memorial Hall flowers, capturing the hearts of locals. Known as 56.____ \"Kapok King,\" it is a miracle of nature, as these trees rarely survive 57.____ a century in the wild. Its long life is due to the constant care and attention from an expert team. Led by Wang Yongyue, the team employs advanced technologies 58.____ (monitor) the tree's health. They use CT scans to map roots up to seven or eight meters deep. \"We also strike nails in the wood to create sound waves,\" Wang explains. \"If the wood 59.____ (be) hollow or decayed inside, the speed of the sound changes. This helps us strengthen the tree 60.____ it's too late.\" Since 2009, Wang has overseen quarterly check-ups, with a critical focus on managing harmful insects. Rather than relying on strong 61.____ (chemical), the team practices biological control. Bi Keke, a lab expert, describes releasing 62.____ (nature) enemies to hunt them. \"It is a story of one 63.____ (beat) another in nature,\" he notes, highlighting how this approach maintains 64.____ (ecology) balance. To the citizens of Guangzhou, this tree is more than a plant; it is a beloved family member 65.____ well-being connects the city's past and future.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "a",
+     "point": "冠词",
+     "explain": "Known as... 后接名词短语，\"Kapok King\" 作为单数可数称号，泛指\"一个\"，填不定冠词 a。",
+     "hint": ""
+    },
+    {
+     "no": 57,
+     "answer": "beyond",
+     "point": "介词",
+     "explain": "表达\"超过\"某一时间界限，用介词 beyond，意为\"很难存活超过一个世纪\"。",
+     "hint": ""
+    },
+    {
+     "no": 58,
+     "answer": "to monitor",
+     "point": "非谓语·不定式",
+     "explain": "主句 employs advanced technologies 结构完整，monitor 表采用技术的目的，用不定式作目的状语 to monitor。",
+     "hint": "monitor"
+    },
+    {
+     "no": 59,
+     "answer": "is",
+     "point": "时态与主谓一致",
+     "explain": "if 条件从句描述科学原理，主句用一般现在时 changes，从句保持一致；the wood 不可数，be 动词用 is。",
+     "hint": "be"
+    },
+    {
+     "no": 60,
+     "answer": "before",
+     "point": "连词",
+     "explain": "加固树木是在情况恶化到无法挽回\"之前\"进行干预，用时间连词 before。",
+     "hint": ""
+    },
+    {
+     "no": 61,
+     "answer": "chemicals",
+     "point": "名词复数",
+     "explain": "strong 修饰名词，chemical 指具体化学物质且通常不止一种，用复数 chemicals。",
+     "hint": "chemical"
+    },
+    {
+     "no": 62,
+     "answer": "natural",
+     "point": "形容词",
+     "explain": "修饰名词 enemies，nature 的形容词为 natural，构成 natural enemies（天敌）。",
+     "hint": "nature"
+    },
+    {
+     "no": 63,
+     "answer": "beating",
+     "point": "非谓语·现在分词",
+     "explain": "one 与 another 为主动关系，表\"一个战胜另一个\"的动态过程，用现在分词 beating。",
+     "hint": "beat"
+    },
+    {
+     "no": 64,
+     "answer": "ecological",
+     "point": "形容词",
+     "explain": "修饰名词 balance，ecology 的形容词为 ecological，构成 ecological balance（生态平衡）。",
+     "hint": "ecology"
+    },
+    {
+     "no": 65,
+     "answer": "whose",
+     "point": "关系代词",
+     "explain": "先行词 family member 与从句主语 well-being 为所属关系，用关系代词 whose 引导定语从句并在从句中作定语。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "name": "广东一模",
+   "topic": "英国摄影师看重庆",
+   "passage": "Jord Hammond is a British photographer who first came to live in Chongqing in 2015. Since then, he 56.____ (regard) the city as his second home. With cameras and curiosity, he captures the country's landscapes and people, 57.____ (reveal) a China that is raw, up-close and deeply human. Before moving to Chongqing, the biggest city Hammond had ever experienced was London. To him, Chongqing was London on a 58.____ (complete) different scale—more intense, more layered and more alive. 59.____ (understand) the city, he started going on long walks with his camera. 60.____ started as a way to feel more comfortable soon became a daily habit, and eventually, a passion. Photography gave him a way to explore, make sense of the surroundings, 61.____ connect with people and stories. Chongqing's rich and colorful urban life inspired him. From the riverbanks to the skyscrapers, the visual contrasts were 62.____ (remark). Beyond the city, traveling to places like Yunnan and Guizhou provinces deepened his 63.____ (appreciate) for China's cultural and geographic diversity. Those experiences helped him realize that photography could be more than a personal hobby—64.____ could be a form of storytelling. Through his work and stories on social media, Hammond tries to show daily life of Chinese 65.____ people around the world. He hopes to present the real China by showing these real stories and encourage foreigners to see the real China for themselves.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "has regarded",
+     "point": "时态",
+     "explain": "Since then 是现在完成时标志，主语 he 为三单，故用 has regarded。",
+     "hint": "regard"
+    },
+    {
+     "no": 57,
+     "answer": "revealing",
+     "point": "非谓语·现在分词",
+     "explain": "主句结构完整，逗号后为伴随/结果状语，reveal 与主语 he 为主动关系，用现在分词 revealing。",
+     "hint": "reveal"
+    },
+    {
+     "no": 58,
+     "answer": "completely",
+     "point": "副词",
+     "explain": "修饰形容词 different，需用副词 completely。",
+     "hint": "complete"
+    },
+    {
+     "no": 59,
+     "answer": "To understand",
+     "point": "非谓语·不定式",
+     "explain": "表目的\"为了理解这座城市\"，用不定式作目的状语，句首大写 To understand。",
+     "hint": "understand"
+    },
+    {
+     "no": 60,
+     "answer": "What",
+     "point": "主语从句引导词",
+     "explain": "空格引导主语从句并在从句中作主语，指\"……的事情\"，用 What，句首大写。",
+     "hint": ""
+    },
+    {
+     "no": 61,
+     "answer": "and",
+     "point": "连词",
+     "explain": "explore、make sense of 与 connect 三个并列不定式，最后一项前用 and 连接。",
+     "hint": ""
+    },
+    {
+     "no": 62,
+     "answer": "remarkable",
+     "point": "形容词",
+     "explain": "系动词 were 后作表语，需形容词 remarkable（显著的、非凡的）。",
+     "hint": "remark"
+    },
+    {
+     "no": 63,
+     "answer": "appreciation",
+     "point": "名词",
+     "explain": "物主代词 his 后接名词，appreciate 的名词为 appreciation。",
+     "hint": "appreciate"
+    },
+    {
+     "no": 64,
+     "answer": "it",
+     "point": "代词",
+     "explain": "破折号后分句主语指代前文 photography，用代词 it。",
+     "hint": ""
+    },
+    {
+     "no": 65,
+     "answer": "ordinary",
+     "point": "形容词",
+     "explain": "ordinary people（普通人的日常生活）符合语境，填 ordinary。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "name": "广东二模",
+   "topic": "大观楼电影院",
+   "passage": "Located in the historic Dashilan area of Beijing's Qianmen district, the Daguanlou Cinema is one of the earliest cinemas in China and is celebrated 56.____ the birthplace of Chinese film, representing the lasting legacy of cinematic art and modern 57.____ (innovate). In 1905, Ren Qingtai, owner of Fengtai Photo Studio, invited Peking Opera master Tan Xinpei to star in an opera movie 58.____ (name) Dingjun Mountain. Classic scenes like \"Requesting Orders,\" \"Swordplay,\" and \"Battle\" 59.____ (film) as silent movie parts. These were first shown at the then-called Daguanlou Theater on December 28, 1905, 60.____ (mark) the beginning of Chinese cinema's journey. Today, the Daguanlou Theater has evolved into the Daguanlou Cinema, 61.____ ground floor hosts a living museum, displaying stills from Dingjun Mountain, classic posters, and historical film projectors. Walking through, visitors can 62.____ (direct) experience the century-old story of Chinese cinema. In recent years, beyond developing film-related products, it 63.____ (establish) strong ties with the Dashilan area, emerging as a dynamic model for cultural tourism that attracts many domestic and overseas tourists with its 64.____ (character) mix of movie screenings, shopping, and tea appreciation. The cinema's fusion of the old and the new offers 65.____ unique experience, attracting young audiences seeking a connection with the past while enjoying modern comfort.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "as",
+     "point": "介词",
+     "explain": "be celebrated as... 固定搭配，意为\"被誉为……\"，填 as。",
+     "hint": ""
+    },
+    {
+     "no": 57,
+     "answer": "innovation",
+     "point": "名词",
+     "explain": "形容词 modern 修饰，且与 cinematic art 并列作 of 的宾语，innovate 转名词 innovation。",
+     "hint": "innovate"
+    },
+    {
+     "no": 58,
+     "answer": "named",
+     "point": "过去分词作定语",
+     "explain": "修饰 an opera movie，电影\"被命名为\"，被动关系用过去分词 named。",
+     "hint": "name"
+    },
+    {
+     "no": 59,
+     "answer": "were filmed",
+     "point": "时态与语态",
+     "explain": "主语 Classic scenes 与 film 为被动关系，描述 1905 年过去事件，复数用 were filmed。",
+     "hint": "film"
+    },
+    {
+     "no": 60,
+     "answer": "marking",
+     "point": "非谓语·结果状语",
+     "explain": "逗号后对整句事件作结果补充说明，表自然而然的结果，用现在分词 marking。",
+     "hint": "mark"
+    },
+    {
+     "no": 61,
+     "answer": "whose",
+     "point": "关系代词",
+     "explain": "非限制性定语从句修饰 Daguanlou Cinema，其 ground floor 为所属关系，用 whose。",
+     "hint": ""
+    },
+    {
+     "no": 62,
+     "answer": "directly",
+     "point": "副词",
+     "explain": "修饰动词 experience，direct 的副词为 directly。",
+     "hint": "direct"
+    },
+    {
+     "no": 63,
+     "answer": "has established",
+     "point": "时态",
+     "explain": "In recent years 为现在完成时标志，主语 it 三单，用 has established。",
+     "hint": "establish"
+    },
+    {
+     "no": 64,
+     "answer": "characteristic",
+     "point": "形容词",
+     "explain": "修饰名词 mix，character 的形容词为 characteristic（特有的、独特的）。",
+     "hint": "character"
+    },
+    {
+     "no": 65,
+     "answer": "a",
+     "point": "冠词",
+     "explain": "experience 此处作可数名词\"一种体验\"，unique 以辅音音素 /j/ 开头，泛指用 a。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "name": "深圳一模",
+   "topic": "《林深见鹿》书评",
+   "passage": "When I first opened Where the Deer Hide in the Woods, I felt as if I were stepping into a world 56.____ the author's words flow like gentle music. The Tang poems, 57.____ (translate) with the master touch of Xu Yuanchong, speak softly in two voices—one Chinese, one English—each echoing with calm, beauty, and quiet 58.____ (deep). The book 59.____ (divide) into six chapters, each unfolding a distinct landscape of emotion—sorrow, peace, love, longing, solitude, and reflection. I was 60.____ (genuine) moved when I read \"The monkeys on both banks are still calling; my light boat has sailed past a thousand hills.\" I fully 61.____ (sense) Li Bai's liberated soul—his joy at being pardoned by the emperor—flowing through the lines. Each page of the book is enriched with thoughtful notes, vivid background stories, and traditional Chinese brush-style 62.____ (illustration). Xu's artful work transforms the rhythm of Chinese poems 63.____ English music, a recreation that honors both the original and its new form. 64.____ (read) this book feels like a journey through hearts and landscapes. For anyone who treasures poetry, painting, or the meeting of two cultures in perfect harmony, Where the Deer Hide in the Woods is 65.____ must-read that beautifully serves as the bridge.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "where",
+     "point": "定语从句",
+     "explain": "先行词 a world，从句结构完整而缺地点状语，用关系副词 where 引导。",
+     "hint": ""
+    },
+    {
+     "no": 57,
+     "answer": "translated",
+     "point": "过去分词作定语",
+     "explain": "逗号间修饰 The Tang poems，唐诗\"被翻译\"，被动关系用过去分词 translated。",
+     "hint": "translate"
+    },
+    {
+     "no": 58,
+     "answer": "depth",
+     "point": "名词",
+     "explain": "与 calm、beauty 并列作 with 的宾语，deep 转名词 depth。",
+     "hint": "deep"
+    },
+    {
+     "no": 59,
+     "answer": "is divided",
+     "point": "时态语态",
+     "explain": "主语 The book 与 divide 为被动关系，陈述书的客观情况用一般现在时，单数用 is divided。",
+     "hint": "divide"
+    },
+    {
+     "no": 60,
+     "answer": "genuinely",
+     "point": "副词",
+     "explain": "修饰过去分词 moved，需用副词 genuinely。",
+     "hint": "genuine"
+    },
+    {
+     "no": 61,
+     "answer": "sensed",
+     "point": "时态",
+     "explain": "与前文 I was / when I read 一致，叙述过去读书感受，用一般过去时 sensed。",
+     "hint": "sense"
+    },
+    {
+     "no": 62,
+     "answer": "illustrations",
+     "point": "名词复数",
+     "explain": "与 notes、stories 并列作 with 宾语，可数名词 illustration 用复数 illustrations。",
+     "hint": "illustration"
+    },
+    {
+     "no": 63,
+     "answer": "into",
+     "point": "介词",
+     "explain": "固定搭配 transform ... into ...（把……转化为……），填 into。",
+     "hint": ""
+    },
+    {
+     "no": 64,
+     "answer": "Reading",
+     "point": "动名词作主语",
+     "explain": "位于句首作主语，表\"阅读这本书\"这一动作，用动名词 Reading，句首大写。",
+     "hint": "read"
+    },
+    {
+     "no": 65,
+     "answer": "a",
+     "point": "冠词",
+     "explain": "must-read 作名词\"一本必读之作\"，可数单数且以辅音音素开头，泛指用 a。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "name": "深圳二模",
+   "topic": "《东仓鼓乐》",
+   "passage": "Powerful drumbeats filled the theatre as performers firmly 56.____ (strike) large drums in perfect rhythm. This was the opening scene of Drum Music in Dongcang, a traditional drum performance I experienced in Xi'an this summer, and it 57.____ (immediate) caught my attention. Originating from the drum music of the Tang Dynasty court, the performance told a 58.____ (remark) story of how this ancient art has survived across centuries. The show kicked off as the history 59.____ (introduce) by Mr. Zhao, a 70-year-old drum master. His disciples then stepped onto the stage, delivering forceful performances with dance and erhu music. The steady rhythm of the drums, 60.____ (combine) with carefully designed movements, created a strong sense of history and discipline. As the performance unfolded, the audience learned that the decline of the Tang Dynasty forced court musicians to leave the palace. They carried the drum music 61.____ them and brought it into ordinary communities. 62.____ had once belonged to the court became something people could hear, learn, and pass on. Over generations, the tradition took root in Xi'an. The message was clear and touching: music is meant 63.____ (share). Toward the end, when the performers revealed how many years they had spent practising, the audience was deeply moved and responded with enthusiastic 64.____ (applaud). Watching Drum Music in Dongcang was 65.____ experience that left a lasting impression on me.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "struck",
+     "point": "时态",
+     "explain": "as 引导时间状语从句，谓语 strike 与全文过去经历一致用一般过去时，strike 的过去式为 struck。",
+     "hint": "strike"
+    },
+    {
+     "no": 57,
+     "answer": "immediately",
+     "point": "副词",
+     "explain": "修饰动词短语 caught my attention，需用副词 immediately。",
+     "hint": "immediate"
+    },
+    {
+     "no": 58,
+     "answer": "remarkable",
+     "point": "形容词",
+     "explain": "位于 a 与 story 之间作定语，remark 的形容词为 remarkable。",
+     "hint": "remark"
+    },
+    {
+     "no": 59,
+     "answer": "was introduced",
+     "point": "时态与语态",
+     "explain": "the history 与 introduce 为被动关系，主句 kicked off 为一般过去时，从句用 was introduced。",
+     "hint": "introduce"
+    },
+    {
+     "no": 60,
+     "answer": "combined",
+     "point": "过去分词",
+     "explain": "combined with...（与……相结合）作后置定语/状语，rhythm 与 combine 为被动关系，用 combined。",
+     "hint": "combine"
+    },
+    {
+     "no": 61,
+     "answer": "with",
+     "point": "介词",
+     "explain": "固定搭配 carry sth. with sb.（随身携带），填 with。",
+     "hint": ""
+    },
+    {
+     "no": 62,
+     "answer": "What",
+     "point": "主语从句",
+     "explain": "空格引导主语从句并在从句中作主语，指事物，用 What，句首大写。",
+     "hint": ""
+    },
+    {
+     "no": 63,
+     "answer": "to be shared",
+     "point": "不定式被动",
+     "explain": "固定搭配 be meant to do；音乐\"被分享\"，用不定式被动 to be shared。",
+     "hint": "share"
+    },
+    {
+     "no": 64,
+     "answer": "applause",
+     "point": "名词",
+     "explain": "enthusiastic 后接名词作 with 的宾语，applaud 的名词为 applause。",
+     "hint": "applaud"
+    },
+    {
+     "no": 65,
+     "answer": "an",
+     "point": "冠词",
+     "explain": "experience 表\"一次经历\"，以元音音素开头，泛指用 an。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "name": "大湾区一模",
+   "topic": "兵马俑展览",
+   "passage": "Ben Davy has never been to China, but the Australian history teacher knows one of the country's top attractions is its Terracotta Warriors. So when a major exhibition on the life-sized clay figures opened in Perth, Davy waited with 56.____ (excite) at the front of the long line at WA Museum Boola Bardip. The remarkable treasures 57.____ (journey) to Perth in late June 2025 for the Terracotta Warriors: Legacy of the First Emperor exhibition. Recognized as the most significant event of its kind in the Australian state, the exhibition runs until February 22, 2026, 58.____ (feature) more than 225 exceptional ancient Chinese items of the Qin Dynasty (221-206 BC), nearly half of 59.____ have never left China before. During their visit, audiences can examine the warrior figures alongside rare objects of art, everyday life and ancient 60.____ (ceremony). The experience is enhanced by cutting-edge multimedia that brings ancient stories 61.____ life and offers breathtaking insights into the mysteries of the emperor's tomb, which remains untouched to this day. This exhibition, the fruit of long-term Sino-Australian cooperation, enables global audiences 62.____ (engage) directly with China's ancient heritage. Set to welcome 180,000 visitors, it invites viewers to appreciate the 63.____ (art) and technological achievements of ancient China, 64.____ to reflect on how China's past informs its present. For Davy, 65.____ opening-day wait was well worth the effort, just as the exhibition continues to amaze visitors today.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "excitement",
+     "point": "名词",
+     "explain": "介词 with 后接名词作宾语，excite 的名词为 excitement，with excitement 表\"兴奋地\"。",
+     "hint": "excite"
+    },
+    {
+     "no": 57,
+     "answer": "journeyed",
+     "point": "时态",
+     "explain": "主语 The remarkable treasures，由 in late June 2025 可知为过去动作，journey 作动词过去式 journeyed。",
+     "hint": "journey"
+    },
+    {
+     "no": 58,
+     "answer": "featuring",
+     "point": "非谓语·现在分词",
+     "explain": "逗号后作状语，the exhibition 与 feature（以……为特色）为主动关系，用现在分词 featuring。",
+     "hint": "feature"
+    },
+    {
+     "no": 59,
+     "answer": "which",
+     "point": "关系代词",
+     "explain": "nearly half of ___ 引导非限制性定语从句，先行词为指物的 items，介词 of 后用 which。",
+     "hint": ""
+    },
+    {
+     "no": 60,
+     "answer": "ceremonies",
+     "point": "名词复数",
+     "explain": "与 objects of art、everyday life 并列，ceremony 为可数名词，表各类仪式用复数 ceremonies。",
+     "hint": "ceremony"
+    },
+    {
+     "no": 61,
+     "answer": "to",
+     "point": "固定搭配",
+     "explain": "固定短语 bring ... to life（使……栩栩如生），填介词 to。",
+     "hint": ""
+    },
+    {
+     "no": 62,
+     "answer": "to engage",
+     "point": "不定式",
+     "explain": "固定句型 enable sb. to do sth.，填 to engage。",
+     "hint": "engage"
+    },
+    {
+     "no": 63,
+     "answer": "artistic",
+     "point": "形容词",
+     "explain": "与 technological 并列修饰 achievements，需用形容词 artistic。",
+     "hint": "art"
+    },
+    {
+     "no": 64,
+     "answer": "and",
+     "point": "连词",
+     "explain": "appreciate 与 reflect 是观众被邀请做的两个并列动作，用 and 连接。",
+     "hint": ""
+    },
+    {
+     "no": 65,
+     "answer": "the",
+     "point": "冠词",
+     "explain": "opening-day wait 特指第一段 Davy 排队等待的情景，用定冠词 the。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "name": "大湾区二模",
+   "topic": "埃及针灸师推广中医",
+   "passage": "In a clinic inside a Cairo medical center, Egyptian acupuncturist El-Naggar carefully arranges her acupuncture needles and cupping tools. With over 20 years of experience, she is both a practitioner and a witness to the 56.____ (grow) influence of traditional Chinese medicine (TCM) in Egypt. \"TCM 57.____ (see) the human as body, soul and spirit together—one complete unit,\" she explained. \"With the right points and properly 58.____ (place) needles, you help the body recover itself 59.____ chemicals.\" It was this philosophy that 60.____ (initial) attracted her to the field more than two decades ago. \"So far many people 61.____ (draw) to TCM because it focuses on the root cause of illness rather than just the symptoms,\" she added. Her journey into TCM began in 2001 and ultimately took her to Denmark. There she completed a three-year acupuncture program at a private college, 62.____ included a month of study at Beijing University of Chinese Medicine, 63.____ later she earned her PhD from China's Nanjing University of Chinese Medicine. One of her patients, a football coach, said acupuncture was the only treatment that reduced his years of knee pain after surgery. After experiencing the 64.____ (effective) of Chinese medicine, he began recommending acupuncture to fellow coaches, players, and friends, believing acupuncture would become 65.____ increasingly vital treatment option.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "growing",
+     "point": "形容词",
+     "explain": "位于 the 与 influence 之间作定语，grow 的现在分词 growing 表\"日益增长的\"。",
+     "hint": "grow"
+    },
+    {
+     "no": 57,
+     "answer": "sees",
+     "point": "时态与主谓一致",
+     "explain": "陈述中医客观理念用一般现在时，主语 TCM 视为单数，谓语用 sees。",
+     "hint": "see"
+    },
+    {
+     "no": 58,
+     "answer": "placed",
+     "point": "过去分词",
+     "explain": "修饰 needles，针\"被刺入\"，被动关系用过去分词 placed。",
+     "hint": "place"
+    },
+    {
+     "no": 59,
+     "answer": "without",
+     "point": "介词",
+     "explain": "针灸靠调节身体机能而非依赖药物，\"不需要化学物质\"，填 without。",
+     "hint": ""
+    },
+    {
+     "no": 60,
+     "answer": "initially",
+     "point": "副词",
+     "explain": "修饰动词 attracted，需用副词 initially（起初）。",
+     "hint": "initial"
+    },
+    {
+     "no": 61,
+     "answer": "have been drawn",
+     "point": "时态语态",
+     "explain": "So far 为现在完成时标志，people 与 be drawn to 为被动关系且复数，用 have been drawn。",
+     "hint": "draw"
+    },
+    {
+     "no": 62,
+     "answer": "which",
+     "point": "关系代词",
+     "explain": "非限制性定语从句修饰先行词 a private college，从句缺主语指物，用 which。",
+     "hint": ""
+    },
+    {
+     "no": 63,
+     "answer": "and",
+     "point": "连词",
+     "explain": "前后两个经历顺承发生（完成课程并后来获博士学位），填 and。",
+     "hint": ""
+    },
+    {
+     "no": 64,
+     "answer": "effectiveness",
+     "point": "名词",
+     "explain": "位于 the 与 of 之间作名词，effective 的名词为 effectiveness。",
+     "hint": "effective"
+    },
+    {
+     "no": 65,
+     "answer": "an",
+     "point": "冠词",
+     "explain": "treatment option 为可数单数，increasingly 以元音音素开头，泛指\"一种\"用 an。",
+     "hint": ""
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "name": "佛山一模",
+   "topic": "加拿大博主眼中的重庆",
+   "passage": "When visiting Chongqing for the first time, Joshua Guvi was worried that the city he'd seen on social media couldn't possibly be as cool in real life. However, the Canadian travel content 56.____ (create) found himself completely amazed by the \"8D city's\" multilayered reality, where sky trains run through residential buildings 57.____ what appears to be the ground floor might actually be the 12th floor. Chongqing's growing global appeal 58.____ (reflect) in Guvi's experience. He showcased the city's cyberpunk feel, which has become 59.____ social media phenomenon. One of his posts of its surreal architecture received over 17 million 60.____ (like) on social media. This kind of online appeal has translated into remarkable growth in Chongqing: inbound tourism rocketed 184% last year, with American visitors 61.____ (show) the most notable increase despite limited direct flights. Local tourism professionals confirm this trend. Chen Ming, who 62.____ (found) a travel agency last year, reports receiving hundreds of monthly bookings, of 63.____ Americans account for 20%. The city's unique spatial design never fails 64.____ (astonish) visitors, just as it did for Guvi, who concluded, \"I wish we had stayed even 65.____ (long) there.\" His initial concerns have clearly been replaced by strong recommendations, mirroring how Chongqing continues to surpass expectations and establish itself as China's latest must-visit destination.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "creator",
+     "point": "名词",
+     "explain": "the Canadian travel content ___ 指\"内容创作者\"，需用名词 creator。",
+     "hint": "create"
+    },
+    {
+     "no": 57,
+     "answer": "and",
+     "point": "连词",
+     "explain": "连接共同描述\"多层现实\"的两个并列现象，用并列连词 and。",
+     "hint": ""
+    },
+    {
+     "no": 58,
+     "answer": "is reflected",
+     "point": "时态与语态",
+     "explain": "主语 appeal 与 reflect 为被动关系，陈述客观事实用一般现在时被动语态，单数用 is reflected。",
+     "hint": "reflect"
+    },
+    {
+     "no": 59,
+     "answer": "a",
+     "point": "冠词",
+     "explain": "social media phenomenon 为可数单数泛指\"一种\"，social 以辅音音素开头，用 a。",
+     "hint": ""
+    },
+    {
+     "no": 60,
+     "answer": "likes",
+     "point": "名词复数",
+     "explain": "17 million 后接可数名词复数，社交媒体\"点赞\"用名词复数 likes。",
+     "hint": "like"
+    },
+    {
+     "no": 61,
+     "answer": "showing",
+     "point": "现在分词",
+     "explain": "with + 宾语 + 宾补结构，American visitors 与 show 为主动关系，用 showing。",
+     "hint": "show"
+    },
+    {
+     "no": 62,
+     "answer": "founded",
+     "point": "时态",
+     "explain": "定语从句谓语 found（创办），由 last year 用一般过去时 founded。",
+     "hint": "found"
+    },
+    {
+     "no": 63,
+     "answer": "which",
+     "point": "关系代词",
+     "explain": "介词 of 后引导定语从句，指代 hundreds of monthly bookings，用 which。",
+     "hint": ""
+    },
+    {
+     "no": 64,
+     "answer": "to astonish",
+     "point": "不定式",
+     "explain": "固定搭配 fail to do，never fails to do 表\"总能……\"，填 to astonish。",
+     "hint": "astonish"
+    },
+    {
+     "no": 65,
+     "answer": "longer",
+     "point": "比较级",
+     "explain": "even 修饰比较级，\"待得更久一些\"，用 longer。",
+     "hint": "long"
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "name": "佛山二模",
+   "topic": "科技融入文化行业",
+   "passage": "In recent years, China has made great efforts to integrate technology into the cultural industry. Digital tools like big data and artificial intelligence have created new 56.____ (opportunity) for museums to engage the public. Traditional exhibitions are being reimagined through interactive and visually striking digital methods that appeal especially 57.____ young audiences. One example is the Palace Museum. Home to over a million artworks, 58.____ used to display only a small part of its treasures. At present, advanced technology allows the museum to offer virtual tours and extensive digital collections. During the COVID-19 outbreak, when physical visits 59.____ (limit), the museum sped up 60.____ digitization of its collection. Since then, 3D modeling, cloud platforms and other technologies have been employed 61.____ (recreate) the palace online. These 62.____ (technology) initiatives have increased public interest in cultural heritage. Millions of visitors can now explore the museum online, 63.____ makes history more accessible to people worldwide. Through the 64.____ (combine) of culture and technology, China is inspiring young people to appreciate traditional arts in innovative ways. Through these efforts, museums are not only safeguarding history but also educating the public creatively, 65.____ (show) how digital development can give cultural treasures new life.",
+   "questions": [
+    {
+     "no": 56,
+     "answer": "opportunities",
+     "point": "名词复数",
+     "explain": "new 修饰可数名词，大数据与 AI 创造的机会通常不止一个，用复数 opportunities。",
+     "hint": "opportunity"
+    },
+    {
+     "no": 57,
+     "answer": "to",
+     "point": "固定搭配",
+     "explain": "appeal to sb.（吸引某人），填 to。",
+     "hint": ""
+    },
+    {
+     "no": 58,
+     "answer": "it",
+     "point": "代词",
+     "explain": "___ used to display... 需主语指代 the Palace Museum，填 it。",
+     "hint": ""
+    },
+    {
+     "no": 59,
+     "answer": "were limited",
+     "point": "时态与语态",
+     "explain": "physical visits 与 limit 为被动关系且发生在过去，复数用 were limited。",
+     "hint": "limit"
+    },
+    {
+     "no": 60,
+     "answer": "the",
+     "point": "冠词",
+     "explain": "特指其藏品的数字化（digitization of its collection），用定冠词 the。",
+     "hint": ""
+    },
+    {
+     "no": 61,
+     "answer": "to recreate",
+     "point": "不定式",
+     "explain": "表目的\"被采用是为了在网上重现宫殿\"，用不定式 to recreate。",
+     "hint": "recreate"
+    },
+    {
+     "no": 62,
+     "answer": "technological",
+     "point": "形容词",
+     "explain": "修饰名词 initiatives，technology 的形容词为 technological。",
+     "hint": "technology"
+    },
+    {
+     "no": 63,
+     "answer": "which",
+     "point": "关系代词",
+     "explain": "非限制性定语从句指代前面整件事，在从句中作主语，用 which。",
+     "hint": ""
+    },
+    {
+     "no": 64,
+     "answer": "combination",
+     "point": "名词",
+     "explain": "the ... of 结构中间需名词，combine 的名词为 combination。",
+     "hint": "combine"
+    },
+    {
+     "no": 65,
+     "answer": "showing",
+     "point": "现在分词",
+     "explain": "句子主干完整，此处作伴随/结果状语，与主语为主动关系，用现在分词 showing。",
+     "hint": "show"
+    }
+   ]
+  }
+ ]
+}</script>
+<script>
+(function(){
+'use strict';
+var DATA=JSON.parse(document.getElementById('data').textContent);
+var FLAT=[];
+DATA.sets.forEach(function(s,si){
+  s.questions.forEach(function(q,qi){
+    FLAT.push({si:si,qi:qi,setId:s.id,set:s.name,topic:s.topic,no:q.no,answer:q.answer,point:q.point,explain:q.explain,hint:q.hint,passage:s.passage,key:s.id+'-'+q.no});
+  });
+});
+var KEY='grammar_fill_100_v1', rec={};
+try{rec=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){rec={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(rec))}catch(e){}}
+/* 教师模式 / 字号 / 五色笔 状态 */
+var HKEY='grammar_fill_hl_v1', highlights={};
+try{highlights=JSON.parse(localStorage.getItem(HKEY)||'{}')||{}}catch(e){highlights={}}
+function saveHL(){try{localStorage.setItem(HKEY,JSON.stringify(highlights))}catch(e){}}
+
+/* 五色笔撤销栈 */
+var hlUndoStack = [];
+function saveHLState() {
+  hlUndoStack.push(JSON.parse(JSON.stringify(highlights)));
+  if(hlUndoStack.length > 20) hlUndoStack.shift(); // 限制最多20步撤销
+}
+function hlUndo() {
+  if(hlUndoStack.length > 0) {
+    highlights = hlUndoStack.pop();
+    saveHL();
+    render();
+  }
+}
+function hlRedo() {
+  // 可以实现重做功能，这里先不实现
+}
+/* 手写笔记（按题保存，笔迹为坐标点） */
+var NKEY='grammar_fill_notes_v1', notes={};
+try{notes=JSON.parse(localStorage.getItem(NKEY)||'{}')||{}}catch(e){notes={}}
+function saveNotes(){try{localStorage.setItem(NKEY,JSON.stringify(notes))}catch(e){}}
+/* 教师权限：默认口令 2468；验证一次后可记住，重开页面仍是教师模式 */
+var DEFAULT_PIN_HASH='7c795ed9';
+var PKEY='grammar_fill_pin_v1', GKEY='grammar_fill_grant_v1';
+var TKEY='grammar_fill_teacher_v1', MKEY='grammar_fill_grant_min_v1';
+function pinHash(s){var h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0;}return h.toString(16);}
+function getPinHash(){var v=null;try{v=localStorage.getItem(PKEY)}catch(e){}return v||DEFAULT_PIN_HASH;}
+function getGrant(){try{return JSON.parse(localStorage.getItem(GKEY)||'null')}catch(e){return null}}
+function setGrant(g){try{if(g)localStorage.setItem(GKEY,JSON.stringify(g));else localStorage.removeItem(GKEY)}catch(e){}}
+function grantValid(g,c){return !!(g&&g.code===c&&(g.exp===0||g.exp>Date.now()))}   /* exp=0：老师设的永久授权码 */
+/* 本机记住的教师身份；exp=0 表示一直有效，直到老师锁定 */
+function getTeacherSaved(){try{return JSON.parse(localStorage.getItem(TKEY)||'null')}catch(e){return null}}
+function setTeacherSaved(v){try{if(v)localStorage.setItem(TKEY,JSON.stringify(v));else localStorage.removeItem(TKEY)}catch(e){}}
+function teacherRemembered(){var s=getTeacherSaved();return !!(s&&s.on&&(!s.exp||s.exp>Date.now()))}
+function getGrantMinutes(){var v=10;try{v=parseInt(localStorage.getItem(MKEY),10)||10}catch(e){}return Math.max(1,Math.min(10080,v))}
+function saveGrantMinutes(v){try{localStorage.setItem(MKEY,v)}catch(e){}}
+function fmtLeft(ms){
+  var m=Math.ceil(ms/60000);if(m<60)return m+' 分钟';
+  var h=Math.floor(m/60),r=m%60;
+  if(h<24)return h+' 小时'+(r?' '+r+' 分钟':'');
+  return Math.floor(h/24)+' 天'+(h%24?' '+(h%24)+' 小时':'');
+}
+var teacherMode=teacherRemembered();   /* 验证一次后持久化：重新打开页面仍是教师模式 */
+var fontScale=1;try{var _f=parseFloat(localStorage.getItem('grammar_fill_font_v1'));if(_f>=1&&_f<=3)fontScale=_f}catch(e){}
+var penColor=null;
+var suppressWordClick=false;   /* 画完五色笔重点后，抑制紧随的 click 误弹查词 */
+/* 画笔状态 */
+var noteOn=false,noteColor='#C4483B',noteDrawing=false,noteStroke=null;
+var penSize=4,eraserSize=14,markerSize=11;   /* 钢笔 / 橡皮 / 记号笔 粗细各自独立 */
+/* 手写工具：pen 钢笔 / marker 记号笔（半透明，可调粗细）/ eraser 橡皮（可擦五色笔） */
+var noteTool='pen',markerColor='#A5D6A7';
+var bySet={};FLAT.forEach(function(q){(bySet[q.si]=bySet[q.si]||[]).push(q)});
+function applyFont(){document.body.style.zoom=fontScale;setTimeout(syncNoteCanvas,0);}
+function applyMode(){
+  document.body.classList.toggle('teacher',teacherMode);
+  document.body.classList.toggle('student-locked',!teacherMode);
+  var ms=$('modeSeg').children;
+  ms[0].className=teacherMode?'':'on';
+  ms[1].className=teacherMode?'on':'';
+  if(!teacherMode){penColor=null;updatePenUI();setNoteOn(false);}
+  /* 工具默认：教师钢笔、学生记号笔；橡皮两种身份都用 */
+  noteTool=teacherMode?'pen':'marker';
+  Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){b.classList.toggle('on',b.dataset.tool===noteTool)});
+  var ns=$('noteSize');   /* 身份切换后，粗细滑块同步当前工具的独立值 */
+  if(ns)ns.value=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
+  var nv=$('noteSizeVal');if(nv)nv.textContent=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
+  var panel=$('penPanel');if(panel)panel.hidden=true;
+  if(typeof applyLayout==='function')applyLayout();   /* 身份切换时按设备重新选布局 */
+  syncNoteCanvas();
+}
+function updatePenUI(){
+  Array.prototype.forEach.call(document.querySelectorAll('#penBar .pen'),function(b){b.classList.toggle('active',b.dataset.c===penColor)});
+}
+/* ============ 手写笔记画板 ============ */
+function noteCtx(){
+  var cv=$('noteCanvas'),card=document.querySelector('.card');
+  if(!cv||!card||!cv.getContext)return null;
+  var w=card.offsetWidth,h=card.offsetHeight;
+  if(w<10||h<10)return null;
+  var dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.style.width=w+'px';cv.style.height=h+'px';
+  var bw=Math.round(w*dpr),bh=Math.round(h*dpr);
+  if(cv.width!==bw||cv.height!==bh){cv.width=bw;cv.height=bh;}
+  var ctx=cv.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,w,h);
+  return {ctx:ctx,w:w,h:h,cv:cv};
+}
+function curGi(){return (typeof vis!=='undefined'&&vis.length)?vis[pos]:-1;}
+function drawStrokes(ctx,arr,w,h){
+  (arr||[]).forEach(function(s){
+    if(!s.pts||!s.pts.length)return;
+    var tool=s.tool||(s.erase?'eraser':'pen');
+    ctx.save();
+    ctx.globalCompositeOperation=(tool==='eraser')?'destination-out':'source-over';
+    ctx.globalAlpha=(tool==='marker')?0.4:1;
+    ctx.strokeStyle=(tool==='eraser')?'rgba(0,0,0,1)':s.c;
+    var lw=(s.w||4);
+    if(tool==='marker')lw=Math.max(6,Math.min(24,lw));   /* 记号笔：半透明荧光笔，不再 ×4 放大 */
+    else if(tool==='eraser')lw=lw*5;               /* 橡皮：按粗细放大 */
+    ctx.lineWidth=lw;
+    ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.beginPath();
+    s.pts.forEach(function(p,i){var x=p[0]*w,y=p[1]*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});
+    if(s.pts.length===1)ctx.lineTo(s.pts[0][0]*w+0.1,s.pts[0][1]*h+0.1);
+    ctx.stroke();ctx.restore();
+  });
+}
+function redrawNotes(){
+  var g=noteCtx();if(!g)return;
+  drawStrokes(g.ctx,notes[curGi()],g.w,g.h);
+}
+function updateNoteStatus(){
+  var el=$('noteStatus');if(!el)return;
+  var n=(notes[curGi()]||[]).length;
+  el.textContent=(noteOn?'画笔开启 · 本题 ':'本题已有 ')+n+' 笔笔记';
+}
+var noteSyncTimer=0;
+function syncNoteCanvas(){   /* 合并同一轮里的多次重绘请求，翻题时只画一次 */
+  if(noteSyncTimer)return;
+  noteSyncTimer=setTimeout(function(){noteSyncTimer=0;try{redrawNotes();updateNoteStatus()}catch(e){}},0);
+}
+function notePt(e){
+  var r=$('noteCanvas').getBoundingClientRect();
+  return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];
+}
+function noteStart(e){
+  if(!noteOn)return;   /* 学生（记号笔/橡皮）与教师（钢笔/橡皮）都可画笔 */
+  e.preventDefault();
+  var tool=noteTool;
+  var col=(tool==='marker')?markerColor:noteColor;
+  var w=(tool==='eraser')?eraserSize:(tool==='marker')?markerSize:penSize;
+  if(tool==='eraser')eraseHLAt(e.clientX,e.clientY);           /* 橡皮同时擦五色笔文字高亮 */
+  else if(tool==='pen')eraseHLAt(e.clientX,e.clientY,Math.max(10,Math.round((penSize||4)*2)));  /* 钢笔点到的五色笔圈也消失 */
+  noteStroke={c:col,w:w,tool:tool,erase:(tool==='eraser'),pts:[notePt(e)]};
+  (notes[curGi()]=notes[curGi()]||[]).push(noteStroke);
+  noteDrawing=true;
+  try{$('noteCanvas').setPointerCapture(e.pointerId)}catch(err){}
+  redrawNotes();
+}
+/* 橡皮/钢笔擦五色笔高亮：按坐标 + 矩形 + 命中容差判断，数据层批量删除。
+   不依赖 elementFromPoint（开笔后 canvas 捕获指针会让它失效）；一次划过删掉命中的所有高亮，只 render 一次。
+   tolOverride：钢笔点选时用更小的容差，橡皮用粗细换算的容差。 */
+function eraseHLAt(x,y,tolOverride){
+  if(!teacherMode)return false;
+  var gi=vis[pos],arr=highlights[gi];
+  if(!arr||!arr.length)return false;
+  var tol=tolOverride||Math.max(12,Math.round((eraserSize||14)*2));   /* 橡皮越粗，命中范围越大 */
+  var hit=[],all=document.querySelectorAll('.hl');
+  for(var i=0;i<all.length;i++){
+    var el=all[i],r=el.getBoundingClientRect();
+    if(!r||(!r.width&&!r.height))continue;                 /* 跳过隐藏(result)里的空矩形 */
+    var dx=Math.max(r.left-x,0,x-r.right),dy=Math.max(r.top-y,0,y-r.bottom);
+    if(dx*dx+dy*dy<=tol*tol)hit.push({t:el.dataset.t,c:el.dataset.c});
+  }
+  if(!hit.length)return false;
+  var changed=false;
+  saveHLState();   /* 进撤销栈：擦掉的五色笔可以「↶ 撤销」找回 */
+  for(var m=0;m<hit.length;m++){
+    for(var j=arr.length-1;j>=0;j--){
+      if(arr[j].text===hit[m].t&&arr[j].color===hit[m].c){arr.splice(j,1);changed=true;break;}
+    }
+  }
+  if(changed){saveHL();render();}
+  return changed;
+}
+function noteMove(e){
+  if(!noteDrawing)return;
+  e.preventDefault();
+  if(noteStroke&&noteStroke.tool==='eraser')eraseHLAt(e.clientX,e.clientY);   /* 橡皮拖动时持续擦五色笔 */
+  noteStroke.pts.push(notePt(e));redrawNotes();
+}
+function noteEnd(){if(!noteDrawing)return;noteDrawing=false;noteStroke=null;saveNotes();updateNoteStatus();}
+function setNoteOn(v){
+  noteOn=!!v;   /* 学生也可用记号笔/橡皮做笔记 */
+  document.body.classList.toggle('note-on',noteOn);
+  var b=$('noteToggle');if(b){b.textContent=noteOn?'收笔':'开笔';b.classList.toggle('on',noteOn);}
+  updateNoteStatus();
+}
+function noteUndo(){
+  var a=notes[curGi()];
+  if(a&&a.length){a.pop();saveNotes();redrawNotes();updateNoteStatus();}
+}
+function noteClearCur(){
+  var gi=curGi();if(!notes[gi]||!notes[gi].length)return;
+  if(!confirm('清空本题的手写笔记？'))return;
+  delete notes[gi];saveNotes();redrawNotes();updateNoteStatus();
+}
+/* 打印时把手写笔记渲染成图片 */
+function noteImageForSet(si){
+  var list=[];
+  for(var gi=0;gi<FLAT.length;gi++){
+    if(FLAT[gi].si!==si)continue;
+    if(notes[gi]&&notes[gi].length)list.push({no:FLAT[gi].no,strokes:notes[gi]});
+  }
+  if(!list.length)return '';
+  var W=760,BH=150,H=list.length*BH;
+  var cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  var ctx=cv.getContext('2d');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  list.forEach(function(it,i){
+    ctx.fillStyle='#2C6E63';ctx.font='bold 14px sans-serif';
+    ctx.fillText('第 '+it.no+' 题 · 教师笔记',10,i*BH+18);
+    ctx.save();ctx.translate(10,i*BH+26);
+    drawStrokes(ctx,it.strokes,W-20,BH-36);
+    ctx.restore();
+    ctx.strokeStyle='#E2EAE7';ctx.beginPath();
+    ctx.moveTo(0,i*BH+BH-2);ctx.lineTo(W,i*BH+BH-2);ctx.stroke();
+  });
+  return cv.toDataURL('image/png');
+}
+/* ============ 教师模式权限 ============ */
+function openGate(){
+  $('gatePin').value='';$('gateCode').value='';$('gateMsg').textContent='';
+  $('gateDlg').hidden=false;
+  setTimeout(function(){try{$('gatePin').focus()}catch(e){}},60);
+}
+function refreshRememberInfo(){
+  var el=$('teacherRemember');if(!el)return;
+  var s=getTeacherSaved();
+  if(s&&s.on&&(!s.exp||s.exp>Date.now())){
+    el.textContent='本机已记住教师模式'+(s.exp?'（到 '+new Date(s.exp).toLocaleString('zh-CN')+'）':'')+'：重新打开页面自动进入，直到点「锁定并返回学生模式」。';
+  }else{el.textContent='本机未记住教师模式：每次重新打开页面都需重新验证。';}
+}
+function teacherUnlock(by,g){
+  teacherMode=true;
+  var keep=(by==='code'&&g)?(g.keep||'forever'):'forever';   /* 口令登录一律记住，方便老师自己用 */
+  if(keep==='once'){setTeacherSaved(null)}
+  else{setTeacherSaved({on:true,by:by,exp:(keep==='expire'&&g)?g.exp:0,at:Date.now()})}
+  $('gateDlg').hidden=true;
+  applyMode();syncNoteCanvas();refreshRememberInfo();
+}
+function gatePinGo(){
+  if(pinHash($('gatePin').value.trim())===getPinHash()){teacherUnlock('pin',null);return}
+  $('gateMsg').textContent='口令不正确，请重新输入（默认 2468）。';
+}
+function gateCodeGo(){
+  var v=$('gateCode').value.trim(),g=getGrant();
+  if(grantValid(g,v)){teacherUnlock('code',g);return}
+  $('gateMsg').textContent=(g&&g.code===v&&g.exp!==0&&g.exp<=Date.now())?'授权码已过期，请老师重新生成。':'授权码无效或未发放，请向老师索取。';
+}
+function lockTeacher(){
+  teacherMode=false;
+  setTeacherSaved(null);   /* 取消记住：下次打开回到学生模式 */
+  $('teacherSetDlg').hidden=true;$('gateDlg').hidden=true;$('printDlg').hidden=true;$('dash').hidden=true;
+  setNoteOn(false);applyMode();syncNoteCanvas();refreshRememberInfo();
+}
+function refreshGrantInfo(){
+  var g=getGrant(),box=$('grantCode'),info=$('grantInfo');
+  if(g&&(g.exp===0||g.exp>Date.now())){
+    box.hidden=false;box.textContent=g.code;
+    info.textContent=g.exp===0
+      ?'永久有效 · 不会过期。把此码告诉学生，学生随时可进入教师模式，直到老师点「收回授权」。'
+      :'有效中 · 剩余 '+fmtLeft(g.exp-Date.now())+'（老师设置 '+fmtLeft((g.minutes||10)*60000)+'）。把此码告诉学生，学生即可进入教师模式。';
+  }else{box.hidden=true;info.textContent='当前未发放授权码，学生无法进入教师模式。';}
+}
+function openTeacherSet(){
+  if(!teacherMode)return;
+  $('teacherSetMsg').textContent='';
+  var g=getGrant(),perm=!!(g&&g.exp===0);
+  $('grantMinutes').value=String(getGrantMinutes());
+  $('grantForever').checked=perm;$('grantMinutes').disabled=perm;
+  $('grantKeep').value=(g&&g.keep)||'forever';
+  refreshGrantInfo();refreshRememberInfo();$('teacherSetDlg').hidden=false;
+}
+function wrapText(root,text,color){
+  if(!text)return;
+  var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false),node;
+  while((node=walker.nextNode())){
+    var idx=node.nodeValue.indexOf(text);
+    if(idx>=0){
+      try{
+        var range=document.createRange();
+        range.setStart(node,idx);range.setEnd(node,idx+text.length);
+        var span=document.createElement('span');
+        span.className='hl';span.style.background=color;
+        span.dataset.t=text;span.dataset.c=color;
+        range.surroundContents(span);
+      }catch(e){}
+      return;
+    }
+  }
+}
+function applyHighlights(root,gi){
+  var hs=highlights[gi];if(!hs||!hs.length)return;
+  hs.forEach(function(h){wrapText(root,h.text,h.color)});
+}
+function applyHighlightsForSet(root,si){
+  for(var k=0;k<FLAT.length;k++){if(FLAT[k].si===si)applyHighlights(root,k);}
+}
+function autoPaint(){
+  if(!teacherMode||!penColor)return;
+  var sel=window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.toString().trim())return;
+  var r=sel.getRangeAt(0);var a=r.commonAncestorContainer;var el=a.nodeType===1?a:a.parentElement;
+  if(!el.closest('#passage')&&!el.closest('#result'))return;
+  var text=sel.toString();var gi=vis[pos];
+  (highlights[gi]=highlights[gi]||[]).push({text:text,color:penColor});
+  suppressWordClick=true;   /* 画完重点，抑制紧随的 click 误弹查词 */
+  saveHLState(); // 保存撤销状态
+  saveHL();sel.removeAllRanges();render();
+}
+function removeHL(el){
+  if(!teacherMode)return false;
+  if(!el.classList.contains('hl'))return false;
+  var gi=vis[pos];var arr=highlights[gi];if(!arr)return false;
+  var i=arr.findIndex(function(h){return h.text===el.dataset.t&&h.color===el.dataset.c});
+  if(i>=0){
+    arr.splice(i,1);
+    saveHLState(); // 保存撤销状态
+    saveHL();render();return true;
+  }
+  return false;
+}
+function mergeHL(src){
+  Object.keys(src).forEach(function(k){
+    var arr=highlights[k]||[];
+    (src[k]||[]).forEach(function(h){
+      if(!arr.some(function(x){return x.text===h.text&&x.color===h.color}))arr.push(h);
+    });
+    highlights[k]=arr;
+  });
+}
+function openDash(){
+  if(!teacherMode)return;   /* 正确率看板仅教师可用 */
+  var rows=DATA.sets.map(function(s,si){
+    var qs=bySet[si]||[],done=0,right=0;
+    qs.forEach(function(q){var r=rec[q.key];if(r&&(r.ok===true||r.ok===false)){done++;if(r.ok)right++}});
+    return {name:s.name,done:done,total:qs.length,acc:done?Math.round(right/done*100):null};
+  });
+  var td=rows.reduce(function(a,r){return a+r.done},0);
+  var tr=rows.reduce(function(a,r){return a+(r.acc?Math.round(r.acc/100*r.done):0)},0);
+  var ta=td?Math.round(tr/td*100):null;
+  var bars=rows.map(function(r){
+    var w=r.done?Math.round(r.done/r.total*100):0;
+    return '<div class="drow"><span class="dn">'+r.name+'</span>'
+      +'<span class="dbar"><i style="width:'+w+'%"></i></span>'
+      +'<span class="dd">'+r.done+'/'+r.total+' · '+(r.acc!=null?r.acc+'%':'--')+'</span></div>';
+  }).join('');
+  $('dashBody').innerHTML='<div class="dtotal">总正确率：<b>'+(ta!=null?ta+'%':'--')+'</b> ｜ 已做 '+td+'/100 题</div>'+bars
+    +'<p class="dtip">正确率基于本机当前作答记录（即在此设备上练习的学生）。要查看多名学生：让学生各自「导出」作答记录，教师在本机「导入」后即可在此查看其正确率，再切回查看下一位。</p>';
+  $('dash').hidden=false;
+}
+function closeDash(){$('dash').hidden=true;}
+var filter=0,mode='all',pos=0,vis=[];
+var $=function(id){return document.getElementById(id)};
+/* 布局：auto(宽屏左右/窄屏上下) / split(强制左右) / stack(强制上下) */
+var LKEY='grammar_fill_layout_v1',layout='auto';
+try{layout=localStorage.getItem(LKEY)||'auto'}catch(e){}
+if(['auto','split','stack'].indexOf(layout)<0)layout='auto';
+function applyLayout(){
+  /* 自动布局按身份：教师=左右分栏（白板/电脑横屏），学生=窄屏上下（手机/平板）、宽屏左右 */
+  var render=(layout==='auto')?(teacherMode?'split':(window.innerWidth>=720?'split':'stack')):layout;
+  document.body.setAttribute('data-render',render);
+  document.documentElement.style.setProperty('--hdH',(document.querySelector('header').offsetHeight+12)+'px');
+  $('layoutBtn').textContent=layout==='auto'?('布局：自动 · '+(render==='split'?'左右':'上下')):(layout==='split'?'布局：左右分栏':'布局：上下堆叠');
+  setTimeout(syncNoteCanvas,0);
+}
+$('layoutBtn').addEventListener('click',function(){
+  layout=(layout==='auto')?'split':(layout==='split'?'stack':'auto');
+  try{localStorage.setItem(LKEY,layout)}catch(e){}
+  applyLayout();
+});
+window.addEventListener('resize',applyLayout);
+window.addEventListener('load',applyLayout);
+function norm(s){return (s||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function visible(){
+  var a=FLAT.map(function(x,i){return i});
+  if(filter>0)a=a.filter(function(i){return FLAT[i].si===filter-1});
+  return a;
+}
+function updateStats(){
+  var vals=Object.keys(rec).map(function(k){return rec[k]});
+  var done=vals.filter(function(x){return x.ok===true||x.ok===false}).length;
+  var right=vals.filter(function(x){return x.ok===true}).length;
+  $('done').textContent=done;
+  $('acc').textContent=done?Math.round(right/done*100)+'%':'--';
+  $('progressBar').style.width=(done/FLAT.length*100)+'%';
+}
+function exportRec(){
+  try{
+    var data=JSON.stringify({app:'grammar_fill_100',v:2,exported:Date.now(),rec:rec,hl:highlights,notes:notes});
+    var blob=new Blob([data],{type:'application/json'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='语法填空作答记录_'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+  }catch(e){alert('导出失败：'+e.message)}
+}
+function importFile(e){
+  var f=e.target.files&&e.target.files[0];if(!f){return}
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var obj=JSON.parse(r.result);
+      var src=(obj&&obj.rec)?obj.rec:obj;
+      if(!src||typeof src!=='object')throw new Error('文件格式不正确');
+      var n=0;
+      Object.keys(src).forEach(function(k){
+        var v=src[k];if(!v||typeof v!=='object')return;
+        var ex=rec[k]||{};
+        rec[k]={ok:(v.ok===true||v.ok===false)?v.ok:ex.ok,input:(v.input!=null&&v.input!=='')?v.input:ex.input,fav:!!(v.fav||ex.fav)};
+        n++;
+      });
+      var srcHL=(obj&&obj.hl)?obj.hl:null;if(srcHL){mergeHL(srcHL);}
+      var nh=(srcHL?Object.keys(srcHL).reduce(function(a,k){return a+(srcHL[k]?srcHL[k].length:0)},0):0);
+      var srcNotes=(obj&&obj.notes)?obj.notes:null,nn=0;
+      if(srcNotes){
+        Object.keys(srcNotes).forEach(function(k){
+          var a=notes[k]||[],b=srcNotes[k]||[];
+          b.forEach(function(s){a.push(s);nn++});
+          if(a.length)notes[k]=a;
+        });
+        saveNotes();
+      }
+      save();updateStats();render();syncNoteCanvas();
+      alert('已导入 '+n+' 条作答记录'+(nh?'、'+nh+' 处五色笔重点':'')+(nn?'、'+nn+' 笔手写笔记':'')+'，已与本地合并。');
+    }catch(err){alert('导入失败：'+err.message)}
+  };
+  r.readAsText(f);
+  e.target.value='';
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function passageHTML(text,cur,editable,vals){
+  return esc(text).replace(/(\d{2})\._{3,}\s*(?:\(([^)]*)\))?/g,function(m,no,hint){
+    var n=parseInt(no,10),cls=(n===cur?'blank cur':'blank');
+    var h=hint?'<small>（'+hint+'）</small>':'';
+    if(editable){
+      var v=(vals&&vals[n])||'';
+      return '<span class="'+cls+'" data-no="'+n+'"><em>'+no+'.</em><input class="blankInput" type="text" data-no="'+n+'" value="'+esc(v)+'" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="第'+n+'题答案">'+h+'</span> ';
+    }
+    return '<span class="'+cls+'" data-no="'+n+'"><em>'+no+'.</em><u></u>'+h+'</span> ';
+  });
+}
+function jumpToGlobal(gi){
+  var i=vis.indexOf(gi);
+  if(i<0){mode='all';filter=0;$('setSel').value='0';syncSeg();vis=visible();i=vis.indexOf(gi)}
+  if(i>=0){pos=i;render()}
+}
+var renderCache={si:-1,pKey:'',pNo:-1,jumpKey:''};
+function render(){
+  vis=visible();
+  if(!vis.length){$('content').hidden=true;$('empty').hidden=false;return}
+  $('content').hidden=false;$('empty').hidden=true;
+  if(pos>=vis.length)pos=vis.length-1;
+  if(pos<0)pos=0;
+  var gi=vis[pos],q=FLAT[gi],r=rec[q.key];
+  $('mSet').textContent=q.set;
+  $('mTopic').textContent='· '+q.topic;
+  $('mQn').textContent='第 '+q.no+' 题';
+  $('mPos').textContent=(pos+1)+' / '+vis.length;
+  var pEl=$('passage');
+  /* 学生模式：预填当前套各题已存答案到横线 */
+  var vals={};
+  if(!teacherMode)FLAT.forEach(function(x){if(x.si===q.si&&rec[x.key]&&rec[x.key].input)vals[x.no]=rec[x.key].input});
+  var pKey=(teacherMode?'T':'S')+'|'+q.si+'|'+q.no+'|'+JSON.stringify(highlights[gi]||[]);
+  if(renderCache.pKey!==pKey){
+    pEl.innerHTML=passageHTML(q.passage,q.no,!teacherMode,vals);
+    applyHighlights(pEl,gi);
+    renderCache.pKey=pKey;renderCache.pNo=q.no;
+  }else if(renderCache.pNo!==q.no){
+    var oldCur=pEl.querySelector('.blank.cur'),newCur=pEl.querySelector('.blank[data-no="'+q.no+'"]');
+    if(oldCur)oldCur.classList.remove('cur');
+    if(newCur)newCur.classList.add('cur');
+    renderCache.pNo=q.no;
+  }
+  var curEl=pEl.querySelector('.blank.cur');
+  if(curEl&&pEl.scrollHeight>pEl.clientHeight+4){pEl.scrollTop=Math.max(0,curEl.offsetTop-pEl.clientHeight/2)}
+  $('curNo').textContent=q.no;
+  $('hintLabel').textContent=q.hint?'提示词：('+q.hint+')':'（无提示词，纯语境填空）';
+  $('answerInput').value=r&&r.input?r.input:'';
+  // 跳转下拉
+  var jumpKey=mode+'|'+filter+'|'+vis.join(',')+'|'+vis.map(function(g){var x=FLAT[g],rr=rec[x.key];return rr&&rr.ok===true?'1':(rr&&rr.ok===false?'0':'-')}).join('');
+  if(renderCache.jumpKey!==jumpKey){
+    var opts=vis.map(function(g,i){var x=FLAT[g];return '<option value="'+i+'"'+(i===pos?' selected':'')+'>'+(i+1)+'. '+x.set+' 第'+x.no+'题'+(rec[x.key]&&rec[x.key].ok===true?' ✓':'')+'</option>'}).join('');
+    $('jumpSel').innerHTML=opts;renderCache.jumpKey=jumpKey;
+  }
+  $('jumpSel').value=String(pos);
+  // 答案速查：同一套卷内容不变，翻题时不重复重建
+  if(renderCache.si!==q.si){
+    $('sheetBody').innerHTML=DATA.sets[q.si].questions.map(function(x){
+      return '<div data-no="'+x.no+'"><span>'+x.no+'. '+(x.hint?'('+x.hint+')':'')+'</span><b>'+esc(x.answer)+'</b></div>';
+    }).join('');
+    renderCache.si=q.si;
+  }
+  $('prevBtn').disabled=(pos===0);
+  $('nextBtn').disabled=(pos===vis.length-1);
+  if(r){showResult(r.ok,r.input)}else{hideResult()}
+  if(!teacherMode)studentRefreshResult();
+  setTimeout(syncNoteCanvas,0);   /* 题目切换后重画该题笔记（已节流合并，不再强制回顶） */
+}
+/* 学生模式：翻题后按当前套已存批改状态回填横线颜色与汇总 */
+function studentRefreshResult(){
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si),done=0,right=0,any=false;
+  qs.forEach(function(q){
+    var rr=rec[q.key],inp=$('passage').querySelector('.blankInput[data-no="'+q.no+'"]');
+    if(rr&&rr.ok===true){right++;done++;any=true;if(inp){inp.classList.add('ok');inp.classList.remove('bad')}}
+    else if(rr&&rr.ok===false){done++;any=true;if(inp){inp.classList.add('bad');inp.classList.remove('ok')}}
+    else if(inp){inp.classList.remove('ok','bad')}
+  });
+  if(any)$('stuScore').textContent='本题已做 '+done+'/'+qs.length+' · 答对 '+right;
+  else $('stuScore').textContent='';
+}
+function hideResult(){$('result').hidden=true;$('result').className='result';$('result').innerHTML='';setTimeout(syncNoteCanvas,0)}
+function showResult(ok,input){
+  var q=FLAT[vis[pos]],el=$('result');
+  var head,cls;
+  if(ok===true){head='答对了';cls='right'}
+  else if(ok===false){head='答错了，正确答案是…';cls='wrong'}
+  else{head='已看解析（不计入正确率）';cls='peek'}
+  var vc=ok===true?'good':(ok===false?'bad':'');
+  el.className='result '+cls;
+  el.innerHTML='<div class="verdict '+vc+'">'+head+'</div>'+
+    '<div class="ansline">正确答案：<b>'+esc(q.answer)+'</b><span class="point">'+esc(q.point)+'</span></div>'+
+    '<div class="explain">'+esc(q.explain)+'</div>';
+  applyHighlights(el.querySelector('.explain'),vis[pos]);
+  el.hidden=false;
+  setTimeout(syncNoteCanvas,0);
+}
+function pubAns(){
+  if(!teacherMode)return;   /* 学生模式下即使被绕过 UI 也拿不到答案 */
+  var q=FLAT[vis[pos]],el=$('result');
+  el.className='result peek';
+  el.innerHTML='<div class="verdict">教师核对 · 本题答案</div>'+
+    '<div class="ansline">正确答案：<b>'+esc(q.answer)+'</b><span class="point">'+esc(q.point)+'</span></div>'+
+    '<div class="explain">'+esc(q.explain)+'</div>';
+  applyHighlights(el.querySelector('.explain'),vis[pos]);
+  el.hidden=false;
+  setTimeout(syncNoteCanvas,0);
+}
+function submit(){
+  var q=FLAT[vis[pos]],v=$('answerInput').value;
+  if(!v.trim()){
+    if(teacherMode){pubAns();return}   /* 教师可不输入直接核对出答案，学生不可以 */
+    $('answerInput').focus();return
+  }
+  var ok=norm(v)===norm(q.answer);
+  var old=rec[q.key]||{};
+  rec[q.key]={ok:ok,input:v,fav:!!old.fav};
+  save();showResult(ok,v);updateStats();renderJumpMark();
+}
+/* ============ 学生模式：横线作答 + 提交批改 ============ */
+function setQuestionsOf(si){return FLAT.filter(function(x){return x.si===si})}
+function qKeyByNo(si,no){for(var i=0;i<FLAT.length;i++)if(FLAT[i].si===si&&FLAT[i].no===no)return FLAT[i].key;return null}
+function studentSaveInput(no,val){
+  if(teacherMode)return;
+  var si=FLAT[vis[pos]].si,k=qKeyByNo(si,no);if(!k)return;
+  var old=rec[k]||{ok:null,fav:false};old.input=val;rec[k]=old;save();
+  var inp=$('passage').querySelector('.blankInput[data-no="'+no+'"]');
+  if(inp){inp.classList.remove('ok','bad')}
+}
+function studentSubmit(){
+  if(teacherMode)return;
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si),right=0,done=0,h='';
+  qs.forEach(function(q){
+    var inp=$('passage').querySelector('.blankInput[data-no="'+q.no+'"]');
+    var v=inp?inp.value.trim():((rec[q.key]&&rec[q.key].input)||'');
+    var ok=null;
+    if(v){done++;ok=norm(v)===norm(q.answer);if(ok)right++}
+    var old=rec[q.key]||{fav:false};
+    if(v)rec[q.key]={ok:ok,input:v,fav:!!old.fav};
+    if(inp){inp.classList.toggle('ok',ok===true);inp.classList.toggle('bad',ok===false)}
+    h+='<div class="sr"><b>'+q.no+'.</b><span>你的答案：'+(v?esc(v):'（空）')+'</span>'+
+       '<span class="'+(ok===true?'g':(ok===false?'x':''))+'">'+(ok===true?'✓ 正确':(ok===false?'✗ 正确：'+esc(q.answer):'未作答'))+'</span></div>';
+  });
+  save();updateStats();renderJumpMark();
+  var box=$('stuResult');box.innerHTML=h;box.hidden=false;
+  $('stuScore').textContent='本题已做 '+done+'/'+qs.length+' · 答对 '+right;
+}
+function studentReset(){
+  if(teacherMode)return;
+  if(!confirm('清空本题的所有作答并重做？'))return;
+  var si=FLAT[vis[pos]].si,qs=setQuestionsOf(si);
+  qs.forEach(function(q){var old=rec[q.key];if(old){delete old.input;delete old.ok;if(old.fav===false&&!old.input)delete rec[q.key];else rec[q.key]=old}});
+  save();updateStats();renderCache.pKey='';render();
+  var box=$('stuResult');box.hidden=true;box.innerHTML='';$('stuScore').textContent='';
+}
+function renderJumpMark(){
+  var q=FLAT[vis[pos]];
+  var o=$('jumpSel').options[pos];
+  if(o){var x=FLAT[vis[pos]];o.textContent=(pos+1)+'. '+x.set+' 第'+x.no+'题'+(rec[x.key]&&rec[x.key].ok===true?' ✓':'')}
+}
+function peek(){
+  if(!teacherMode)return;   /* 「直接看解析」仅教师可用 */
+  var q=FLAT[vis[pos]],old=rec[q.key];
+  if(!old){rec[q.key]={ok:null,input:'',fav:false};save()}
+  showResult(old?old.ok:null,old?old.input:'');
+  updateStats();
+}
+function go(d){var n=pos+d;if(n>=0&&n<vis.length){pos=n;render()}}
+function syncSeg(){
+  Array.prototype.forEach.call($('seg').children,function(b){b.className=(b.dataset.mode===mode?'on':'')});
+}
+// 初始化套别下拉
+var so='<option value="0">全部 10 套 · 100 题</option>'+DATA.sets.map(function(s,i){return '<option value="'+(i+1)+'">'+s.name+'（'+s.topic+'）</option>'}).join('');
+$('setSel').innerHTML=so;
+$('setSel').addEventListener('change',function(){filter=parseInt(this.value,10);pos=0;render()});
+$('seg').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  mode=b.dataset.mode;syncSeg();pos=0;render();
+});
+$('backAll').addEventListener('click',function(){mode='all';filter=0;$('setSel').value='0';syncSeg();pos=0;render()});
+$('checkBtn').addEventListener('click',submit);
+/* 学生横线作答：输入即存、提交批改、清空重做 */
+$('passage').addEventListener('input',function(e){
+  var t=e.target;if(!t.classList||!t.classList.contains('blankInput'))return;
+  studentSaveInput(parseInt(t.dataset.no,10),t.value);
+});
+$('stuSubmitBtn').addEventListener('click',studentSubmit);
+$('stuResetBtn').addEventListener('click',studentReset);
+$('revealBtn').addEventListener('click',peek);
+$('prevBtn').addEventListener('click',function(){go(-1)});
+$('nextBtn').addEventListener('click',function(){go(1)});
+$('jumpSel').addEventListener('change',function(){pos=parseInt(this.value,10);render()});
+$('passage').addEventListener('click',function(e){
+  if(e.target.closest('input'))return;   /* 学生横线输入框：点击不跳题 */
+  var b=e.target.closest('.blank');if(!b)return;
+  var n=parseInt(b.dataset.no,10),q=FLAT[vis[pos]];
+  var gi=-1;for(var i=0;i<FLAT.length;i++){if(FLAT[i].si===q.si&&FLAT[i].no===n){gi=i;break}}
+  if(gi>=0)jumpToGlobal(gi);
+});
+$('sheetBody').addEventListener('click',function(e){
+  var d=e.target.closest('div[data-no]');if(!d)return;
+  var n=parseInt(d.dataset.no,10),q=FLAT[vis[pos]];
+  var gi=-1;for(var i=0;i<FLAT.length;i++){if(FLAT[i].si===q.si&&FLAT[i].no===n){gi=i;break}}
+  if(gi>=0)jumpToGlobal(gi);
+});
+$('resetBtn').addEventListener('click',function(){
+  if(!confirm('确定清空全部作答记录、错题和收藏吗？此操作不可撤销。'))return;
+  rec={};save();pos=0;updateStats();render();
+});
+$('exportBtn').addEventListener('click',exportRec);
+$('importBtn').addEventListener('click',function(){$('importFile').click()});
+$('importFile').addEventListener('change',importFile);
+function buildPrint(opt){
+  opt=opt||{};
+  /* 双保险：无论打印选项怎么被改动，学生模式一律不出答案、不出教师笔记；单词本师生均可打印 */
+  opt.answers=!!opt.answers&&teacherMode;
+  opt.notes=!!opt.notes&&teacherMode;
+  opt.wordbook=!!opt.wordbook;
+  if(opt.wordbook){
+    var wb='<h1>2026届各地英语语法填空 · 我的单词本</h1>'
+      +'<p class="pdate">生成于 '+new Date().toLocaleDateString('zh-CN')+' ｜ 共 '+wordBook.length+' 词 ｜ 姓名：____________</p>';
+    if(!wordBook.length)wb+='<p class="pblanknote">（单词本还没有收藏的单词）</p>';
+    else{
+      wb+='<table class="wbtab"><thead><tr><th>序号</th><th>单词</th><th>音标</th><th>释义</th><th>默写</th></tr></thead><tbody>';
+      wordBook.forEach(function(it,i){
+        wb+='<tr><td>'+(i+1)+'</td><td><b>'+esc(it.w)+'</b></td><td>'+(it.phon?esc('/'+it.phon+'/'):'')+'</td><td>'+esc(it.def||'')+'</td><td class="wbwrite"></td></tr>';
+      });
+      wb+='</tbody></table>';
+    }
+    $('printArea').innerHTML=wb;
+    return;
+  }
+  var sets=(typeof filter!=='undefined'&&filter>0)?[DATA.sets[filter-1]]:DATA.sets;
+  var total=sets.reduce(function(a,s){return a+s.questions.length;},0);
+  var html='<h1>2026届各地英语语法填空汇编 · '+(opt.answers?'题目+答案':'练习卷（仅题目）')+'</h1>'
+    +'<p class="pdate">生成于 '+new Date().toLocaleDateString('zh-CN')+' ｜ 共 '+sets.length+' 套 / '+total+' 题'
+    +(opt.answers?'':' ｜ 姓名：____________　得分：__________')+'</p>';
+  sets.forEach(function(s,si){
+    var realSi=(typeof filter!=='undefined'&&filter>0)?filter-1:si;
+    html+='<h2>'+s.name+(s.topic?'（'+s.topic+'）':'')+'</h2>';
+    var pEl=document.createElement('div');pEl.className='ppass';
+    /* 用 span 而非 u：避免浏览器原生下划线 + border-bottom 造成「两条横线」 */
+    pEl.innerHTML=s.passage.replace(/(\d+)\.____/g,function(_,n){return '<span class="pb">（'+n+'）</span>';});
+    applyHighlightsForSet(pEl,realSi);
+    html+='<p>'+pEl.outerHTML+'</p>';
+    if(opt.answers){
+      var keys=s.questions.map(function(q){return '<b>'+q.no+'.</b> '+q.answer+(q.point?' <span class="pt">'+q.point+'</span>':'');});
+      html+='<div class="pans"><b>答案：</b>'+keys.join('　')+'</div>';
+    }
+    if(opt.notes){
+      var img=noteImageForSet(realSi);
+      if(img)html+='<div class="pnotes"><b>教师手写笔记：</b><br><img src="'+img+'" alt="教师笔记"></div>';
+    }
+  });
+  $('printArea').innerHTML=html;
+}
+function openPrintDlg(){
+  var qa=document.querySelector('input[name=pmode][value=qa]');
+  var wb=document.querySelector('input[name=pmode][value=wb]');
+  var hasNotes=Object.keys(notes).some(function(k){return notes[k]&&notes[k].length});
+  qa.disabled=!teacherMode;
+  $('optQA').classList.toggle('disabled',!teacherMode);
+  $('qaHint').textContent=teacherMode?'':'（需教师授权）';
+  wb.disabled=false;
+  $('optWB').classList.remove('disabled');
+  $('wbHint').textContent='（已收藏 '+wordBook.length+' 词）';
+  if(!teacherMode)document.querySelector('input[name=pmode][value=q]').checked=true;
+  var inc=$('pIncludeNote');
+  inc.disabled=!hasNotes;inc.checked=!!hasNotes;
+  $('optNote').classList.toggle('disabled',!hasNotes);
+  $('noteHint').textContent=hasNotes?'':'（当前还没有手写笔记）';
+  $('printDlg').hidden=false;
+}
+function doPrint(){
+  var sel=document.querySelector('input[name=pmode]:checked');
+  var mode=sel&&!sel.disabled?sel.value:'q';
+  if(!teacherMode&&mode!=='q'&&mode!=='wb')mode='q';
+  var withNotes=teacherMode&&!!($('pIncludeNote').checked&&!$('pIncludeNote').disabled);
+  $('printDlg').hidden=true;
+  if(mode==='wb')buildPrint({wordbook:true});
+  else buildPrint({answers:mode==='qa',notes:withNotes});
+  setTimeout(function(){window.print()},80);
+}
+$('printBtn').addEventListener('click',openPrintDlg);
+$('printCancel').addEventListener('click',function(){$('printDlg').hidden=true});
+$('printGo').addEventListener('click',doPrint);
+$('printDlg').addEventListener('click',function(e){if(e.target===$('printDlg'))$('printDlg').hidden=true});
+/* 字号 */
+$('fontBtn').addEventListener('click',function(){var p=$('fontPanel');var show=!p.classList.contains('show');p.classList.toggle('show',show);if(show){$('fontRange').value=Math.round(fontScale*100);$('fontVal').textContent=Math.round(fontScale*100)+'%';}});
+var fontTimer=0;
+$('fontRange').addEventListener('input',function(){
+  var v=parseInt(this.value,10);fontScale=v/100;$('fontVal').textContent=v+'%';
+  if(fontTimer)clearTimeout(fontTimer);
+  fontTimer=setTimeout(function(){fontTimer=0;applyFont()},40);   /* 拖动滑块时节流，避免每格整页重排 */
+  try{localStorage.setItem('grammar_fill_font_v1',fontScale)}catch(e){}
+});
+Array.prototype.forEach.call(document.querySelectorAll('#fontPanel .presets button'),function(b){b.addEventListener('click',function(){var v=parseInt(b.dataset.f,10);fontScale=v/100;$('fontRange').value=v;$('fontVal').textContent=v+'%';applyFont();try{localStorage.setItem('grammar_fill_font_v1',fontScale)}catch(e){}});});
+document.addEventListener('click',function(e){if(!e.target.closest('#fontPanel')&&!e.target.closest('#fontBtn'))$('fontPanel').classList.remove('show');});
+/* 学生 / 教师 模式：教师需口令或老师发放的授权码 */
+$('modeSeg').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.mode==='teacher'){if(!teacherMode)openGate();}
+  else{lockTeacher();}
+});
+$('gatePinGo').addEventListener('click',gatePinGo);
+$('gateCodeGo').addEventListener('click',gateCodeGo);
+$('gateCancel').addEventListener('click',function(){$('gateDlg').hidden=true});
+$('gateDlg').addEventListener('click',function(e){if(e.target===$('gateDlg'))$('gateDlg').hidden=true});
+['gatePin','gateCode'].forEach(function(id){
+  $(id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();id==='gatePin'?gatePinGo():gateCodeGo()}});
+});
+$('teacherSetBtn').addEventListener('click',openTeacherSet);
+$('teacherSetClose').addEventListener('click',function(){$('teacherSetDlg').hidden=true});
+$('teacherSetDlg').addEventListener('click',function(e){if(e.target===$('teacherSetDlg'))$('teacherSetDlg').hidden=true});
+$('pinSave').addEventListener('click',function(){
+  var v=$('pinNew').value.trim();
+  if(v.length<4){$('teacherSetMsg').textContent='口令至少 4 位。';return}
+  try{localStorage.setItem(PKEY,pinHash(v))}catch(e){}
+  $('pinNew').value='';$('teacherSetMsg').textContent='教师口令已更新，请牢记：'+v;
+});
+$('grantForever').addEventListener('change',function(){$('grantMinutes').disabled=!!this.checked;});
+$('grantGo').addEventListener('click',function(){
+  var perm=!!$('grantForever').checked,raw=parseInt($('grantMinutes').value,10);
+  if(!perm&&(isNaN(raw)||raw<1||raw>10080)){$('teacherSetMsg').textContent='有效时间请填 1–10080 分钟（最长 7 天），或勾选「永久有效」。';return}
+  var keep=$('grantKeep').value||'forever';
+  var code=String(Math.floor(100000+Math.random()*900000));
+  setGrant({code:code,exp:perm?0:Date.now()+raw*60000,minutes:perm?0:raw,keep:keep});
+  if(!perm)saveGrantMinutes(raw);
+  refreshGrantInfo();
+  var kn={forever:'一直保持，直到锁定',expire:'与授权码同时到期',once:'每次都要验证'}[keep]||'一直保持，直到锁定';
+  $('teacherSetMsg').textContent='已生成授权码 '+code+'：'+(perm?'永久有效（不过期）':'有效 '+fmtLeft(raw*60000))+'；验证后'+kn+'。';
+});
+$('grantRevoke').addEventListener('click',function(){
+  setGrant(null);refreshGrantInfo();
+  $('teacherSetMsg').textContent='已收回授权，学生无法再凭此码进入；已记住教师模式的设备需各自点「锁定并返回学生模式」。';
+});
+$('lockGo').addEventListener('click',function(){lockTeacher();});
+/* 教师核对答案特权按钮 */
+$('pubAnsBtn').addEventListener('click',pubAns);
+/* 五色笔 */
+Array.prototype.forEach.call(document.querySelectorAll('#penBar .pen'),function(b){if(b.id==='penClear'||b.id==='penUndo')return;b.addEventListener('click',function(){var c=b.dataset.c;penColor=(penColor===c?null:c);updatePenUI();});});
+$('penClear').addEventListener('click',function(){var gi=vis[pos];if(highlights[gi]){
+  saveHLState(); // 保存撤销状态
+  delete highlights[gi];
+  saveHL();render();
+}});
+$('penUndo').addEventListener('click',hlUndo);
+$('passage').addEventListener('click',function(e){var t=e.target.closest('.hl');if(t)removeHL(t);});
+$('result').addEventListener('click',function(e){var t=e.target.closest('.hl');if(t)removeHL(t);});
+document.addEventListener('mouseup',autoPaint);
+document.addEventListener('keyup',function(e){if(e.shiftKey)autoPaint();});
+/* 手写笔记工具条 + 画板 */
+$('noteToggle').addEventListener('click',function(){setNoteOn(!noteOn)});
+/* 三工具切换：点工具弹出设置面板，选颜色 / 调粗细 */
+function setTool(t){
+  if(t==='marker'&&teacherMode)return;   /* 记号笔只给学生 */
+  if(t==='pen'&&!teacherMode)return;     /* 钢笔只给教师 */
+  var panel=$('penPanel');
+  if(t===noteTool&&panel&&!panel.hidden){panel.hidden=true;return}   /* 再点当前工具 → 收起面板 */
+  noteTool=t;
+  Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){b.classList.toggle('on',b.dataset.tool===t)});
+  if(panel)panel.hidden=false;
+  var colorBox=$('ppColors'),penColors=$('ppPenColors'),markerColors=$('ppMarkerColors'),sizeBox=$('ppSize');
+  if(colorBox)colorBox.hidden=(t==='eraser');   /* 橡皮没有颜色 */
+  if(penColors)penColors.hidden=(t!=='pen');
+  if(markerColors)markerColors.hidden=(t!=='marker');
+  if(sizeBox)sizeBox.hidden=false;   /* 钢笔/记号笔/橡皮 都能调粗细，各自独立 */
+  var s=$('noteSize');   /* 切换工具时，粗细滑块显示对应工具独立的值 */
+  if(s)s.value=(t==='eraser')?eraserSize:(t==='marker')?markerSize:penSize;
+  updateNotePreview();
+}
+function updateNotePreview(){
+  var pv=$('notePreview');if(!pv)return;
+  var col=(noteTool==='marker')?markerColor:(noteTool==='eraser')?'#9AA5A1':noteColor;
+  var w=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
+  pv.style.background=col;pv.style.height=Math.min(24,Math.max(3,w))+'px';
+  pv.style.opacity=(noteTool==='marker')?'0.4':'1';
+  var v=$('noteSizeVal');
+  if(v)v.textContent=(noteTool==='eraser')?eraserSize:(noteTool==='marker')?markerSize:penSize;
+}
+Array.prototype.forEach.call(document.querySelectorAll('#noteBar .toolbtn'),function(b){
+  b.addEventListener('click',function(){setTool(b.dataset.tool||'pen')});
+});
+Array.prototype.forEach.call(document.querySelectorAll('#penPanel .clr'),function(b){
+  b.addEventListener('click',function(){
+    var c=this.dataset.c,row=this.parentNode;
+    Array.prototype.forEach.call(row.querySelectorAll('.clr'),function(x){x.classList.toggle('active',x===b)});
+    if(row.id==='ppMarkerColors')markerColor=c;else noteColor=c;
+    updateNotePreview();
+  });
+});
+$('noteSize').addEventListener('input',function(){
+  var v=parseInt(this.value,10)||4;
+  if(noteTool==='eraser')eraserSize=v;                       /* 各自独立保存 */
+  else if(noteTool==='marker')markerSize=v;
+  else penSize=v;
+  updateNotePreview();
+});
+$('noteUndo').addEventListener('click',noteUndo);
+$('noteClear').addEventListener('click',noteClearCur);
+/* 工具面板：关闭按钮 + 点击外部收起（否则选完颜色/粗细关不掉） */
+$('penPanelClose').addEventListener('click',function(){var p=$('penPanel');if(p)p.hidden=true;});
+document.addEventListener('click',function(e){
+  var p=$('penPanel');if(!p||p.hidden)return;
+  if(e.target.closest('#penPanel')||e.target.closest('#noteBar .toolbtn'))return;
+  p.hidden=true;
+});
+var nc=$('noteCanvas');
+if(nc){
+  nc.addEventListener('pointerdown',noteStart);
+  nc.addEventListener('pointermove',noteMove);
+  nc.addEventListener('pointerup',noteEnd);
+  nc.addEventListener('pointercancel',noteEnd);
+  nc.addEventListener('pointerleave',noteEnd);
+}
+window.addEventListener('resize',function(){syncNoteCanvas()});
+/* 正确率看板 */
+$('dashBtn').addEventListener('click',openDash);
+$('dashClose').addEventListener('click',closeDash);
+$('dash').addEventListener('click',function(e){if(e.target===$('dash'))closeDash();});
+document.addEventListener('keydown',function(e){
+  var ae=document.activeElement,inAnswer=ae&&ae.id==='answerInput',inBlank=ae&&ae.classList&&ae.classList.contains('blankInput');
+  var shown=!$('result').hidden;
+  /* 翻页笔：多数翻页笔发 PageUp/PageDown；教师模式用它前后翻题 */
+  if(e.key==='PageUp'||e.key==='PageDown'){
+    if(teacherMode){e.preventDefault();go(e.key==='PageUp'?-1:1)}
+    return;
+  }
+  if(e.key==='ArrowLeft'&&!inAnswer&&!inBlank){e.preventDefault();go(-1);return}
+  if(e.key==='ArrowRight'&&!inAnswer&&!inBlank){e.preventDefault();go(1);return}
+  if(e.key==='Enter'){
+    if(inBlank){e.preventDefault();studentSubmit();return}   /* 学生横线输入回车 = 提交批改 */
+    e.preventDefault();
+    if(shown){go(1)}
+    else if(inAnswer){submit()}
+    else{$('answerInput').focus()}
+  }
+});
+/* ============ 离线生词翻译（词库内嵌在本文件，零网络请求） ============ */
+var DICT={};
+try{DICT=JSON.parse((($('dictData')||{}).textContent)||'{}')||{}}catch(e){DICT={}}
+var UKEY='grammar_fill_dict_user_v1',userDict={};
+try{userDict=JSON.parse(localStorage.getItem(UKEY)||'{}')||{}}catch(e){userDict={}}
+function saveUserDict(){try{localStorage.setItem(UKEY,JSON.stringify(userDict))}catch(e){}}
+/* ============ 单词本（教师查词收藏 / 学生点词收藏，按收藏顺序，师生共用） ============ */
+var WKEY='grammar_fill_wordbook_v1',wordBook=[];
+try{wordBook=JSON.parse(localStorage.getItem(WKEY)||'[]')||[]}catch(e){wordBook=[]}
+function saveWordBook(){try{localStorage.setItem(WKEY,JSON.stringify(wordBook))}catch(e){}}
+function phonOf(w){var r=dictLookup(w);return PHON[w]||(r&&r.base?PHON[r.base]:'')||''}
+function isWordFaved(w){w=wordNorm(w);if(!w)return false;for(var i=0;i<wordBook.length;i++)if(wordBook[i].w===w)return true;return false}
+/* 收藏/取消收藏某个词（教师卡片按钮与学生点词共用） */
+function favWordByText(w){
+  w=wordNorm(w)||String(w||'').trim().toLowerCase();
+  if(!w)return null;
+  var i=-1;for(var k=0;k<wordBook.length;k++){if(wordBook[k].w===w){i=k;break}}
+  var added;
+  if(i>=0){wordBook.splice(i,1);added=false}
+  else{var r=dictLookup(w)||{};wordBook.push({w:w,def:(r.t||''),phon:phonOf(w),at:Date.now()});added=true}
+  saveWordBook();return added;
+}
+function toggleFavWord(){
+  if(!teacherMode)return;
+  var added=favWordByText(dictTipWord);if(added===null)return;
+  showDictTip(dictTipWord,dictTipX,dictTipY,false);   /* 刷新收藏按钮状态 */
+}
+var stuFavTimer=0;
+/* 全局浮层提示：学生点词收藏时，工具栏里的 noteStatus 可能不可见，用浮层双保险 */
+var toastTimer=0;
+function toast(msg){
+  var el=$('toast');if(!el)return;
+  el.textContent=msg;el.hidden=false;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){el.hidden=true;},1900);
+}
+function studentFav(w){
+  var added=favWordByText(w);if(added===null)return;
+  var msg=(added?'★ 已加入单词本：':'☆ 已从单词本移除：')+wordNorm(w);
+  toast(msg);
+  var el=$('noteStatus');if(el){
+    el.textContent=msg;
+    clearTimeout(stuFavTimer);
+    stuFavTimer=setTimeout(updateNoteStatus,2200);
+  }
+}
+function renderWordBook(){
+  var el=$('wordBookList');if(!el)return;
+  var h='';
+  wordBook.forEach(function(it,i){
+    var ph=it.phon?('<span class="wbph">/'+esc(it.phon)+'/</span>'):'';
+    h+='<div class="wbrow" data-i="'+i+'"><b>'+esc(it.w)+'</b>'+ph+'<span class="wbdef">'+esc(it.def||'（暂无释义）')+'</span><button class="wbdel" data-i="'+i+'" title="移除">×</button></div>';
+  });
+  el.innerHTML=h||'<div class="drow none"><span>还没有收藏单词。点短文里的单词即可加入（学生点词直接收藏，教师点词后在卡片点收藏）。</span></div>';
+  var c=$('wordBookCount');if(c)c.textContent='已收藏 '+wordBook.length+' 个单词'+(wordBook.length?'（按收藏顺序）':'');
+}
+function openWordBook(){renderWordBook();$('wordBookDlg').hidden=false;}
+function wordNorm(s){return String(s||'').trim().toLowerCase().replace(/^[^a-z]+|[^a-z'-]+$/g,'')}
+function dictGuess(w){
+  var a=[];
+  if(/ies$/.test(w))a.push(w.slice(0,-3)+'y');
+  if(/[^s]es$/.test(w))a.push(w.slice(0,-2),w.slice(0,-1));
+  else if(/[^s]s$/.test(w))a.push(w.slice(0,-1));
+  if(/ing$/.test(w))a.push(w.slice(0,-3),w.slice(0,-3)+'e',w.slice(0,-4));
+  if(/ed$/.test(w))a.push(w.slice(0,-2),w.slice(0,-1),w.slice(0,-3)+'y');
+  return a.filter(function(x){return x&&x.length>=2});
+}
+function dictLookup(w){
+  w=wordNorm(w);if(!w)return null;
+  if(userDict[w])return {w:w,t:userDict[w],custom:true};
+  if(DICT[w])return {w:w,t:DICT[w]};
+  var g=dictGuess(w),i;
+  for(i=0;i<g.length;i++){
+    if(userDict[g[i]])return {w:w,t:userDict[g[i]],base:g[i],custom:true};
+    if(DICT[g[i]])return {w:w,t:DICT[g[i]],base:g[i]};
+  }
+  return {w:w,t:''};
+}
+function setWordsOfCurrent(){
+  var s=DATA.sets[(typeof filter!=='undefined'&&filter>0)?filter-1:FLAT[vis[pos]].si];
+  var t=s.passage.replace(/\d+\.____/g,' ').replace(/\([^)]*\)/g,' ');
+  var seen={},out=[];
+  (t.match(/[A-Za-z][A-Za-z'-]*/g)||[]).forEach(function(x){
+    var w=wordNorm(x);
+    if(w.length>=3&&!seen[w]){seen[w]=1;out.push(w)}
+  });
+  return out.sort();
+}
+var PHON={};
+try{PHON=JSON.parse((($('dictPhon')||{}).textContent)||'{}')||{}}catch(e){PHON={}}
+function escRe(s){return String(s||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+/* 点哪儿取哪个词：用浏览器光标定位，不改动短文 DOM，五色笔划词不受影响 */
+function wordAtPoint(x,y){
+  var rg=null;
+  try{
+    if(document.caretRangeFromPoint)rg=document.caretRangeFromPoint(x,y);
+    else if(document.caretPositionFromPoint){
+      var p=document.caretPositionFromPoint(x,y);
+      if(p){rg=document.createRange();rg.setStart(p.offsetNode,p.offset)}
+    }
+  }catch(e){return ''}
+  if(!rg||!rg.startContainer||rg.startContainer.nodeType!==3)return '';
+  var t=rg.startContainer.nodeValue,i=rg.startOffset,s=i,e=i;
+  while(s>0&&/[A-Za-z'-]/.test(t.charAt(s-1)))s--;
+  while(e<t.length&&/[A-Za-z'-]/.test(t.charAt(e)))e++;
+  return t.slice(s,e).replace(/^[^A-Za-z]+|[^A-Za-z'-]+$/g,'');
+}
+function sentenceOf(w){
+  try{
+    var s=DATA.sets[(typeof filter!=='undefined'&&filter>0)?filter-1:FLAT[vis[pos]].si];
+    var t=s.passage.replace(/\d+\.____/g,' ').replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ');
+    var parts=t.match(/[^.!?]+[.!?]*/g)||[],re=new RegExp('\\b'+escRe(w),'i');
+    for(var i=0;i<parts.length;i++)if(re.test(parts[i]))return parts[i].trim().slice(0,200);
+  }catch(e){}
+  return '';
+}
+function speakWord(w){
+  try{
+    if(typeof SpeechSynthesisUtterance==='undefined'||!window.speechSynthesis)return;
+    var u=new SpeechSynthesisUtterance(String(w||'').replace(/[^A-Za-z' -]/g,'').slice(0,60));
+    u.lang='en-US';u.rate=.85;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+var dictTipWord='',dictTipX=100,dictTipY=100;
+function positionTip(el,x,y){
+  var vw=window.innerWidth||1000,vh=window.innerHeight||700;
+  var bw=el.offsetWidth||290,bh=el.offsetHeight||180;
+  el.style.left=Math.max(8,Math.min(x,vw-bw-10))+'px';
+  el.style.top=Math.max(8,Math.min(y+12,vh-bh-10))+'px';
+}
+function showDictTip(w,x,y,phrase){
+  if(!teacherMode)return;   /* 词句翻译仅教师模式可用 */
+  var el=$('dictTip');if(!el)return;
+  dictTipWord=String(w||'');dictTipX=x||100;dictTipY=y||100;
+  var title,phon='',def='',exa='',gloss='',tags=[],defNone=false;
+  if(phrase){
+    var words=(dictTipWord.match(/[A-Za-z][A-Za-z'-]*/g)||[]),seen={},n=0;
+    words.forEach(function(t){
+      var k=wordNorm(t);if(k.length<3||seen[k])return;seen[k]=1;
+      var rr=dictLookup(k);if(!rr||!rr.t)return;n++;
+      gloss+='<div><b>'+esc(k)+'</b>'+esc(rr.t.slice(0,70))+'</div>';
+    });
+    title='选中的词句';phon='共 '+words.length+' 词 · 已收录 '+n+' 条';
+    def=n?'':'（这段里暂未收录的词，可在「词库管理」里补）';defNone=!n;
+    exa=esc(dictTipWord.slice(0,180));tags=['逐词释义','教师模式'];
+  }else{
+    var r=dictLookup(dictTipWord);if(!r)return;
+    dictTipWord=r.w;
+    title=r.w;var _p=PHON[r.w]||(r.base?PHON[r.base]:'')||'';phon=_p?'/'+_p+'/':'';
+    def=r.t||'词库里还没有这个词';defNone=!r.t;
+    var sent=sentenceOf(r.w);
+    if(sent)exa=esc(sent).replace(new RegExp('('+escRe(r.w)+')','ig'),'<b>$1</b>');
+    tags=(r.custom?['教师补充']:['内嵌词库']).concat(r.base?['原形 '+r.base]:[],['教师模式']);
+  }
+  var h='<div class="dh"><b>'+esc(title)+'</b><button class="dx" data-act="close" title="关闭">×</button></div><div class="db">';
+  if(phon)h+='<span class="dp">'+esc(phon)+'</span>';
+  h+='<span class="dt'+(defNone?' none':'')+'">'+esc(def)+'</span>';
+  h+='<div class="dmeta">'+tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+'</div>';
+  if(gloss)h+='<div class="dgloss">'+gloss+'</div>';
+  if(exa)h+='<div class="dexa"><b>原文</b> '+exa+'</div>';
+  h+='</div><div class="dacts">'+
+     '<button data-act="favword" class="'+(isWordFaved(dictTipWord)?'faved':'')+'">'+(isWordFaved(dictTipWord)?'★ 已收藏':'☆ 收藏')+'</button>'+
+     '<button class="hi" data-act="list">查词</button>'+
+     '</div>';
+  el.innerHTML=h;el.hidden=false;positionTip(el,dictTipX,dictTipY);
+}
+function hideDictTip(){var el=$('dictTip');if(el)el.hidden=true}
+function openDictEdit(w,t){
+  if(!teacherMode)return;
+  hideDictTip();
+  $('dictWord').value=w||'';$('dictDef').value=t||'';
+  $('dictEditMsg').textContent='';$('dictEditDlg').hidden=false;
+}
+$('dictEditSave').addEventListener('click',function(){
+  if(!teacherMode)return;
+  var w=wordNorm($('dictWord').value),t=$('dictDef').value.trim();
+  if(!w){$('dictEditMsg').textContent='请填英文单词。';return}
+  if(t)userDict[w]=t;else delete userDict[w];
+  saveUserDict();$('dictEditDlg').hidden=true;
+  if(!$('dictDlg').hidden)renderDictList();
+  showDictTip(w,Math.min(window.innerWidth/2,400),60);
+});
+$('dictEditCancel').addEventListener('click',function(){$('dictEditDlg').hidden=true});
+$('dictEditBtn').addEventListener('click',function(){
+  var r=dictLookup(dictTipWord||'');
+  openDictEdit(dictTipWord||'',r?(r.t||''):'');
+});
+function renderDictList(){
+  var q=wordNorm($('dictSearch').value)||'',ws=setWordsOfCurrent(),h='',n=0;
+  ws.forEach(function(w){
+    var r=dictLookup(w);
+    if(q&&w.indexOf(q)<0&&(r.t||'').indexOf(q)<0)return;
+    n++;
+    h+='<div class="drow'+(r.t?'':' none')+'" data-w="'+esc(w)+'"><b>'+esc(w)+'</b><span>'+esc(r.t||'未收录')+'</span></div>';
+  });
+  $('dictList').innerHTML=h||'<div class="drow none"><span>没有匹配的词</span></div>';
+  $('dictCount').textContent='共 '+ws.length+' 个词，显示 '+n+' 个 ｜ 内嵌 '+Object.keys(DICT).length+' 条 ＋ 自定义 '+Object.keys(userDict).length+' 条';
+}
+$('dictListBtn').addEventListener('click',function(){if(!teacherMode)return;$('dictSearch').value='';renderDictList();$('dictDlg').hidden=false});
+$('dictMoreBtn').addEventListener('click',function(){
+  if(!teacherMode)return;
+  var s=$('dictAdvanced');s.hidden=!s.hidden;
+  this.textContent=s.hidden?'词库管理':'收起管理';
+});
+$('dictClose').addEventListener('click',function(){$('dictDlg').hidden=true});
+$('dictSearch').addEventListener('input',renderDictList);
+$('dictList').addEventListener('click',function(e){
+  var d=e.target.closest('.drow');if(!d||!teacherMode)return;
+  showDictTip(d.dataset.w,Math.min(window.innerWidth-340,180),120,false);
+});
+$('dictDlg').addEventListener('click',function(e){if(e.target===$('dictDlg'))$('dictDlg').hidden=true});
+/* 单词本弹窗 */
+$('wordBookBtn').addEventListener('click',openWordBook);
+$('wordBookTopBtn').addEventListener('click',openWordBook);
+$('wbClose').addEventListener('click',function(){$('wordBookDlg').hidden=true});
+$('wordBookDlg').addEventListener('click',function(e){if(e.target===$('wordBookDlg'))$('wordBookDlg').hidden=true});
+$('wordBookList').addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('.wbdel');if(!b)return;
+  var i=parseInt(b.dataset.i,10);
+  if(i>=0&&i<wordBook.length){wordBook.splice(i,1);saveWordBook();renderWordBook();}
+});
+$('wbClear').addEventListener('click',function(){
+  if(!wordBook.length)return;
+  if(!confirm('清空单词本的全部 '+wordBook.length+' 个单词？'))return;
+  wordBook=[];saveWordBook();renderWordBook();
+});
+$('wbExport').addEventListener('click',function(){
+  if(!wordBook.length)return;
+  var rows=['word,音标,释义'];
+  wordBook.forEach(function(it){
+    rows.push(it.w+',"'+String(it.phon?'/'+it.phon+'/':'').replace(/"/g,'""')+'","'+String(it.def||'').replace(/"/g,'""')+'"');
+  });
+  var blob=new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='语法填空单词本_'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+});
+$('wbPrint').addEventListener('click',function(){
+  $('wordBookDlg').hidden=true;
+  buildPrint({wordbook:true});
+  setTimeout(function(){window.print()},80);
+});
+/* 卡片内按钮统一事件委托（动态生成，不用 id） */
+$('dictTip').addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-act]');if(!b)return;
+  var act=b.dataset.act,box,inp,r;
+  if(act==='close'){hideDictTip();return}
+  if(act==='cancel'){box=this.querySelector('.dedit');if(box)box.hidden=true;return}
+  if(act==='favword'){if(!teacherMode)return;toggleFavWord();return}
+  if(act==='list'){$('dictSearch').value=dictTipWord;renderDictList();$('dictDlg').hidden=false;hideDictTip();return}
+  if(act==='edit'){
+    box=this.querySelector('.dedit');if(!box)return;
+    box.hidden=false;inp=box.querySelector('.dinput');
+    if(inp){r=dictLookup(dictTipWord);inp.value=r?(r.t||''):'';try{inp.focus()}catch(err){}}
+    return;
+  }
+  if(act==='save'){
+    box=this.querySelector('.dedit');inp=box?box.querySelector('.dinput'):null;if(!inp)return;
+    var w=wordNorm(dictTipWord),t=inp.value.trim();if(!w)return;
+    if(t)userDict[w]=t;else delete userDict[w];
+    saveUserDict();if(!$('dictDlg').hidden)renderDictList();
+    showDictTip(w,dictTipX,dictTipY,false);return;
+  }
+});
+/* 点单词：教师就地查义；学生只加入单词本，不出翻译。
+   做笔记/画重点时不误弹：画完重点、五色笔选中、手写笔开笔时都不触发取词 */
+$('passage').addEventListener('click',function(e){
+  if(e.target.closest('.blank')||e.target.closest('.hl'))return;
+  if(e.target.closest('input'))return;   /* 学生模式横线输入框不触发查词 */
+  if(suppressWordClick){suppressWordClick=false;return;}   /* 刚画完五色笔重点，抑制误弹 */
+  if(teacherMode&&(penColor||noteOn))return;               /* 教师：五色笔选中/手写笔开笔时不查词 */
+  if(!teacherMode&&noteOn)return;                          /* 学生：记号笔开笔时不收藏 */
+  var sel=window.getSelection();if(sel&&!sel.isCollapsed)return;
+  var w=wordAtPoint(e.clientX,e.clientY);
+  if(!w||w.length<2){if(teacherMode)hideDictTip();return}
+  if(teacherMode)showDictTip(w,e.clientX,e.clientY,false);
+  else studentFav(w);
+});
+/* 划选一句话：逐词释义（没选五色笔颜色时才生效） */
+$('passage').addEventListener('mouseup',function(e){
+  if(!teacherMode||penColor)return;
+  var sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  var t=sel.toString().trim();if(t.length<4||t.length>220)return;
+  try{
+    var a=sel.getRangeAt(0).commonAncestorContainer,ae=a.nodeType===1?a:a.parentElement;
+    if(!ae||!ae.closest||!ae.closest('#passage'))return;
+  }catch(err){return}
+  showDictTip(t,e.clientX,e.clientY,true);
+});
+document.addEventListener('click',function(e){
+  if($('dictTip').hidden||!e.target||!e.target.closest)return;
+  if(e.target.closest('#dictTip')||e.target.closest('#passage')||e.target.closest('#dictList'))return;
+  hideDictTip();
+});
+$('dictExportBtn').addEventListener('click',function(){
+  if(!teacherMode)return;
+  var all={},k;for(k in DICT)all[k]=DICT[k];for(k in userDict)all[k]=userDict[k];
+  var rows=['word,释义'];
+  Object.keys(all).sort().forEach(function(w){rows.push(w+',"'+String(all[w]).replace(/"/g,'""')+'"')});
+  var blob=new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='语法填空词表_'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+});
+$('dictImportBtn').addEventListener('click',function(){if(teacherMode)$('dictFile').click()});
+$('dictFile').addEventListener('change',function(e){
+  var f=e.target.files&&e.target.files[0];if(!f)return;
+  var rd=new FileReader();
+  rd.onload=function(){
+    var txt=String(rd.result||'').replace(/^\ufeff/,''),n=0;
+    try{
+      if(/^\s*\{/.test(txt)){
+        var o=JSON.parse(txt);
+        Object.keys(o).forEach(function(w){var k=wordNorm(w);if(k&&o[w]){userDict[k]=String(o[w]);n++}});
+      }else{
+        txt.split(/\r?\n/).forEach(function(line){
+          if(!line.trim())return;
+          var m=line.match(/^\s*"?([A-Za-z][A-Za-z'-]*)"?\s*[,，\t]\s*"?(.+?)"?\s*$/);
+          if(!m)return;
+          var w=wordNorm(m[1]),t=m[2].replace(/""/g,'"').replace(/^"|"$/g,'').trim();
+          if(w&&t&&w!=='word'){userDict[w]=t;n++}
+        });
+      }
+      saveUserDict();renderDictList();
+      alert('已导入 '+n+' 条词条，同名词的内嵌释义已被覆盖。');
+    }catch(err){alert('导入失败：'+err.message)}
+  };
+  rd.readAsText(f,'utf-8');e.target.value='';
+});
+applyFont();applyMode();applyLayout();updateStats();render();
+})();
+</script>
+<div id="printArea"></div>
+</body>
+</html>

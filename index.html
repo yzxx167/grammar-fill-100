@@ -374,7 +374,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
       <button id="printCancel" class="nbtn">取消</button>
       <button id="printGo" class="primary">生成并打印</button>
     </div>
-    <div class="mnote">学生模式只能「只打印题目」；答案、单词本与教师笔记需教师授权后使用。</div>
+    <div class="mnote">学生模式可打印「只打印题目」和「打印单词本」；答案与教师笔记需教师授权后使用。</div>
   </div>
 </div>
 
@@ -468,7 +468,7 @@ body:not(.teacher) .right-col .sheet{display:none!important}
   </div>
 </div>
 
-<!-- 我的单词本（收藏的生词，教师模式可用） -->
+<!-- 我的单词本（收藏的生词，师生均可用，均可打印） -->
 <div id="wordBookDlg" class="modal" hidden>
   <div class="mbox">
     <h3>我的单词本</h3>
@@ -2039,10 +2039,10 @@ $('importBtn').addEventListener('click',function(){$('importFile').click()});
 $('importFile').addEventListener('change',importFile);
 function buildPrint(opt){
   opt=opt||{};
-  /* 双保险：无论打印选项怎么被改动，学生模式一律不出答案、不出教师笔记、不出单词本 */
+  /* 双保险：无论打印选项怎么被改动，学生模式一律不出答案、不出教师笔记；单词本师生均可打印 */
   opt.answers=!!opt.answers&&teacherMode;
   opt.notes=!!opt.notes&&teacherMode;
-  opt.wordbook=!!opt.wordbook&&teacherMode;
+  opt.wordbook=!!opt.wordbook;
   if(opt.wordbook){
     var wb='<h1>2026届各地英语语法填空 · 我的单词本</h1>'
       +'<p class="pdate">生成于 '+new Date().toLocaleDateString('zh-CN')+' ｜ 共 '+wordBook.length+' 词 ｜ 姓名：____________</p>';
@@ -2088,9 +2088,9 @@ function openPrintDlg(){
   qa.disabled=!teacherMode;
   $('optQA').classList.toggle('disabled',!teacherMode);
   $('qaHint').textContent=teacherMode?'':'（需教师授权）';
-  wb.disabled=!teacherMode;
-  $('optWB').classList.toggle('disabled',!teacherMode);
-  $('wbHint').textContent=teacherMode?('（已收藏 '+wordBook.length+' 词）'):'（需教师授权）';
+  wb.disabled=false;
+  $('optWB').classList.remove('disabled');
+  $('wbHint').textContent='（已收藏 '+wordBook.length+' 词）';
   if(!teacherMode)document.querySelector('input[name=pmode][value=q]').checked=true;
   var inc=$('pIncludeNote');
   inc.disabled=!hasNotes;inc.checked=!!hasNotes;
@@ -2101,7 +2101,7 @@ function openPrintDlg(){
 function doPrint(){
   var sel=document.querySelector('input[name=pmode]:checked');
   var mode=sel&&!sel.disabled?sel.value:'q';
-  if(!teacherMode&&mode!=='q')mode='q';
+  if(!teacherMode&&mode!=='q'&&mode!=='wb')mode='q';
   var withNotes=teacherMode&&!!($('pIncludeNote').checked&&!$('pIncludeNote').disabled);
   $('printDlg').hidden=true;
   if(mode==='wb')buildPrint({wordbook:true});
@@ -2502,7 +2502,6 @@ $('wbExport').addEventListener('click',function(){
   setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
 });
 $('wbPrint').addEventListener('click',function(){
-  if(!teacherMode)return;
   $('wordBookDlg').hidden=true;
   buildPrint({wordbook:true});
   setTimeout(function(){window.print()},80);
